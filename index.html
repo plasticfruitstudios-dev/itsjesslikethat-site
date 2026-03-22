@@ -1,0 +1,535 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Jessi Clover Belgrave</title>
+  <meta name="description" content="Jessi Clover Belgrave — Director. Music videos, commercials, editorial.">
+  <link rel="icon" href="assets/logo.png" type="image/png">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=VT323&display=swap" rel="stylesheet">
+
+  <style>
+    :root {
+      --pink:  #eabcbc;
+      --green: #2d6b5b;
+      --green-faint: rgba(45,107,91,0.15);
+    }
+
+    *, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--pink);
+      color: var(--green);
+      font-family: 'VT323', monospace;
+      text-transform: lowercase;
+      cursor: url('assets/cursor.png') 24 8, auto;
+      -webkit-font-smoothing: antialiased;
+      overflow-x: hidden;
+    }
+
+    a { text-decoration: none; color: inherit; }
+    img { display: block; }
+
+    /* ── LOGO ── */
+    .logo-wrap {
+      display: flex;
+      justify-content: center;
+      padding: 1.8rem 0 0;
+    }
+
+    .site-logo {
+      width: 120px;
+      height: 120px;
+      object-fit: contain;
+      animation: bob 3.8s ease-in-out infinite;
+    }
+
+    @keyframes bob {
+      0%,100% { transform: translateY(0) rotate(-2deg); }
+      50%      { transform: translateY(-10px) rotate(2deg); }
+    }
+
+    /* ── TICKER ── */
+    .ticker-wrap {
+      overflow: hidden;
+      margin: 1.2rem 0 0;
+      padding: 0;
+    }
+
+    .ticker-track {
+      display: flex;
+      width: max-content;
+      animation: ticker 16s linear infinite;
+    }
+
+    .ticker-wrap:hover .ticker-track { animation-play-state: paused; }
+
+    .ticker-track span {
+      font-family: 'VT323', monospace;
+      font-size: clamp(1.6rem, 4vw, 2.4rem);
+      color: var(--green);
+      letter-spacing: 0.06em;
+      white-space: nowrap;
+      padding: 0 2.5rem;
+    }
+
+    /* Sparkling stars */
+    .star {
+      font-style: normal;
+      margin: 0 0.5rem;
+      display: inline-block;
+      animation: sparkle 2.2s ease-in-out infinite;
+    }
+    .star:nth-child(2) { animation-delay: 0.4s; }
+    .star:nth-child(3) { animation-delay: 0.8s; }
+
+    @keyframes sparkle {
+      0%, 100% { opacity: 0.25; transform: scale(0.85) rotate(0deg); }
+      50%       { opacity: 1;    transform: scale(1.3)  rotate(20deg); }
+    }
+
+    @keyframes ticker {
+      from { transform: translateX(0); }
+      to   { transform: translateX(-50%); }
+    }
+
+    /* ── NAV ── */
+    nav {
+      display: flex;
+      justify-content: center;
+      gap: 2.5rem;
+      padding: 2.4rem 0 0;
+    }
+
+    nav a {
+      font-family: 'VT323', monospace;
+      font-size: 1.5rem;
+      font-weight: 400;
+      color: var(--green);
+      opacity: 0.45;
+      transition: opacity 0.2s;
+      position: relative;
+      letter-spacing: 0.05em;
+      overflow: hidden;
+    }
+
+    nav a:hover, nav a.active { opacity: 1; }
+
+    nav a.active::after {
+      content: '';
+      position: absolute;
+      bottom: -2px; left: 0; right: 0;
+      height: 2px;
+      background: var(--green);
+    }
+
+    /* Nav static canvas */
+    .nav-canvas {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      opacity: 0;
+      transition: opacity 0.1s ease;
+      pointer-events: none;
+      mix-blend-mode: multiply;
+      z-index: 1;
+    }
+
+    nav a:hover .nav-canvas { opacity: 1; }
+
+    /* ── SECTIONS ── */
+    section {
+      display: none;
+      padding: 1.2rem 2rem 5rem;
+      max-width: 980px;
+      margin: 0 auto;
+    }
+    section.active { display: block; }
+
+    /* ── GRID ── */
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      column-gap: 1.4rem;
+      row-gap: 2.2rem;
+    }
+
+    /* centre the last item when it sits alone in the final row */
+    .grid .project:last-child:nth-child(3n+1) {
+      grid-column: 2;
+    }
+
+    .project {
+      display: block;
+      cursor: url('assets/cursor.png') 24 8, pointer;
+    }
+
+    .project-thumb {
+      width: 100%;
+      aspect-ratio: 4 / 3;
+      background: var(--green-faint);
+      overflow: hidden;
+      margin-bottom: 0.5rem;
+    }
+
+    .project-img {
+      width: 100%; height: 100%;
+      object-fit: cover;
+      transition: transform 0.5s cubic-bezier(0.25,0.46,0.45,0.94);
+    }
+
+    .project:hover .project-img { transform: scale(1.04); }
+
+    .project-title {
+      font-family: 'VT323', monospace;
+      font-size: 1rem;
+      font-weight: 400;
+      line-height: 1.35;
+      color: var(--green);
+      transition: opacity 0.2s;
+    }
+
+    .project:hover .project-title { opacity: 0.5; }
+
+    /* ── TV STATIC ── */
+    .project-thumb {
+      position: relative; /* needed for canvas overlay */
+    }
+
+    .static-canvas {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      opacity: 0;
+      transition: opacity 0.15s ease;
+      pointer-events: none;
+      mix-blend-mode: screen;
+      z-index: 2;
+    }
+
+    .project:hover .static-canvas { opacity: 1; }
+
+    /* ── FOOTER ── */
+    footer {
+      text-align: center;
+      padding: 2.5rem 2rem;
+      font-family: 'VT323', monospace;
+      font-size: 1rem;
+      font-weight: 400;
+      color: var(--green);
+      opacity: 0.45;
+      letter-spacing: 0.04em;
+    }
+
+    /* ── INFO ── */
+    #info {
+      padding-top: 2.8rem;
+    }
+
+    .info-inner {
+      display: flex;
+      gap: 4rem;
+      align-items: flex-start;
+      max-width: 860px;
+    }
+
+    .info-text { flex: 1; }
+
+    .info-text p {
+      font-size: 1.2rem;
+      line-height: 1.8;
+      margin-bottom: 1.6rem;
+    }
+
+    .info-links { display: flex; flex-direction: column; gap: 0.5rem; }
+
+    .info-links a {
+      font-size: 1.2rem;
+      opacity: 0.55;
+      transition: opacity 0.2s;
+    }
+    .info-links a:hover { opacity: 1; }
+
+    .info-photo {
+      flex: 0 0 280px;
+    }
+
+    .info-photo img {
+      width: 100%;
+      display: block;
+    }
+
+    @media (max-width: 640px) {
+      .info-inner { flex-direction: column; gap: 2rem; }
+      .info-photo { flex: unset; width: 220px; }
+    }
+
+    /* ── STILLS ── */
+    .stills-grid {
+      columns: 2;
+      column-gap: 1.4rem;
+    }
+
+    .still {
+      break-inside: avoid;
+      margin-bottom: 1.4rem;
+      display: block;
+      overflow: hidden;
+    }
+
+    .still img {
+      width: 100%;
+      display: block;
+      transition: transform 0.5s cubic-bezier(0.25,0.46,0.45,0.94);
+    }
+
+    .still:hover img { transform: scale(1.03); }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 640px) {
+      .grid { grid-template-columns: repeat(2,1fr); }
+      section { padding: 2rem 1.4rem 4rem; }
+    }
+    @media (max-width: 400px) { .grid { grid-template-columns: 1fr; } }
+
+    @media (prefers-reduced-motion: reduce) {
+      .site-logo { animation: none; }
+      .ticker-track { animation: none; }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="logo-wrap">
+    <img class="site-logo" src="assets/logo.gif" alt="Jessi Clover">
+  </div>
+
+  <div class="ticker-wrap">
+    <div class="ticker-track">
+      <span>JESSI CLOVER BELGRAVE <span class="star">✦</span> DIRECTOR <span class="star">✦</span></span>
+      <span>JESSI CLOVER BELGRAVE <span class="star">✦</span> DIRECTOR <span class="star">✦</span></span>
+      <span>JESSI CLOVER BELGRAVE <span class="star">✦</span> DIRECTOR <span class="star">✦</span></span>
+      <span>JESSI CLOVER BELGRAVE <span class="star">✦</span> DIRECTOR <span class="star">✦</span></span>
+    </div>
+  </div>
+
+  <nav>
+    <a href="#" data-section="motion" class="active">motion<canvas class="nav-canvas"></canvas></a>
+    <a href="#" data-section="stills">stills<canvas class="nav-canvas"></canvas></a>
+    <a href="#" data-section="info">info<canvas class="nav-canvas"></canvas></a>
+  </nav>
+
+  <section id="motion" class="active">
+    <div class="grid">
+
+      <a class="project" href="https://vimeo.com/1037862617" target="_blank" rel="noopener">
+        <div class="project-thumb"><canvas class="static-canvas"></canvas><img class="project-img" src="assets/work/audemars.gif" alt=""></div>
+        <p class="project-title">Audemars Piguet – the time is now</p>
+      </a>
+
+      <a class="project" href="https://www.youtube.com/watch?v=dX8orLrVwtY" target="_blank" rel="noopener">
+        <div class="project-thumb"><canvas class="static-canvas"></canvas><img class="project-img" src="assets/work/somedays.gif" alt=""></div>
+        <p class="project-title">Sonny Fodera, Jazzy, D.O.D – somedays</p>
+      </a>
+
+      <a class="project" href="https://www.instagram.com/p/DQ7DkjKDPG2/" target="_blank" rel="noopener">
+        <div class="project-thumb"><canvas class="static-canvas"></canvas><img class="project-img" src="assets/work/sam-smith.gif" alt=""></div>
+        <p class="project-title">Sam Smith – to be free (live visuals)</p>
+      </a>
+
+      <a class="project" href="the-diamond-store.html">
+        <div class="project-thumb"><canvas class="static-canvas"></canvas><img class="project-img" src="assets/work/diamond-store.gif" alt=""></div>
+        <p class="project-title">The Diamond Store – seasonal campaigns</p>
+      </a>
+
+      <a class="project" href="https://www.youtube.com/watch?v=SJMLCyhYvCE" target="_blank" rel="noopener">
+        <div class="project-thumb"><canvas class="static-canvas"></canvas><img class="project-img" src="assets/work/tell-me.gif" alt=""></div>
+        <p class="project-title">Sonny Fodera & Clementine Douglas – tell me</p>
+      </a>
+
+      <a class="project" href="https://www.youtube.com/watch?v=5LNlBIg4g3I" target="_blank" rel="noopener">
+        <div class="project-thumb"><canvas class="static-canvas"></canvas><img class="project-img" src="assets/work/dog.gif" alt=""></div>
+        <p class="project-title">piri & tommy – dog</p>
+      </a>
+
+      <a class="project" href="jade.html">
+        <div class="project-thumb"><canvas class="static-canvas"></canvas><img class="project-img" src="assets/work/jade.gif" alt=""></div>
+        <p class="project-title">jade – short form series</p>
+      </a>
+
+      <a class="project" href="https://www.youtube.com/watch?v=HxlhtZHmRts" target="_blank" rel="noopener">
+        <div class="project-thumb"><canvas class="static-canvas"></canvas><img class="project-img" src="assets/work/gorgon.gif" alt=""></div>
+        <p class="project-title">Gorgon City, NORTH – breathe you in</p>
+      </a>
+
+      <a class="project" href="https://www.youtube.com/watch?v=YHpDqoHMi_k" target="_blank" rel="noopener">
+        <div class="project-thumb"><canvas class="static-canvas"></canvas><img class="project-img" src="assets/work/sienna-mews.gif" alt=""></div>
+        <p class="project-title">Sienna Spiro – maybe. (live from the mews)</p>
+      </a>
+
+      <a class="project" href="https://www.youtube.com/watch?v=AH7d7mlZWuQ" target="_blank" rel="noopener">
+        <div class="project-thumb"><canvas class="static-canvas"></canvas><img class="project-img" src="assets/work/butterfly.gif" alt=""></div>
+        <p class="project-title">Sienna Spiro – butterfly effect</p>
+      </a>
+
+      <a class="project" href="https://www.youtube.com/watch?v=0U4TmlrLKuI" target="_blank" rel="noopener">
+        <div class="project-thumb"><canvas class="static-canvas"></canvas><img class="project-img" src="assets/work/think-about-us.gif" alt=""></div>
+        <p class="project-title">Sonny Fodera, D.O.D & Poppy Baskcomb – think about us</p>
+      </a>
+
+      <a class="project" href="https://www.youtube.com/watch?v=j6Xvo7DgJBg" target="_blank" rel="noopener">
+        <div class="project-thumb"><canvas class="static-canvas"></canvas><img class="project-img" src="assets/work/stay-in-lane.gif" alt=""></div>
+        <p class="project-title">Taiki Nulight x P Money x Jolie P – stay in your lane</p>
+      </a>
+
+      <a class="project" href="https://www.youtube.com/watch?v=_6pMu4w0X5E" target="_blank" rel="noopener">
+        <div class="project-thumb"><canvas class="static-canvas"></canvas><img class="project-img" src="assets/work/piri-99.gif" alt=""></div>
+        <p class="project-title">piri & tommy – 99%</p>
+      </a>
+
+      <a class="project" href="https://www.youtube.com/watch?v=R63gdYd4fEM" target="_blank" rel="noopener">
+        <div class="project-thumb"><canvas class="static-canvas"></canvas><img class="project-img" src="assets/work/style.gif" alt=""></div>
+        <p class="project-title">Taiki Nulight x P Money x Capo Lee – style</p>
+      </a>
+
+      <a class="project" href="bea.html">
+        <div class="project-thumb"><canvas class="static-canvas"></canvas><img class="project-img" src="assets/work/bea.gif" alt=""></div>
+        <p class="project-title">Bea & Her Business – EP visuals</p>
+      </a>
+
+      <a class="project" href="gather.html">
+        <div class="project-thumb"><canvas class="static-canvas"></canvas><img class="project-img" src="assets/work/gather.gif" alt=""></div>
+        <p class="project-title">Gather x Soho House – cinema ad</p>
+      </a>
+
+    </div>
+  </section>
+
+  <section id="stills">
+    <div class="stills-grid">
+      <div class="still"><img src="assets/stills/piri_2.4.1.jpg" alt=""></div>
+      <div class="still"><img src="assets/stills/Untitled%20take2_1.12.2.jpg" alt=""></div>
+      <div class="still"><img src="assets/stills/Untitled_2.3.2.jpg" alt=""></div>
+      <div class="still"><img src="assets/stills/Benjiflow_1.13.1.jpg" alt=""></div>
+      <div class="still"><img src="assets/stills/Benjiflow_2.1.1%202.jpg" alt=""></div>
+      <div class="still"><img src="assets/stills/cat_1.14.1.jpg" alt=""></div>
+      <div class="still"><img src="assets/stills/B0026893-Edit.jpg" alt=""></div>
+      <div class="still"><img src="assets/stills/V1-0002_B0000000-Edit%20v2.jpg" alt=""></div>
+      <div class="still"><img src="assets/stills/V1-0007_B0000000-Edit.jpg" alt=""></div>
+      <div class="still"><img src="assets/stills/V1-0008_B_20987.00000000.jpg" alt=""></div>
+      <div class="still"><img src="assets/stills/Jazzy%20Beach_4.1.1%20b_4.1.2.jpg" alt=""></div>
+      <div class="still"><img src="assets/stills/Jazzy%20Stardust_34.jpg" alt=""></div>
+      <div class="still"><img src="assets/stills/Oppidan%20%26%20Eliza%20Rose.-%20Too%20Slow_11%20EDIT_1.23.1.jpg" alt=""></div>
+      <div class="still"><img src="assets/stills/v3_1.3.4.jpg" alt=""></div>
+    </div>
+  </section>
+
+  <section id="info">
+    <div class="info-inner">
+      <div class="info-text">
+        <p>born and raised in north london, jessi clover belgrave is a director of caribbean, english and danish heritage whose visual language is shaped by a music-led instinct.</p>
+        <p>she began in music as a singer, songwriter and producer, creating for her own artist projects as well as major brands and hollywood films before moving into directing.</p>
+        <p>as one half of plastic fruit studios, she works across music videos, advertising, editorial and photography.</p>
+        <div class="info-links">
+          <a href="mailto:jessi@plasticfruitstudios.com">jessi@plasticfruitstudios.com</a>
+          <a href="https://www.instagram.com/itsjesslikethat" target="_blank" rel="noopener">@itsjesslikethat</a>
+        </div>
+      </div>
+      <div class="info-photo">
+        <img src="assets/jessi.jpg" alt="Jessi Clover Belgrave">
+      </div>
+    </div>
+  </section>
+
+  <footer>© jessi clover belgrave. 2026. all rights reserved.</footer>
+
+  <script>
+    // ── Nav switching ──
+    document.querySelectorAll('nav a').forEach(link => {
+      link.addEventListener('click', e => {
+        e.preventDefault();
+        document.querySelectorAll('nav a').forEach(a => a.classList.remove('active'));
+        document.querySelectorAll('section').forEach(s => s.classList.remove('active'));
+        link.classList.add('active');
+        document.getElementById(link.dataset.section).classList.add('active');
+      });
+    });
+
+    // ── TV Static ──
+    document.querySelectorAll('.project-thumb').forEach(thumb => {
+      const canvas = thumb.querySelector('.static-canvas');
+      const ctx = canvas.getContext('2d');
+      let animId = null;
+
+      function resize() {
+        canvas.width  = thumb.offsetWidth;
+        canvas.height = thumb.offsetHeight;
+      }
+
+      function drawStatic() {
+        const w = canvas.width;
+        const h = canvas.height;
+        const imageData = ctx.createImageData(w, h);
+        const d = imageData.data;
+        for (let i = 0; i < d.length; i += 4) {
+          const v = Math.random() * 255 | 0;
+          d[i] = d[i+1] = d[i+2] = v;
+          d[i+3] = (Math.random() * 160 + 60) | 0; // semi-transparent
+        }
+        ctx.putImageData(imageData, 0, 0);
+        animId = requestAnimationFrame(drawStatic);
+      }
+
+      thumb.closest('.project').addEventListener('mouseenter', () => {
+        resize();
+        if (!animId) drawStatic();
+      });
+
+      thumb.closest('.project').addEventListener('mouseleave', () => {
+        cancelAnimationFrame(animId);
+        animId = null;
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+      });
+    });
+
+    // ── Nav Static ──
+    document.querySelectorAll('nav a').forEach(link => {
+      const canvas = link.querySelector('.nav-canvas');
+      const ctx = canvas.getContext('2d');
+      let animId = null;
+
+      function resize() {
+        canvas.width  = link.offsetWidth;
+        canvas.height = link.offsetHeight;
+      }
+
+      function drawStatic() {
+        const w = canvas.width, h = canvas.height;
+        const imageData = ctx.createImageData(w, h);
+        const d = imageData.data;
+        for (let i = 0; i < d.length; i += 4) {
+          const v = Math.random() * 255 | 0;
+          d[i] = d[i+1] = d[i+2] = v;
+          d[i+3] = (Math.random() * 120 + 40) | 0;
+        }
+        ctx.putImageData(imageData, 0, 0);
+        animId = requestAnimationFrame(drawStatic);
+      }
+
+      link.addEventListener('mouseenter', () => { resize(); if (!animId) drawStatic(); });
+      link.addEventListener('mouseleave', () => {
+        cancelAnimationFrame(animId);
+        animId = null;
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+      });
+    });
+  </script>
+
+</body>
+</html>

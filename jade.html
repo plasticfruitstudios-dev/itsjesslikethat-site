@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>jade – short form series – jessi clover belgrave</title>
+  <link rel="icon" href="assets/logo.png" type="image/png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=VT323&display=swap" rel="stylesheet">
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      background: #eabcbc;
+      color: #2d6b5b;
+      font-family: 'VT323', monospace;
+      text-transform: lowercase;
+      cursor: url('assets/cursor.png') 24 8, pointer;
+      min-height: 100vh;
+    }
+    a { color: #2d6b5b; text-decoration: none; }
+    a:hover { opacity: 0.6; }
+
+    header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 1.8rem 2rem 0;
+    }
+    .logo-wrap img { height: 70px; display: block; }
+    nav { display: flex; gap: 2.5rem; font-size: 1.5rem; }
+
+    .page-inner {
+      padding: 2rem 2rem 5rem;
+      max-width: 1000px;
+      margin: 0 auto;
+    }
+    h1 {
+      font-size: clamp(1.6rem, 4vw, 2.6rem);
+      font-weight: normal;
+      margin-bottom: 2rem;
+      opacity: 0.75;
+    }
+
+    .tiktok-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1.2rem;
+    }
+    .tiktok-wrap {
+      display: flex;
+      justify-content: center;
+    }
+    /* override tiktok embed background */
+    .tiktok-embed {
+      background: #eabcbc !important;
+      border-color: #2d6b5b !important;
+    }
+
+    footer { text-align: center; padding: 2rem; font-size: 0.9rem; opacity: 0.5; }
+
+    @media (max-width: 768px) { .tiktok-grid { grid-template-columns: repeat(2, 1fr); } }
+    @media (max-width: 480px) { .tiktok-grid { grid-template-columns: 1fr; } }
+  </style>
+</head>
+<body>
+
+  <header>
+    <a href="index.html" class="logo-wrap">
+      <img src="assets/logo.gif" alt="jessi clover belgrave">
+    </a>
+    <nav>
+      <a href="index.html#motion">motion</a>
+      <a href="index.html#stills">stills</a>
+      <a href="index.html#info">info</a>
+    </nav>
+  </header>
+
+  <div class="page-inner">
+    <h1>jade – short form series</h1>
+
+    <div class="tiktok-grid">
+      <div class="tiktok-wrap">
+        <blockquote class="tiktok-embed" cite="https://www.tiktok.com/@jadethirlwall/video/7480206002684480790" data-video-id="7480206002684480790"><section></section></blockquote>
+      </div>
+      <div class="tiktok-wrap">
+        <blockquote class="tiktok-embed" cite="https://www.tiktok.com/@jadethirlwall/video/7474662293121371414" data-video-id="7474662293121371414"><section></section></blockquote>
+      </div>
+      <div class="tiktok-wrap">
+        <blockquote class="tiktok-embed" cite="https://www.tiktok.com/@jadethirlwall/video/7467996347296140577" data-video-id="7467996347296140577"><section></section></blockquote>
+      </div>
+      <div class="tiktok-wrap">
+        <blockquote class="tiktok-embed" cite="https://www.tiktok.com/@jadethirlwall/video/7454178768601615649" data-video-id="7454178768601615649"><section></section></blockquote>
+      </div>
+      <div class="tiktok-wrap">
+        <blockquote class="tiktok-embed" cite="https://www.tiktok.com/@jadethirlwall/video/7441240153810652448" data-video-id="7441240153810652448"><section></section></blockquote>
+      </div>
+      <div class="tiktok-wrap">
+        <blockquote class="tiktok-embed" cite="https://www.tiktok.com/@jadethirlwall/video/7439758582784068896" data-video-id="7439758582784068896"><section></section></blockquote>
+      </div>
+      <div class="tiktok-wrap">
+        <blockquote class="tiktok-embed" cite="https://www.tiktok.com/@jadethirlwall/video/7433858537438203169" data-video-id="7433858537438203169"><section></section></blockquote>
+      </div>
+    </div>
+  </div>
+
+  <footer>© jessi clover belgrave. 2026. all rights reserved.</footer>
+
+  <script async src="https://www.tiktok.com/embed.js"></script>
+</body>
+</html>
