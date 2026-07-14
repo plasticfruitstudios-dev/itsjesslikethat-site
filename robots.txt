@@ -1,5 +1,54 @@
+# itsjesslikethat.com — jessi clover belgrave
+# search + AI retrieval welcome, model training opted out
+
 User-agent: *
 Allow: /
-Disallow: /404.html
+
+# --- AI retrieval / live browsing / AI search (welcome) ---
+User-agent: OAI-SearchBot
+Allow: /
+
+User-agent: ChatGPT-User
+Allow: /
+
+User-agent: Claude-SearchBot
+Allow: /
+
+User-agent: Claude-User
+Allow: /
+
+User-agent: Claude-Web
+Allow: /
+
+User-agent: PerplexityBot
+Allow: /
+
+User-agent: Perplexity-User
+Allow: /
+
+# --- model training crawlers (opted out) ---
+User-agent: GPTBot
+Disallow: /
+
+User-agent: ClaudeBot
+Disallow: /
+
+User-agent: anthropic-ai
+Disallow: /
+
+User-agent: CCBot
+Disallow: /
+
+User-agent: Google-Extended
+Disallow: /
+
+User-agent: Applebot-Extended
+Disallow: /
+
+User-agent: Bytespider
+Disallow: /
+
+User-agent: meta-externalagent
+Disallow: /
 
 Sitemap: https://www.itsjesslikethat.com/sitemap.xml

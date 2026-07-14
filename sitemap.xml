@@ -1,123 +1,491 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+        xmlns:image="http://www.google.com/schemas/sitemap-image/1.1"
+        xmlns:video="http://www.google.com/schemas/sitemap-video/1.1">
   <url>
     <loc>https://www.itsjesslikethat.com/</loc>
+    <lastmod>2026-07-14</lastmod>
     <changefreq>monthly</changefreq>
     <priority>1.0</priority>
+    <image:image>
+      <image:loc>https://www.itsjesslikethat.com/stills/web/ally-salort_cover-large.jpg</image:loc>
+      <image:title>Jessi Clover Belgrave</image:title>
+    </image:image>
+    <image:image>
+      <image:loc>https://www.itsjesslikethat.com/stills/web/piri-album_cover-grid.jpg</image:loc>
+      <image:title>Jessi Clover Belgrave</image:title>
+    </image:image>
+    <image:image>
+      <image:loc>https://www.itsjesslikethat.com/stills/web/cat-burns-ep-cover-grid.jpg</image:loc>
+      <image:title>Jessi Clover Belgrave</image:title>
+    </image:image>
+    <image:image>
+      <image:loc>https://www.itsjesslikethat.com/stills/web/charlieeeee_3-grid.jpg</image:loc>
+      <image:title>Jessi Clover Belgrave</image:title>
+    </image:image>
+    <image:image>
+      <image:loc>https://www.itsjesslikethat.com/stills/web/tapwaterlucy-x-piri-v3_11-grid.jpg</image:loc>
+      <image:title>Jessi Clover Belgrave</image:title>
+    </image:image>
+    <image:image>
+      <image:loc>https://www.itsjesslikethat.com/stills/web/benjiflow_3-grid.jpg</image:loc>
+      <image:title>Jessi Clover Belgrave</image:title>
+    </image:image>
+    <image:image>
+      <image:loc>https://www.itsjesslikethat.com/stills/web/piri-tommy-yoyo_4-grid.jpg</image:loc>
+      <image:title>Jessi Clover Belgrave</image:title>
+    </image:image>
+    <image:image>
+      <image:loc>https://www.itsjesslikethat.com/stills/web/jade_press-shot-grid.jpg</image:loc>
+      <image:title>Jessi Clover Belgrave</image:title>
+    </image:image>
   </url>
   <url>
     <loc>https://www.itsjesslikethat.com/motion</loc>
+    <lastmod>2026-07-14</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.9</priority>
   </url>
   <url>
     <loc>https://www.itsjesslikethat.com/stills</loc>
+    <lastmod>2026-07-14</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.9</priority>
+    <image:image>
+      <image:loc>https://www.itsjesslikethat.com/stills/web/ally-salort_cover-large.jpg</image:loc>
+      <image:title>Jessi Clover Belgrave</image:title>
+    </image:image>
+    <image:image>
+      <image:loc>https://www.itsjesslikethat.com/stills/web/piri-album_cover-grid.jpg</image:loc>
+      <image:title>Jessi Clover Belgrave</image:title>
+    </image:image>
+    <image:image>
+      <image:loc>https://www.itsjesslikethat.com/stills/web/cat-burns-ep-cover-grid.jpg</image:loc>
+      <image:title>Jessi Clover Belgrave</image:title>
+    </image:image>
+    <image:image>
+      <image:loc>https://www.itsjesslikethat.com/stills/web/charlieeeee_3-grid.jpg</image:loc>
+      <image:title>Jessi Clover Belgrave</image:title>
+    </image:image>
+    <image:image>
+      <image:loc>https://www.itsjesslikethat.com/stills/web/piri-tommy-yoyo_4-grid.jpg</image:loc>
+      <image:title>Jessi Clover Belgrave</image:title>
+    </image:image>
+    <image:image>
+      <image:loc>https://www.itsjesslikethat.com/stills/web/benjiflow_3-grid.jpg</image:loc>
+      <image:title>Jessi Clover Belgrave</image:title>
+    </image:image>
+    <image:image>
+      <image:loc>https://www.itsjesslikethat.com/stills/web/tapwaterlucy-x-piri-v3_11-grid.jpg</image:loc>
+      <image:title>Jessi Clover Belgrave</image:title>
+    </image:image>
+    <image:image>
+      <image:loc>https://www.itsjesslikethat.com/stills/web/jade_press-shot-large.jpg</image:loc>
+      <image:title>Jessi Clover Belgrave</image:title>
+    </image:image>
   </url>
   <url>
     <loc>https://www.itsjesslikethat.com/info</loc>
+    <lastmod>2026-07-14</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.9</priority>
   </url>
   <url>
     <loc>https://www.itsjesslikethat.com/mi-sam-smith</loc>
+    <lastmod>2026-07-14</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
+    <video:video>
+      <video:thumbnail_loc>https://www.itsjesslikethat.com/images/og/sam-smith.jpg</video:thumbnail_loc>
+      <video:title>Sam Smith — To Be Free (Live Visuals)</video:title>
+      <video:description>Sam Smith — To Be Free (Live Visuals). Directed by Jessi Clover Belgrave.</video:description>
+      <video:player_loc>https://player.vimeo.com/video/1174144832</video:player_loc>
+      <video:duration>251</video:duration>
+      <video:publication_date>2026-03-16T00:00:00+00:00</video:publication_date>
+      <video:family_friendly>yes</video:family_friendly>
+    </video:video>
   </url>
   <url>
     <loc>https://www.itsjesslikethat.com/mi-audemars-piguet</loc>
+    <lastmod>2026-07-14</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://www.itsjesslikethat.com/jordan-rakei</loc>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
+    <video:video>
+      <video:thumbnail_loc>https://www.itsjesslikethat.com/images/og/audemars.jpg</video:thumbnail_loc>
+      <video:title>Audemars Piguet — The Time Is Now</video:title>
+      <video:description>Audemars Piguet — The Time Is Now. Directed by Jessi Clover Belgrave.</video:description>
+      <video:player_loc>https://player.vimeo.com/video/1037862617</video:player_loc>
+      <video:duration>60</video:duration>
+      <video:publication_date>2024-12-10T00:00:00+00:00</video:publication_date>
+      <video:family_friendly>yes</video:family_friendly>
+    </video:video>
   </url>
   <url>
     <loc>https://www.itsjesslikethat.com/the-diamond-store</loc>
+    <lastmod>2026-07-14</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://www.itsjesslikethat.com/mi-piri-tommy-dog</loc>
+    <lastmod>2026-07-14</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
+    <video:video>
+      <video:thumbnail_loc>https://www.itsjesslikethat.com/images/og/dog.jpg</video:thumbnail_loc>
+      <video:title>piri &amp; tommy — Dog</video:title>
+      <video:description>piri &amp; tommy — Dog. Directed by Jessi Clover Belgrave.</video:description>
+      <video:player_loc>https://player.vimeo.com/video/1209331307</video:player_loc>
+      <video:duration>230</video:duration>
+      <video:publication_date>2026-07-12T00:00:00+00:00</video:publication_date>
+      <video:family_friendly>yes</video:family_friendly>
+    </video:video>
   </url>
   <url>
     <loc>https://www.itsjesslikethat.com/mi-gorgon-city</loc>
+    <lastmod>2026-07-14</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
+    <video:video>
+      <video:thumbnail_loc>https://www.itsjesslikethat.com/images/og/gorgon.jpg</video:thumbnail_loc>
+      <video:title>Gorgon City, NORTH — Breathe You In</video:title>
+      <video:description>Gorgon City, NORTH — Breathe You In. Directed by Jessi Clover Belgrave.</video:description>
+      <video:player_loc>https://player.vimeo.com/video/1209317370</video:player_loc>
+      <video:duration>249</video:duration>
+      <video:publication_date>2026-07-12T00:00:00+00:00</video:publication_date>
+      <video:family_friendly>yes</video:family_friendly>
+    </video:video>
   </url>
   <url>
     <loc>https://www.itsjesslikethat.com/jade</loc>
+    <lastmod>2026-07-14</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://www.itsjesslikethat.com/mi-somedays</loc>
+    <lastmod>2026-07-14</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
+    <video:video>
+      <video:thumbnail_loc>https://www.itsjesslikethat.com/images/og/somedays.jpg</video:thumbnail_loc>
+      <video:title>Sonny Fodera, Jazzy, D.O.D — Somedays</video:title>
+      <video:description>Sonny Fodera, Jazzy, D.O.D — Somedays. Directed by Jessi Clover Belgrave.</video:description>
+      <video:player_loc>https://player.vimeo.com/video/1209331427</video:player_loc>
+      <video:duration>211</video:duration>
+      <video:publication_date>2026-07-12T00:00:00+00:00</video:publication_date>
+      <video:family_friendly>yes</video:family_friendly>
+    </video:video>
   </url>
   <url>
     <loc>https://www.itsjesslikethat.com/mi-sienna-spiro-maybe</loc>
+    <lastmod>2026-07-14</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
+    <video:video>
+      <video:thumbnail_loc>https://www.itsjesslikethat.com/images/og/sienna-mews.jpg</video:thumbnail_loc>
+      <video:title>Sienna Spiro — Maybe. (Live from the Mews)</video:title>
+      <video:description>Sienna Spiro — Maybe. (Live from the Mews). Directed by Jessi Clover Belgrave.</video:description>
+      <video:player_loc>https://player.vimeo.com/video/1209331734</video:player_loc>
+      <video:duration>248</video:duration>
+      <video:publication_date>2026-07-12T00:00:00+00:00</video:publication_date>
+      <video:family_friendly>yes</video:family_friendly>
+    </video:video>
   </url>
   <url>
     <loc>https://www.itsjesslikethat.com/mi-girl-group</loc>
+    <lastmod>2026-07-14</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
+    <image:image>
+      <image:loc>https://www.itsjesslikethat.com/images/girl-group/cover.jpg</image:loc>
+      <image:title>girl group — EP Live</image:title>
+    </image:image>
+    <video:video>
+      <video:thumbnail_loc>https://www.itsjesslikethat.com/images/og/girl-group.jpg</video:thumbnail_loc>
+      <video:title>girl group — EP Live</video:title>
+      <video:description>girl group — EP Live. Directed by Jessi Clover Belgrave.</video:description>
+      <video:player_loc>https://player.vimeo.com/video/1198416578</video:player_loc>
+      <video:duration>1162</video:duration>
+      <video:publication_date>2026-06-04T00:00:00+00:00</video:publication_date>
+      <video:family_friendly>yes</video:family_friendly>
+    </video:video>
   </url>
   <url>
     <loc>https://www.itsjesslikethat.com/mi-tell-me</loc>
+    <lastmod>2026-07-14</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
+    <video:video>
+      <video:thumbnail_loc>https://www.itsjesslikethat.com/images/og/tell-me.jpg</video:thumbnail_loc>
+      <video:title>Sonny Fodera &amp; Clementine Douglas — Tell Me</video:title>
+      <video:description>Sonny Fodera &amp; Clementine Douglas — Tell Me. Directed by Jessi Clover Belgrave.</video:description>
+      <video:player_loc>https://player.vimeo.com/video/1209332122</video:player_loc>
+      <video:duration>198</video:duration>
+      <video:publication_date>2026-07-12T00:00:00+00:00</video:publication_date>
+      <video:family_friendly>yes</video:family_friendly>
+    </video:video>
   </url>
   <url>
     <loc>https://www.itsjesslikethat.com/bea</loc>
+    <lastmod>2026-07-14</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
+    <image:image>
+      <image:loc>https://www.itsjesslikethat.com/images/bea/bea-1.jpg</image:loc>
+      <image:title>Bea &amp; Her Business — EP Visuals</image:title>
+    </image:image>
+    <image:image>
+      <image:loc>https://www.itsjesslikethat.com/images/bea/bea-2.jpg</image:loc>
+      <image:title>Bea &amp; Her Business — EP Visuals</image:title>
+    </image:image>
+    <image:image>
+      <image:loc>https://www.itsjesslikethat.com/images/bea/bea-3.jpg</image:loc>
+      <image:title>Bea &amp; Her Business — EP Visuals</image:title>
+    </image:image>
+    <image:image>
+      <image:loc>https://www.itsjesslikethat.com/images/bea/bea-4.jpg</image:loc>
+      <image:title>Bea &amp; Her Business — EP Visuals</image:title>
+    </image:image>
+    <image:image>
+      <image:loc>https://www.itsjesslikethat.com/images/bea/bea-5.jpg</image:loc>
+      <image:title>Bea &amp; Her Business — EP Visuals</image:title>
+    </image:image>
+    <image:image>
+      <image:loc>https://www.itsjesslikethat.com/images/bea/bea-6.jpg</image:loc>
+      <image:title>Bea &amp; Her Business — EP Visuals</image:title>
+    </image:image>
   </url>
   <url>
     <loc>https://www.itsjesslikethat.com/stills-ally-salort</loc>
+    <lastmod>2026-07-14</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
+    <image:image>
+      <image:loc>https://www.itsjesslikethat.com/stills/web/ally-salort_cover-large.jpg</image:loc>
+      <image:title>Ally Salort — Artwork &amp; Press Shoot</image:title>
+    </image:image>
+    <image:image>
+      <image:loc>https://www.itsjesslikethat.com/stills/web/ally-salort_01-large.jpg</image:loc>
+      <image:title>Ally Salort — Artwork &amp; Press Shoot</image:title>
+    </image:image>
+    <image:image>
+      <image:loc>https://www.itsjesslikethat.com/stills/web/ally-salort_02-large.jpg</image:loc>
+      <image:title>Ally Salort — Artwork &amp; Press Shoot</image:title>
+    </image:image>
+    <image:image>
+      <image:loc>https://www.itsjesslikethat.com/stills/web/ally-salort_04-large.jpg</image:loc>
+      <image:title>Ally Salort — Artwork &amp; Press Shoot</image:title>
+    </image:image>
+    <image:image>
+      <image:loc>https://www.itsjesslikethat.com/stills/web/ally-salort_06-large.jpg</image:loc>
+      <image:title>Ally Salort — Artwork &amp; Press Shoot</image:title>
+    </image:image>
+    <image:image>
+      <image:loc>https://www.itsjesslikethat.com/stills/web/ally-salort_09-large.jpg</image:loc>
+      <image:title>Ally Salort — Artwork &amp; Press Shoot</image:title>
+    </image:image>
+    <image:image>
+      <image:loc>https://www.itsjesslikethat.com/stills/web/ally-salort_08-large.jpg</image:loc>
+      <image:title>Ally Salort — Artwork &amp; Press Shoot</image:title>
+    </image:image>
   </url>
   <url>
     <loc>https://www.itsjesslikethat.com/stills-piri-album</loc>
+    <lastmod>2026-07-14</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
+    <image:image>
+      <image:loc>https://www.itsjesslikethat.com/stills/web/piri-album_cover-large.jpg</image:loc>
+      <image:title>piri — Album Artwork &amp; Press Shoot</image:title>
+    </image:image>
+    <image:image>
+      <image:loc>https://www.itsjesslikethat.com/stills/web/piri-album_01-large.jpg</image:loc>
+      <image:title>piri — Album Artwork &amp; Press Shoot</image:title>
+    </image:image>
+    <image:image>
+      <image:loc>https://www.itsjesslikethat.com/stills/web/piri-album_02-large.jpg</image:loc>
+      <image:title>piri — Album Artwork &amp; Press Shoot</image:title>
+    </image:image>
+    <image:image>
+      <image:loc>https://www.itsjesslikethat.com/stills/web/piri-album_03-large.jpg</image:loc>
+      <image:title>piri — Album Artwork &amp; Press Shoot</image:title>
+    </image:image>
+    <image:image>
+      <image:loc>https://www.itsjesslikethat.com/stills/web/piri-album_04-large.jpg</image:loc>
+      <image:title>piri — Album Artwork &amp; Press Shoot</image:title>
+    </image:image>
+    <image:image>
+      <image:loc>https://www.itsjesslikethat.com/stills/web/piri-album_05-large.jpg</image:loc>
+      <image:title>piri — Album Artwork &amp; Press Shoot</image:title>
+    </image:image>
+    <image:image>
+      <image:loc>https://www.itsjesslikethat.com/stills/web/piri-album_06-large.jpg</image:loc>
+      <image:title>piri — Album Artwork &amp; Press Shoot</image:title>
+    </image:image>
+    <image:image>
+      <image:loc>https://www.itsjesslikethat.com/stills/web/piri-album_07-large.jpg</image:loc>
+      <image:title>piri — Album Artwork &amp; Press Shoot</image:title>
+    </image:image>
+    <image:image>
+      <image:loc>https://www.itsjesslikethat.com/stills/web/piri-album_08-large.jpg</image:loc>
+      <image:title>piri — Album Artwork &amp; Press Shoot</image:title>
+    </image:image>
+    <image:image>
+      <image:loc>https://www.itsjesslikethat.com/stills/web/piri-album_09-large.jpg</image:loc>
+      <image:title>piri — Album Artwork &amp; Press Shoot</image:title>
+    </image:image>
+    <image:image>
+      <image:loc>https://www.itsjesslikethat.com/stills/web/piri-album_10-large.jpg</image:loc>
+      <image:title>piri — Album Artwork &amp; Press Shoot</image:title>
+    </image:image>
+    <image:image>
+      <image:loc>https://www.itsjesslikethat.com/stills/web/piri-album_11-large.jpg</image:loc>
+      <image:title>piri — Album Artwork &amp; Press Shoot</image:title>
+    </image:image>
+    <image:image>
+      <image:loc>https://www.itsjesslikethat.com/stills/web/piri-album_12-large.jpg</image:loc>
+      <image:title>piri — Album Artwork &amp; Press Shoot</image:title>
+    </image:image>
+    <image:image>
+      <image:loc>https://www.itsjesslikethat.com/stills/web/piri-album_13-large.jpg</image:loc>
+      <image:title>piri — Album Artwork &amp; Press Shoot</image:title>
+    </image:image>
   </url>
   <url>
     <loc>https://www.itsjesslikethat.com/stills-cat-burns</loc>
+    <lastmod>2026-07-14</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
+    <image:image>
+      <image:loc>https://www.itsjesslikethat.com/stills/web/cat-burns-ep-cover-large.jpg</image:loc>
+      <image:title>Cat Burns — People Pleaser : Sleep at Night EP Cover</image:title>
+    </image:image>
   </url>
   <url>
     <loc>https://www.itsjesslikethat.com/stills-charlieeeee</loc>
+    <lastmod>2026-07-14</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
+    <image:image>
+      <image:loc>https://www.itsjesslikethat.com/stills/web/charlieeeee_3-large.jpg</image:loc>
+      <image:title>charlieeeee — Press Shoot</image:title>
+    </image:image>
+    <image:image>
+      <image:loc>https://www.itsjesslikethat.com/stills/web/charlieeeee_1-large.jpg</image:loc>
+      <image:title>charlieeeee — Press Shoot</image:title>
+    </image:image>
+    <image:image>
+      <image:loc>https://www.itsjesslikethat.com/stills/web/charlieeeee_2-large.jpg</image:loc>
+      <image:title>charlieeeee — Press Shoot</image:title>
+    </image:image>
   </url>
   <url>
     <loc>https://www.itsjesslikethat.com/stills-tapwaterlucy-x-piri</loc>
+    <lastmod>2026-07-14</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
+    <image:image>
+      <image:loc>https://www.itsjesslikethat.com/stills/web/tapwaterlucy-x-piri-v3_11-large.jpg</image:loc>
+      <image:title>tapwaterlucy x piri — Press Shoot</image:title>
+    </image:image>
+    <image:image>
+      <image:loc>https://www.itsjesslikethat.com/stills/web/tapwaterlucy-x-piri-v2_3-large.jpg</image:loc>
+      <image:title>tapwaterlucy x piri — Press Shoot</image:title>
+    </image:image>
+    <image:image>
+      <image:loc>https://www.itsjesslikethat.com/stills/web/tapwaterlucy-x-piri-v3_1-large.jpg</image:loc>
+      <image:title>tapwaterlucy x piri — Press Shoot</image:title>
+    </image:image>
+    <image:image>
+      <image:loc>https://www.itsjesslikethat.com/stills/web/tapwaterlucy-x-piri-v3_7-large.jpg</image:loc>
+      <image:title>tapwaterlucy x piri — Press Shoot</image:title>
+    </image:image>
+    <image:image>
+      <image:loc>https://www.itsjesslikethat.com/stills/web/tapwaterlucy-x-piri_16-large.jpg</image:loc>
+      <image:title>tapwaterlucy x piri — Press Shoot</image:title>
+    </image:image>
   </url>
   <url>
     <loc>https://www.itsjesslikethat.com/stills-benjiflow</loc>
+    <lastmod>2026-07-14</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
+    <image:image>
+      <image:loc>https://www.itsjesslikethat.com/stills/web/benjiflow_3-large.jpg</image:loc>
+      <image:title>There Are No Borders to Benjiflow — DMY Editorial</image:title>
+    </image:image>
+    <image:image>
+      <image:loc>https://www.itsjesslikethat.com/stills/web/benjiflow_1-large.jpg</image:loc>
+      <image:title>There Are No Borders to Benjiflow — DMY Editorial</image:title>
+    </image:image>
+    <image:image>
+      <image:loc>https://www.itsjesslikethat.com/stills/web/benjiflow_2-large.jpg</image:loc>
+      <image:title>There Are No Borders to Benjiflow — DMY Editorial</image:title>
+    </image:image>
+    <image:image>
+      <image:loc>https://www.itsjesslikethat.com/stills/web/benjiflow_4-large.jpg</image:loc>
+      <image:title>There Are No Borders to Benjiflow — DMY Editorial</image:title>
+    </image:image>
   </url>
   <url>
     <loc>https://www.itsjesslikethat.com/stills-piri-and-tommy</loc>
+    <lastmod>2026-07-14</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
+    <image:image>
+      <image:loc>https://www.itsjesslikethat.com/stills/web/piri-tommy-yoyo_4-large.jpg</image:loc>
+      <image:title>piri &amp; tommy — Press Shoot</image:title>
+    </image:image>
+    <image:image>
+      <image:loc>https://www.itsjesslikethat.com/stills/web/piri-tommy-yoyo_2-large.jpg</image:loc>
+      <image:title>piri &amp; tommy — Press Shoot</image:title>
+    </image:image>
+    <image:image>
+      <image:loc>https://www.itsjesslikethat.com/stills/web/piri-tommy-yoyo_3-large.jpg</image:loc>
+      <image:title>piri &amp; tommy — Press Shoot</image:title>
+    </image:image>
+    <image:image>
+      <image:loc>https://www.itsjesslikethat.com/stills/web/piri-tommy-yoyo_6-large.jpg</image:loc>
+      <image:title>piri &amp; tommy — Press Shoot</image:title>
+    </image:image>
+    <image:image>
+      <image:loc>https://www.itsjesslikethat.com/stills/web/piri-tommy-yoyo_1-large.jpg</image:loc>
+      <image:title>piri &amp; tommy — Press Shoot</image:title>
+    </image:image>
   </url>
   <url>
     <loc>https://www.itsjesslikethat.com/stills-jade</loc>
+    <lastmod>2026-07-14</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
+    <image:image>
+      <image:loc>https://www.itsjesslikethat.com/stills/web/jade_press-shot-large.jpg</image:loc>
+      <image:title>JADE — Press Shoot</image:title>
+    </image:image>
+    <image:image>
+      <image:loc>https://www.itsjesslikethat.com/stills/web/jade-still-02-large.jpg</image:loc>
+      <image:title>JADE — Press Shoot</image:title>
+    </image:image>
+    <image:image>
+      <image:loc>https://www.itsjesslikethat.com/stills/web/jade-still-04-large.jpg</image:loc>
+      <image:title>JADE — Press Shoot</image:title>
+    </image:image>
+    <image:image>
+      <image:loc>https://www.itsjesslikethat.com/stills/web/jade-still-06-large.jpg</image:loc>
+      <image:title>JADE — Press Shoot</image:title>
+    </image:image>
+    <image:image>
+      <image:loc>https://www.itsjesslikethat.com/stills/web/jade-still-08-large.jpg</image:loc>
+      <image:title>JADE — Press Shoot</image:title>
+    </image:image>
+    <image:image>
+      <image:loc>https://www.itsjesslikethat.com/stills/web/jade-still-14-large.jpg</image:loc>
+      <image:title>JADE — Press Shoot</image:title>
+    </image:image>
+    <image:image>
+      <image:loc>https://www.itsjesslikethat.com/stills/web/jade-still-15-large.jpg</image:loc>
+      <image:title>JADE — Press Shoot</image:title>
+    </image:image>
   </url>
 </urlset>
