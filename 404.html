@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="robots" content="noindex" />
+  <link rel="icon" href="assets/logo.png" type="image/png" />
+  <title>404 &mdash; Jessi Clover Belgrave</title>
+  <style>
+    :root { --accent: #2d6b5b; --bg: #eabcbc; }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      background: var(--bg); min-height: 100vh;
+      font-family: 'Apercu Pro', 'Apercu', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+      font-weight: 500; color: #0a0a0a; cursor: url('assets/cursor.png') 24 8, auto; overflow-x: hidden;
+      display: flex; align-items: center; justify-content: center;
+    }
+    .wrap {
+      text-align: center;
+      opacity: 0; transform: translateY(12px);
+      animation: fadeUp 0.7s ease 0.2s forwards;
+    }
+    @keyframes fadeUp { to { opacity: 1; transform: translateY(0); } }
+    .wrap img { height: 90px; display: block; margin: 0 auto 32px; }
+    .wrap p {
+      font-size: 11px; font-weight: 500; letter-spacing: 0.1em;
+      text-transform: lowercase; color: #0a0a0a; opacity: 0.45;
+      margin-bottom: 28px;
+    }
+    .wrap a {
+      font-size: 11px; font-weight: 500; letter-spacing: 0.1em;
+      text-transform: lowercase; color: #0a0a0a; text-decoration: none;
+      opacity: 0.5; border-bottom: 0.5px solid rgba(0,0,0,0.2);
+      padding-bottom: 2px; transition: opacity 0.2s, color 0.2s, border-color 0.2s;
+    }
+    .wrap a:hover { opacity: 1; color: var(--accent); border-bottom-color: var(--accent); }
+  </style>
+
+  <style>
+    @font-face {
+      font-family: 'Apercu Pro';
+      src: url('font/ApercuPro-Medium.woff2') format('woff2'),
+           url('font/ApercuPro-Medium.woff')  format('woff');
+      font-weight: 500;
+      font-style: normal;
+      font-display: swap;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="wrap">
+    <a href="index.html"><img src="assets/logo.gif" alt="Jessi Clover Belgrave" /></a>
+    <p>404 &mdash; page not found</p>
+    <a href="index.html">&larr; back home</a>
+  </div>
+
+</body>
+</html>

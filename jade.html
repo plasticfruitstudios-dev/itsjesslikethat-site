@@ -3,109 +3,301 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>jade – short form series – jessi clover belgrave</title>
-  <link rel="icon" href="assets/logo.png" type="image/png">
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=VT323&display=swap" rel="stylesheet">
+  <meta name="description" content="Jade — short form series. Visuals directed by Jessica Clover Belgrave, shot by Vladimir Woodham-Smith at Monolith Studios. RCA Records / Sony Music." />
+  <link rel="canonical" href="https://www.itsjesslikethat.com/jade" />
+  <meta property="og:site_name" content="Jessi Clover Belgrave" />
+  <meta property="og:title" content="Jade — Jessi Clover Belgrave" />
+  <meta property="og:description" content="Jade — short form series. Visuals directed by Jessica Clover Belgrave, shot by Vladimir Woodham-Smith at Monolith Studios. RCA Records / Sony Music." />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://www.itsjesslikethat.com/jade" />
+  <meta property="og:image" content="https://www.itsjesslikethat.com/images/og/jade.jpg" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <link rel="icon" href="assets/logo.png" type="image/png" />
+
+  <title>Jade &mdash; Jessi Clover Belgrave</title>
   <style>
+    :root { --overlay: rgba(234,188,188,0.97); --accent: #2d6b5b; --bg: #eabcbc; }
     * { margin: 0; padding: 0; box-sizing: border-box; }
     body {
-      background: #eabcbc;
-      color: #2d6b5b;
-      font-family: 'VT323', monospace;
-      text-transform: lowercase;
-      cursor: url('assets/cursor.png') 24 8, pointer;
-      min-height: 100vh;
+      background: var(--bg); min-height: 100vh;
+      font-family: 'Apercu Pro', 'Apercu', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+      font-weight: 500; color: #0a0a0a; cursor: url('assets/cursor.png') 24 8, auto; overflow-x: hidden;
     }
-    a { color: #2d6b5b; text-decoration: none; }
-    a:hover { opacity: 0.6; }
+    #loader {
+      position: fixed; inset: 0; background: var(--bg); z-index: 5000;
+      display: flex; align-items: center; justify-content: center; gap: 14px;
+      transition: opacity 0.7s ease;
+    }
+    #loader.hide { opacity: 0; pointer-events: none; }
+    #loader img { width: 40px; height: 40px; object-fit: contain; display: block; }
+    #load-pct {
+      font-size: 12px; font-weight: 500; letter-spacing: 0.08em;
+      color: #0a0a0a; font-variant-numeric: tabular-nums; min-width: 42px;
+    }
+    nav {
+      position: sticky; top: 0; z-index: 100;
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 24px 100px; background: var(--bg);
+    }
+    .logo-wrap { display: block; line-height: 0; }
+    .logo-wrap img { height: 75px; display: block; }
+    .nav-links { display: flex; gap: 44px; list-style: none; margin-right: 12%; } .nav-toggle { display: none; }
+    .nav-links a {
+      font-size: 14px; font-weight: 500; letter-spacing: 0.01em;
+      text-transform: lowercase; color: #0a0a0a; text-decoration: none;
+      transition: color 0.2s;
+    }
+    .nav-links a:hover, .nav-links a.active { color: var(--accent); }
+    .info-wrap {
+      min-height: calc(100vh - 115px - 72px);
+      display: flex; align-items: center;
+      padding: 80px 100px;
+    }
+    .info-content {
+      max-width: 500px;
+      opacity: 0; transform: translateY(16px);
+      animation: fadeUp 0.7s ease 0.2s forwards;
+    }
+    @keyframes fadeUp { to { opacity: 1; transform: translateY(0); } }
+    .info-content p {
+      font-size: 15px; font-weight: 500; line-height: 1.75;
+      letter-spacing: 0.01em;
+      color: #0a0a0a; opacity: 0.85; margin-bottom: 36px;
+    }
+    .info-content a {
+      font-size: 15px; font-weight: 500; letter-spacing: 0.01em;
+      color: #0a0a0a; text-decoration: none;
+      opacity: 0.85; transition: opacity 0.2s;
+      border-bottom: 0.5px solid rgba(0,0,0,0.3); padding-bottom: 2px;
+    }
+    .info-content a:hover { opacity: 1; color: var(--accent); border-bottom-color: var(--accent); }
+    footer {
+      padding: 28px 100px;
+      border-top: 0.5px solid rgba(0,0,0,0.1);
+      display: flex; justify-content: space-between; align-items: center;
+    }
+    footer span { font-size: 11px; font-weight: 500; letter-spacing: 0.01em; text-transform: lowercase; color: #0a0a0a; opacity: 0.35; }
+    @media (max-width: 640px) {
+      nav { padding: 16px 24px; flex-wrap: wrap; align-items: flex-start; gap: 10px 0; }
+      .logo-wrap img { height: 32px; }
+      .info-wrap { padding: 60px 24px; }
+      footer { padding: 24px 24px; flex-direction: column; gap: 8px; }
+    }
+  </style>
 
-    header {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      padding: 1.8rem 2rem 0;
+  <style>
+    @font-face {
+      font-family: 'Apercu Pro';
+      src: url('font/ApercuPro-Medium.woff2') format('woff2'),
+           url('font/ApercuPro-Medium.woff')  format('woff');
+      font-weight: 500;
+      font-style: normal;
+      font-display: swap;
     }
-    .logo-wrap img { height: 70px; display: block; }
-    nav { display: flex; gap: 2.5rem; font-size: 1.5rem; }
+  </style>
+  <!-- ============================================================ -->
 
-    .page-inner {
-      padding: 2rem 2rem 5rem;
-      max-width: 1000px;
-      margin: 0 auto;
+  <style>
+    nav { gap: 24px; }
+    .nav-left { display: flex; align-items: center; gap: 28px; min-width: 0; }
+    .tagline {
+      max-width: 560px; font-size: 14px; font-weight: 500; letter-spacing: 0.02em;
+      text-transform: lowercase; line-height: 1.55; color: #0a0a0a;
     }
-    h1 {
-      font-size: clamp(1.6rem, 4vw, 2.6rem);
-      font-weight: normal;
-      margin-bottom: 2rem;
-      opacity: 0.75;
+    .tagline a { color: #0a0a0a; text-decoration: none; transition: color 0.2s; }
+    .tagline a:hover { color: var(--accent); }
+    .tagline .w { display: inline-block; overflow: hidden; vertical-align: top; }
+    .tagline .w i {
+      display: inline-block; font-style: normal;
+      transform: translateY(110%); transition: transform 0.55s cubic-bezier(0.22,0.61,0.36,1);
     }
+    .tagline.in .w i { transform: translateY(0); }
+    @media (max-width: 640px) {
+      .nav-left { display: flow-root; flex: 1 1 0; min-width: 0; } .logo-wrap { float: left; margin: 2px 8px 0 0; }
+      .nav-toggle { display: flex; flex-direction: column; justify-content: center; gap: 5px; width: 28px; height: 28px; padding: 0; margin-top: 2px; margin-left: 24px; background: none; border: 0; color: inherit; cursor: inherit; flex: 0 0 auto; z-index: 4500; }
+      nav.open .nav-toggle { position: fixed; top: 16px; right: 24px; margin: 0; }
+      .nav-toggle .bar { display: block; width: 22px; height: 2px; background: currentColor; transition: transform 0.3s ease, opacity 0.2s ease; }
+      nav.open .nav-toggle .bar:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+      nav.open .nav-toggle .bar:nth-child(2) { opacity: 0; }
+      nav.open .nav-toggle .bar:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+      .nav-links {
+        position: fixed; inset: 0; z-index: 4000; margin-right: 0;
+        display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 26px;
+        background: var(--overlay, rgba(234,188,188,0.97));
+        -webkit-backdrop-filter: blur(14px); backdrop-filter: blur(14px);
+        opacity: 0; visibility: hidden; pointer-events: none;
+        transition: opacity 0.35s ease, visibility 0.35s ease;
+      }
+      nav.open .nav-links { opacity: 1; visibility: visible; pointer-events: auto; }
+      .nav-links a { font-size: 20px; }
+    }
+  </style>
 
-    .tiktok-grid {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 1.2rem;
+  <style>
+    .project-wrap {
+      display: flex; gap: 64px; align-items: flex-start;
+      padding: 70px 100px 40px;
+      opacity: 0; transform: translateY(12px);
+      animation: fadeUp 0.6s ease 0.1s forwards;
     }
-    .tiktok-wrap {
-      display: flex;
-      justify-content: center;
+    @keyframes fadeUp { to { opacity: 1; transform: translateY(0); } }
+    .project-meta { width: 300px; flex-shrink: 0; position: sticky; top: 140px; }
+    .project-meta .artist { font-size: 15px; font-weight: 500; letter-spacing: 0.02em; text-transform: lowercase; color: var(--accent); }
+    .project-meta .title { font-size: 15px; font-weight: 500; letter-spacing: 0.02em; text-transform: lowercase; color: #0a0a0a; margin-top: 2px; }
+    .project-meta .credits-label { font-size: 12px; font-weight: 500; letter-spacing: 0.04em; text-transform: lowercase; color: var(--accent); margin-top: 32px; }
+    .project-meta .credit { font-size: 13px; font-weight: 500; letter-spacing: 0.02em; text-transform: lowercase; color: #0a0a0a; margin-top: 6px; line-height: 1.5; }
+    .project-meta .backlink {
+      display: inline-block; margin-top: 36px; font-size: 12px; font-weight: 500;
+      letter-spacing: 0.04em; text-transform: lowercase; color: #0a0a0a; opacity: 0.45;
+      text-decoration: none; transition: color 0.2s, opacity 0.2s;
     }
-    /* override tiktok embed background */
-    .tiktok-embed {
-      background: #eabcbc !important;
-      border-color: #2d6b5b !important;
+    .project-meta .backlink:hover { color: var(--accent); opacity: 1; }
+    .player-stack { flex: 1; display: flex; flex-direction: column; gap: 44px; min-width: 0; }
+    .media.portrait { max-width: 430px; margin: 0 auto; width: 100%; }
+    .media video { width: 100%; height: auto; display: block; }
+    @media (max-width: 900px) {
+      .project-wrap { flex-direction: column; gap: 32px; padding: 40px 40px 20px; }
+      .project-meta { width: 100%; position: static; }
     }
+    @media (max-width: 640px) { .project-wrap { padding: 24px 24px 10px; } }
+  </style>
 
-    footer { text-align: center; padding: 2rem; font-size: 0.9rem; opacity: 0.5; }
-
-    @media (max-width: 768px) { .tiktok-grid { grid-template-columns: repeat(2, 1fr); } }
-    @media (max-width: 480px) { .tiktok-grid { grid-template-columns: 1fr; } }
+  <style>
+    /* ── centred header (logo above centred nav links) ── */
+    nav {
+      position: sticky; top: 0; z-index: 100;
+      display: flex; flex-direction: column; align-items: center; justify-content: flex-start;
+      gap: 16px; padding: 26px 24px 20px; background: var(--bg);
+    }
+    nav .logo-wrap { display: block; line-height: 0; }
+    nav .logo-wrap img { height: 88px; width: auto; display: block; }
+    nav .nav-links {
+      display: flex; gap: 40px; list-style: none; margin: 0; padding: 0;
+      position: static; inset: auto; background: none; opacity: 1; visibility: visible;
+      pointer-events: auto; -webkit-backdrop-filter: none; backdrop-filter: none;
+      flex-direction: row; align-items: center; justify-content: center;
+    }
+    nav .nav-links a {
+      font-size: 14px; font-weight: 500; letter-spacing: 0.01em;
+      text-transform: lowercase; color: #0a0a0a; text-decoration: none;
+      opacity: 0.45; transition: opacity 0.2s, color 0.2s;
+    }
+    nav .nav-links a:hover { opacity: 1; color: var(--accent); }
+    nav .nav-links a.active { opacity: 1; color: var(--accent); }
+    nav .nav-toggle { display: none !important; }
+    @media (max-width: 640px) {
+      nav { padding: 18px 20px 14px; gap: 12px; flex-wrap: nowrap; align-items: center; }
+      nav .logo-wrap { float: none; margin: 0; }
+      nav .logo-wrap img { height: 58px; }
+      nav .nav-links { gap: 26px; }
+      nav .nav-links a { font-size: 14px; }
+    }
   </style>
 </head>
 <body>
+  <div id="loader"><img src="assets/logo.gif" alt="" /><span id="load-pct">0%</span></div>
 
-  <header>
-    <a href="index.html" class="logo-wrap">
-      <img src="assets/logo.gif" alt="jessi clover belgrave">
-    </a>
-    <nav>
-      <a href="index.html#motion">motion</a>
-      <a href="index.html#stills">stills</a>
-      <a href="index.html#info">info</a>
-    </nav>
-  </header>
+  <nav>
+    <a href="index.html" class="logo-wrap"><img src="assets/logo.gif" alt="Jessi Clover Belgrave" /></a>
+    <ul class="nav-links">
+      <li><a href="stills.html">stills</a></li>
+      <li><a href="motion.html" class="active">motion</a></li>
+      <li><a href="info.html">info</a></li>
+    </ul>
+  </nav>
 
-  <div class="page-inner">
-    <h1>jade – short form series</h1>
-
-    <div class="tiktok-grid">
-      <div class="tiktok-wrap">
-        <blockquote class="tiktok-embed" cite="https://www.tiktok.com/@jadethirlwall/video/7480206002684480790" data-video-id="7480206002684480790"><section></section></blockquote>
-      </div>
-      <div class="tiktok-wrap">
-        <blockquote class="tiktok-embed" cite="https://www.tiktok.com/@jadethirlwall/video/7474662293121371414" data-video-id="7474662293121371414"><section></section></blockquote>
-      </div>
-      <div class="tiktok-wrap">
-        <blockquote class="tiktok-embed" cite="https://www.tiktok.com/@jadethirlwall/video/7467996347296140577" data-video-id="7467996347296140577"><section></section></blockquote>
-      </div>
-      <div class="tiktok-wrap">
-        <blockquote class="tiktok-embed" cite="https://www.tiktok.com/@jadethirlwall/video/7454178768601615649" data-video-id="7454178768601615649"><section></section></blockquote>
-      </div>
-      <div class="tiktok-wrap">
-        <blockquote class="tiktok-embed" cite="https://www.tiktok.com/@jadethirlwall/video/7441240153810652448" data-video-id="7441240153810652448"><section></section></blockquote>
-      </div>
-      <div class="tiktok-wrap">
-        <blockquote class="tiktok-embed" cite="https://www.tiktok.com/@jadethirlwall/video/7439758582784068896" data-video-id="7439758582784068896"><section></section></blockquote>
-      </div>
-      <div class="tiktok-wrap">
-        <blockquote class="tiktok-embed" cite="https://www.tiktok.com/@jadethirlwall/video/7433858537438203169" data-video-id="7433858537438203169"><section></section></blockquote>
-      </div>
+    <div class="project-wrap">
+    <div class="project-meta">
+      <h1 class="artist">jade</h1>
+      <div class="title">short form series</div>
+      <div class="credits-label">credits</div>
+      <div class="credit">director - jessica clover belgrave</div>
+      <div class="credit">director of photography - vladimir woodham-smith</div>
+      <div class="credit">1st ac - inigo woodham-smith</div>
+      <div class="credit">label - rca records, sony music</div>
+      <div class="credit">studio - monolith studios</div>
+      <!-- add further credit lines here as .credit divs -->
+      <a class="backlink" href="motion.html">&larr; back</a>
+    </div>
+    <div class="player-stack">
+      <div class="media portrait"><video src="videos/jade.mp4" autoplay muted loop playsinline preload="auto"></video></div>
+      <div class="media portrait"><video src="videos/jade-projection.mp4" autoplay muted loop playsinline preload="auto"></video></div>
+      <div class="media portrait"><video src="videos/jade-candle.mp4" autoplay muted loop playsinline preload="auto"></video></div>
+      <div class="media portrait"><video src="videos/jade-two-jades.mp4" autoplay muted loop playsinline preload="metadata"></video></div>
+      <div class="media portrait"><video src="videos/jade-blue.mp4" autoplay muted loop playsinline preload="metadata"></video></div>
+      <div class="media portrait"><video src="videos/jade-mirror.mp4" autoplay muted loop playsinline preload="metadata"></video></div>
+      <div class="media portrait"><video src="videos/jade-box.mp4" autoplay muted loop playsinline preload="metadata"></video></div>
     </div>
   </div>
 
-  <footer>© jessi clover belgrave. 2026. all rights reserved.</footer>
+  <footer>
+    <span>© jessi clover belgrave. 2026. all rights reserved.</span>
+  </footer>
 
-  <script async src="https://www.tiktok.com/embed.js"></script>
+  <script>
+    const l = document.getElementById('loader');
+    if (sessionStorage.getItem('jess-visited')) {
+      l.style.display = 'none';
+      setTimeout(() => window.revealTagline && window.revealTagline(), 300);
+    } else {
+      sessionStorage.setItem('jess-visited', '1');
+      const pctEl = document.getElementById('load-pct');
+      const imgs = Array.from(document.images).filter(im => !l.contains(im));
+      let loadedCount = 0;
+      imgs.forEach(im => {
+        if (im.complete) loadedCount++;
+        else {
+          im.addEventListener('load', () => loadedCount++);
+          im.addEventListener('error', () => loadedCount++);
+        }
+      });
+      const start = performance.now();
+      const MIN = 1000, MAX = 2800;
+      let shown = 0;
+      function tick(now) {
+        const t = now - start;
+        const real = imgs.length ? loadedCount / imgs.length : 1;
+        const floor = Math.min(t / MAX, 1);
+        const ceil = Math.min(t / MIN, 1);
+        const target = Math.min(Math.max(real, floor), ceil) * 100;
+        shown = Math.min(shown + 3, Math.max(shown, target));
+        pctEl.textContent = Math.floor(shown) + '%';
+        if (shown >= 100) {
+          l.classList.add('hide');
+          window.revealTagline && window.revealTagline();
+          setTimeout(() => l.style.display = 'none', 700);
+        } else {
+          requestAnimationFrame(tick);
+        }
+      }
+      requestAnimationFrame(tick);
+    }
+  </script>
+  <a href="https://www.instagram.com/itsjesslikethat" target="_blank" rel="noopener"
+     id="ig-icon"
+     style="position:fixed;bottom:28px;right:36px;z-index:900;opacity:0.35;transition:opacity 0.2s;line-height:0;"
+     onmouseenter="this.style.opacity='1'" onmouseleave="this.style.opacity='0.35'"
+     aria-label="Instagram">
+    <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="#0a0a0a"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.791-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
+  </a>
+
+  <script>
+    (function () {
+      const vids = Array.from(document.querySelectorAll('.player-stack video'));
+      if (!vids.length) return;
+      const io = new IntersectionObserver(entries => {
+        entries.forEach(e => {
+          e.target.dataset.vis = e.isIntersecting ? '1' : '0';
+          if (e.isIntersecting) e.target.play().catch(() => {});
+          else e.target.pause();
+        });
+      }, { threshold: 0.1 });
+      vids.forEach(v => io.observe(v));
+      setInterval(() => {
+        if (document.hidden) return;
+        vids.forEach(v => { if (v.dataset.vis === '1' && v.paused) v.play().catch(() => {}); });
+      }, 3000);
+    })();
+  </script>
 </body>
 </html>

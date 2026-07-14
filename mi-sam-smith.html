@@ -3,18 +3,18 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta name="description" content="The Diamond Store — seasonal campaigns (Black Friday, January Sale, Valentine's & Christmas) by Jessi Clover Belgrave." />
-  <link rel="canonical" href="https://www.itsjesslikethat.com/the-diamond-store" />
+  <meta name="description" content="Sam Smith — To Be Free performance visuals. Directed by Jessica Clover Belgrave, cinematography by Vladimir Woodham-Smith. Jessi Clover Belgrave." />
+  <link rel="canonical" href="https://www.itsjesslikethat.com/mi-sam-smith" />
   <meta property="og:site_name" content="Jessi Clover Belgrave" />
-  <meta property="og:title" content="The Diamond Store — Jessi Clover Belgrave" />
-  <meta property="og:description" content="The Diamond Store — seasonal campaigns (Black Friday, January Sale, Valentine's & Christmas) by Jessi Clover Belgrave." />
+  <meta property="og:title" content="Sam Smith — Jessi Clover Belgrave" />
+  <meta property="og:description" content="Sam Smith — To Be Free performance visuals. Directed by Jessica Clover Belgrave, cinematography by Vladimir Woodham-Smith. Jessi Clover Belgrave." />
   <meta property="og:type" content="website" />
-  <meta property="og:url" content="https://www.itsjesslikethat.com/the-diamond-store" />
-  <meta property="og:image" content="https://www.itsjesslikethat.com/images/og/diamond-store.jpg" />
+  <meta property="og:url" content="https://www.itsjesslikethat.com/mi-sam-smith" />
+  <meta property="og:image" content="https://www.itsjesslikethat.com/images/og/sam-smith.jpg" />
   <meta name="twitter:card" content="summary_large_image" />
   <link rel="icon" href="assets/logo.png" type="image/png" />
 
-  <title>The Diamond Store &mdash; Jessi Clover Belgrave</title>
+  <title>Sam Smith &mdash; Jessi Clover Belgrave</title>
   <style>
     :root { --overlay: rgba(234,188,188,0.97); --accent: #2d6b5b; --bg: #eabcbc; }
     * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -141,27 +141,50 @@
       animation: fadeUp 0.6s ease 0.1s forwards;
     }
     @keyframes fadeUp { to { opacity: 1; transform: translateY(0); } }
-    .project-meta { width: 300px; flex-shrink: 0; position: sticky; top: 140px; }
-    .project-meta .artist { font-size: 15px; font-weight: 500; letter-spacing: 0.02em; text-transform: lowercase; color: var(--accent); }
-    .project-meta .title { font-size: 15px; font-weight: 500; letter-spacing: 0.02em; text-transform: lowercase; color: #0a0a0a; margin-top: 2px; }
-    .project-meta .credits-label { font-size: 12px; font-weight: 500; letter-spacing: 0.04em; text-transform: lowercase; color: var(--accent); margin-top: 32px; }
-    .project-meta .credit { font-size: 13px; font-weight: 500; letter-spacing: 0.02em; text-transform: lowercase; color: #0a0a0a; margin-top: 6px; line-height: 1.5; }
-    .project-meta .backlink {
-      display: inline-block; margin-top: 36px; font-size: 12px; font-weight: 500;
-      letter-spacing: 0.04em; text-transform: lowercase; color: #0a0a0a; opacity: 0.45;
+    .project-meta { width: 300px; flex-shrink: 0; }
+    .project-meta .artist {
+      font-size: 15px; font-weight: 500; letter-spacing: 0.02em;
+      text-transform: lowercase; color: var(--accent);
+    }
+    .project-meta .title {
+      font-size: 15px; font-weight: 500; letter-spacing: 0.02em;
+      text-transform: lowercase; color: #0a0a0a; margin-top: 2px;
+    }
+    .project-meta .credits-label {
+      font-size: 12px; font-weight: 500; letter-spacing: 0.04em;
+      text-transform: lowercase; color: var(--accent); margin-top: 32px;
+    }
+    .project-meta .credit {
+      font-size: 13px; font-weight: 500; letter-spacing: 0.02em;
+      text-transform: lowercase; color: #0a0a0a; margin-top: 6px; line-height: 1.5;
+    }
+    .project-meta .ext {
+      display: inline-block; margin-top: 32px;
+      font-size: 12px; font-weight: 500; letter-spacing: 0.04em;
+      text-transform: lowercase; color: #0a0a0a; opacity: 0.45;
       text-decoration: none; transition: color 0.2s, opacity 0.2s;
     }
-    .project-meta .backlink:hover { color: var(--accent); opacity: 1; }
-    .player-stack { flex: 1; display: flex; flex-direction: column; gap: 44px; min-width: 0; }
-    .media video, .media img { width: 100%; height: auto; display: block; }
-    .media.ratio169 { aspect-ratio: 16 / 9; background: #0a0a0a; }
-    .media.ratio169 iframe { width: 100%; height: 100%; display: block; border: 0; }
-    .media.ig { display: flex; justify-content: center; }
-    @media (max-width: 900px) {
-      .project-wrap { flex-direction: column; gap: 32px; padding: 40px 40px 20px; }
-      .project-meta { width: 100%; position: static; }
+    .project-meta .ext:hover { color: var(--accent); opacity: 1; }
+    .player { flex: 1; aspect-ratio: 16 / 9; background: #0a0a0a; }
+    .player-stack { flex: 1; display: flex; flex-direction: column; gap: 40px; }
+    .player-stack .player { flex: none; width: 100%; }
+    .player iframe, .player video { width: 100%; height: 100%; display: block; border: 0; }
+    .back-bottom {
+      display: inline-block; padding: 40px 100px 10px;
+      font-size: 12px; font-weight: 500; letter-spacing: 0.04em;
+      text-transform: lowercase; color: #0a0a0a; opacity: 0.45;
+      text-decoration: none; transition: color 0.2s, opacity 0.2s;
     }
-    @media (max-width: 640px) { .project-wrap { padding: 24px 24px 10px; } }
+    .back-bottom:hover { color: var(--accent); opacity: 1; }
+    @media (max-width: 900px) {
+      .project-wrap { flex-direction: column-reverse; gap: 28px; padding: 40px 40px 20px; }
+      .project-meta { width: 100%; }
+      .back-bottom { padding: 30px 40px 10px; }
+    }
+    @media (max-width: 640px) {
+      .project-wrap { padding: 24px 24px 10px; }
+      .back-bottom { padding: 24px 24px 10px; }
+    }
   </style>
 
   <style>
@@ -210,45 +233,28 @@
 
     <div class="project-wrap">
     <div class="project-meta">
-      <h1 class="artist">the diamond store</h1>
-      <div class="title">seasonal campaigns</div>
+      <h1 class="artist">sam smith</h1>
+      <div class="title">to be free (live visuals)</div>
       <div class="credits-label">credits</div>
       <div class="credit">director - jessica clover belgrave</div>
       <div class="credit">director of photography - vladimir woodham-smith</div>
-      <div class="credit">producers - joshua louis parrott, carolina cariba</div>
-      <div class="credit">movement director - yagamoto</div>
-      <div class="credit">brand &amp; creative direction - lindsay ferguson</div>
-      <div class="credit">senior marketing manager - estelle jane-peter</div>
-      <div class="credit">social media &amp; product manager - flora hook</div>
-      <div class="credit">social media &amp; styling assistant - carolina cariba</div>
-      <div class="credit">photographer - jim tobias johnston</div>
-      <div class="credit">1st lighting (stills) - pierre lequeux</div>
-      <div class="credit">digital tech (stills) - bruno conrad, marsy hild thorsdottir</div>
-      <div class="credit">stylist - rubina marchiori</div>
-      <div class="credit">hair &amp; makeup - siân duke, lizzie mua, holly louise hmua</div>
-      <div class="credit">designer - suz tiare</div>
+      <div class="credit">producer - rhory danniells</div>
+      <div class="credit">production assistant - ciaran k. walker</div>
       <div class="credit">1st ac - samuel harding</div>
-      <div class="credit">2nd ac - inigo woodham-smith</div>
-      <div class="credit">gaffer - ryan delahunty</div>
-      <div class="credit">sparks - fin meehan, sam horne, tom davies</div>
-      <div class="credit">grip - dan huntley</div>
-      <div class="credit">set designer - phoebe shakespeare</div>
-      <div class="credit">art assistants - jakob woolston, emily avery, giorgi india barford</div>
-      <div class="credit">video editor - imogen frost</div>
-      <div class="credit">colour - vladimir woodham-smith</div>
-      <div class="credit">camera hire - emmyland</div>
-      <div class="credit">lighting - pro light london</div>
-      <div class="credit">filters - prism lens fx</div>
-      <div class="credit">studio - big sky studios</div>
-      <a class="backlink" href="motion.html">&larr; back</a>
+      <div class="credit">lighting - inigo woodham-smith</div>
+      <div class="credit">grade - vladimir woodham-smith</div>
+      <div class="credit">production company - intergalactic studios</div>
+      <div class="credit">label - andrew bunton, universal music uk</div>
+      <a class="ext" href="https://www.instagram.com/p/DQ7DkjKDPG2/" target="_blank" rel="noopener">view on instagram &#8599;</a>
     </div>
     <div class="player-stack">
-      <div class="media"><video src="videos/diamond-store.mp4" autoplay muted loop playsinline preload="auto"></video></div>
-      <div class="media ig"><blockquote class="instagram-media" data-instgrm-permalink="https://www.instagram.com/p/DVqVZ7XCK4w/?utm_source=ig_embed&amp;utm_campaign=loading" data-instgrm-version="14" style="margin:0 auto; max-width:540px; width:100%;"></blockquote></div>
-      <div class="media ig"><blockquote class="instagram-media" data-instgrm-permalink="https://www.instagram.com/p/DVs5qPbiPq_/?utm_source=ig_embed&amp;utm_campaign=loading" data-instgrm-version="14" style="margin:0 auto; max-width:540px; width:100%;"></blockquote></div>
-      <div class="media ig"><blockquote class="instagram-media" data-instgrm-permalink="https://www.instagram.com/p/DVyNceKiAWe/?utm_source=ig_embed&amp;utm_campaign=loading" data-instgrm-version="14" style="margin:0 auto; max-width:540px; width:100%;"></blockquote></div>
+      <div class="player" style="aspect-ratio: 4 / 3;"><iframe src="https://player.vimeo.com/video/1174144832?title=0&amp;byline=0&amp;portrait=0&amp;badge=0&amp;autopause=0&amp;player_id=0&amp;app_id=58479" frameborder="0" allow="autoplay; fullscreen; picture-in-picture; clipboard-write; encrypted-media; web-share" referrerpolicy="strict-origin-when-cross-origin" title="Sam Smith - To Be Free (Performance Visual One)"></iframe></div>
+      <div class="player" style="aspect-ratio: 4 / 3;"><iframe src="https://player.vimeo.com/video/1174145687?title=0&amp;byline=0&amp;portrait=0&amp;badge=0&amp;autopause=0&amp;player_id=0&amp;app_id=58479" frameborder="0" allow="autoplay; fullscreen; picture-in-picture; clipboard-write; encrypted-media; web-share" referrerpolicy="strict-origin-when-cross-origin" title="Sam Smith - To Be Free (Performance Visual Two)"></iframe></div>
+      <div class="player" style="aspect-ratio: 4 / 3;"><iframe src="https://player.vimeo.com/video/1174146169?title=0&amp;byline=0&amp;portrait=0&amp;badge=0&amp;autopause=0&amp;player_id=0&amp;app_id=58479" frameborder="0" allow="autoplay; fullscreen; picture-in-picture; clipboard-write; encrypted-media; web-share" referrerpolicy="strict-origin-when-cross-origin" title="Sam Smith - To Be Free (Performance Visual Three)"></iframe></div>
     </div>
   </div>
+
+  <a class="back-bottom" href="motion.html">&larr; back</a>
 
   <footer>
     <span>© jessi clover belgrave. 2026. all rights reserved.</span>
@@ -300,26 +306,6 @@
      aria-label="Instagram">
     <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="#0a0a0a"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.791-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
   </a>
-  <script async src="https://www.instagram.com/embed.js"></script>
-
-  <script>
-    // keep local loops alive — browsers suspend long-running muted video
-    (function () {
-      const vids = Array.from(document.querySelectorAll('.player-stack video'));
-      if (!vids.length) return;
-      const io = new IntersectionObserver(entries => {
-        entries.forEach(e => {
-          e.target.dataset.vis = e.isIntersecting ? '1' : '0';
-          if (e.isIntersecting) e.target.play().catch(() => {});
-          else e.target.pause();
-        });
-      }, { threshold: 0.1 });
-      vids.forEach(v => io.observe(v));
-      setInterval(() => {
-        if (document.hidden) return;
-        vids.forEach(v => { if (v.dataset.vis === '1' && v.paused) v.play().catch(() => {}); });
-      }, 3000);
-    })();
-  </script>
+  <script src="https://player.vimeo.com/api/player.js"></script>
 </body>
 </html>
