@@ -18,7 +18,7 @@ const items = await Promise.all(d.media.map(async (m) => {
   if (!meta) return { m, meta: null, large: null, lw: 0, lh: 0 };
   const lw = Math.min(2000, meta.width);
   const lh = Math.round(meta.height * (lw / meta.width));
-  const large = await getImage({ src: meta, format: 'webp', width: lw });
+  const large = await getImage({ src: meta, format: 'webp', width: lw, quality: 90 });
   const widths = [...new Set([480, 800, 1200, meta.width].filter((w) => w <= meta.width))];
   return { m, meta, large, lw, lh, widths };
 }));
@@ -36,8 +36,8 @@ const items = await Promise.all(d.media.map(async (m) => {
     {items.map(({ m, meta, large, lw, lh, widths }, i) => (
       <div class="strip-img" style={i === 0 ? `view-transition-name: cover-${entry.id}` : undefined}>
         {meta ? (
-          <a href={large.src} data-pswp-width={lw} data-pswp-height={lh} data-caption={m.alt} target="_blank" rel="noopener" aria-label={`view ${m.alt} full screen`}>
-            <Picture src={meta} formats={['avif', 'webp']} widths={widths} sizes="(max-width: 640px) 92vw, 60vw" loading={m.loading ?? 'lazy'} alt={m.alt} />
+          <a href={large.src} data-astro-prefetch="false" draggable="false" data-pswp-width={lw} data-pswp-height={lh} data-caption={m.alt} target="_blank" rel="noopener" aria-label={`view ${m.alt} full screen`}>
+            <Picture src={meta} formats={['avif', 'webp']} quality={80} widths={widths} sizes={`(max-width: 640px) calc(100vw - 48px), (max-width: 900px) calc(100vw - 80px), ${Math.ceil(64 * meta.width / meta.height)}vh`} loading={m.loading ?? 'lazy'} alt={m.alt} />
           </a>
         ) : (
           <img src={'/' + m.src} loading={m.loading ?? 'lazy'} alt={m.alt} />

@@ -23,5 +23,7 @@ const hasInstagram = d.media.some((m) => m.type === 'instagram');
       {d.media.map((m, i) => <Media item={m} tname={i === 0 ? 'cover-' + entry.id : undefined} />)}
     </div>
   </div>
-  {hasInstagram && <script async is:inline src="https://www.instagram.com/embed.js" slot="after-scripts"></script>}
+  {/* embed.js only scans the page once when it first loads; on later client-side
+      visits the new blockquotes have to be processed explicitly */}
+  {hasInstagram && <script is:inline data-astro-rerun slot="after-scripts" set:html={"(function(){if(window.instgrm&&window.instgrm.Embeds){window.instgrm.Embeds.process();return;}var s=document.createElement('script');s.async=true;s.src='https://www.instagram.com/embed.js';document.body.appendChild(s);})();"}></script>}
 </Base>

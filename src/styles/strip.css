@@ -173,7 +173,7 @@ body.kind-strip #lb-close:hover, body.kind-strip #lb-prev:hover, body.kind-strip
 }
 
 body.kind-strip .strip-img { overflow: hidden; }
-body.kind-strip .strip-img a { display: block; line-height: 0; cursor: zoom-in; }
+body.kind-strip .strip-img a { display: block; line-height: 0; cursor: zoom-in; -webkit-user-drag: none; }
 
 body.kind-strip .strip-progress {
   position: fixed; left: 100px; right: 100px; bottom: 16px;
@@ -189,6 +189,10 @@ body.kind-strip .strip-counter {
   font-size: 11px; font-weight: 500; letter-spacing: 0.08em;
   font-variant-numeric: tabular-nums; color: #0a0a0a; opacity: 0.55;
 }
+/* the frame counter must not draw over the open mobile menu */
+nav.open ~ main .strip-counter,
+nav.open ~ main .strip-progress { visibility: hidden; }
+
 @media (max-width: 900px) {
   body.kind-strip .strip-progress { left: 40px; right: 40px; bottom: 12px; }
   body.kind-strip .strip-counter { left: 40px; bottom: 22px; }

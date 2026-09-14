@@ -25,7 +25,7 @@ const widths = meta ? [...new Set([480, 800, 1200, meta.width].filter((w) => w <
 ---
 <div class={klass} style={wrapStyle}>
   {item.type === 'image' && (meta
-    ? <Picture src={meta} formats={['avif', 'webp']} widths={widths} sizes="(max-width: 900px) 92vw, 60vw" loading={item.loading ?? 'lazy'} alt={item.alt} />
+    ? <Picture src={meta} formats={['avif', 'webp']} quality={80} widths={widths} sizes="(max-width: 900px) 92vw, 60vw" loading={item.loading ?? 'lazy'} alt={item.alt} />
     : <img src={'/' + item.src} loading={item.loading ?? 'lazy'} alt={item.alt} />)}
   {item.type === 'video' && <video data-src={'/' + item.src} poster={item.poster ? '/' + item.poster : undefined} style={pMeta ? `aspect-ratio: ${pMeta.width} / ${pMeta.height}` : undefined} loop muted playsinline preload="none"></video>}
   {item.type === 'instagram' && <blockquote class="instagram-media" data-instgrm-permalink={item.src} data-instgrm-version="14" style="margin:0 auto; max-width:540px; width:100%;"></blockquote>}

@@ -103,6 +103,11 @@
       // leaking them onto the incoming page
       const shadow = wrap.attachShadow({ mode: 'open' });
       document.querySelectorAll('style').forEach((s) => shadow.appendChild(s.cloneNode(true)));
+      // freeze entrance animations: a cloned node restarts them from opacity 0,
+      // which blinked the outgoing page out before the dissolve began
+      const freeze = document.createElement('style');
+      freeze.textContent = '*,*::before,*::after{animation:none!important;transition:none!important}.project-wrap,.strip-wrap,.project-content,.info-content,.info-inner,.project-card,.reveal{opacity:1!important;transform:none!important}';
+      shadow.appendChild(freeze);
       const inner = document.body.cloneNode(true);
       inner.querySelectorAll('script').forEach((s) => s.remove());
       inner.querySelectorAll('[id]').forEach((el) => el.removeAttribute('id'));

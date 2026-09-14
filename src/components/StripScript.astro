@@ -34,8 +34,12 @@
       if (dragged) { e.preventDefault(); el.scrollLeft = startLeft - dx; }
     };
     const onUp = () => { down = false; };
+    // a native link/image drag would swallow mouseup and leave the strip
+    // following the pointer with no button held
+    el.addEventListener('dragstart', (e) => e.preventDefault());
     window.addEventListener('mousemove', onMove);
     window.addEventListener('mouseup', onUp);
+    window.addEventListener('blur', onUp);
     el.addEventListener('click', (e) => {
       if (dragged) { e.preventDefault(); e.stopPropagation(); dragged = false; }
     }, true);
@@ -132,6 +136,7 @@
     window.__pfsStripCleanup = () => {
       window.removeEventListener('mousemove', onMove);
       window.removeEventListener('mouseup', onUp);
+      window.removeEventListener('blur', onUp);
       document.removeEventListener('keydown', onKey);
       lightbox.destroy();
       pswpBgOff();
