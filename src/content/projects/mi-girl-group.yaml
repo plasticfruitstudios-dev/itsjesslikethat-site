@@ -1,0 +1,49 @@
+title: girl group
+subtitle: ep live
+kind: film
+video:
+  uploadDate: "2026-06-04"
+  duration: PT19M22S
+pageTitle: girl group — EP Live | Jessi Clover Belgrave
+description: girl group — EP Live. Directed by Jessi Clover Belgrave, a London director making music videos, commercials and editorial.
+ogImage: images/og/girl-group.jpg
+credits:
+  - text: director - jessica clover belgrave
+  - text: creative commissioner - lauren mills
+  - text: producer - thea sun
+  - text: director of photography - linda wu
+  - text: 1st ac - jade jenkins
+  - text: gaffer - deimantė sprainaitytė
+  - text: spark - ana tutala
+  - text: vhs - flora scott
+  - text: edit & grade - plastic fruit studios
+  - text: audio - evie oldfield
+  - text: mix - mike park
+  - text: a&r - lizzy wood
+  - text: management - holly manners
+  - text: marketing - helen fleming
+  - text: socials - jess meade
+  - text: production company - plastic fruit studios
+  - text: studio - the pool studio
+  - text: runner - madeline mills
+vimeo:
+  id: "1198416578"
+  aspect: 4 / 3
+  title: girl group - live at the pool
+ext:
+  href: https://www.instagram.com/p/DaANSsUDb8l/
+  label: view on instagram
+media:
+  - type: image
+    src: images/girl-group/cover.jpg
+    alt: girl group — ep live
+    loading: lazy
+  - type: video
+    src: videos/girl-group-2.mp4
+    poster: videos/posters/girl-group-2.jpg
+  - type: video
+    src: videos/girl-group-3.mp4
+    poster: videos/posters/girl-group-3.jpg
+  - type: video
+    src: videos/girl-group-4.mp4
+    poster: videos/posters/girl-group-4.jpg

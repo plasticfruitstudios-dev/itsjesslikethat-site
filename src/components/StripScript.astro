@@ -1,0 +1,141 @@
+---
+// Strip behaviours: wheel-to-horizontal scroll, click-drag panning and arrow
+// keys (ported from legacy), PhotoSwipe lightbox, and a subtle GSAP parallax
+// drift on the images. View-transition aware; window listeners are cleaned up
+// between navigations.
+---
+<script>
+  import PhotoSwipeLightbox from 'photoswipe/lightbox';
+  import { gsap } from 'gsap';
+
+  document.addEventListener('astro:page-load', () => {
+    if (window.__pfsStripCleanup) { window.__pfsStripCleanup(); window.__pfsStripCleanup = null; }
+    const el = document.getElementById('strip');
+    if (!el) return;
+
+    // vertical wheel -> horizontal scroll
+    el.addEventListener('wheel', (e) => {
+      if (Math.abs(e.deltaY) > Math.abs(e.deltaX)) {
+        e.preventDefault();
+        el.scrollLeft += e.deltaY;
+      }
+    }, { passive: false });
+
+    // click-drag to pan (suppress the lightbox click after a real drag)
+    let down = false, startX = 0, startLeft = 0, dragged = false;
+    el.addEventListener('mousedown', (e) => {
+      down = true; dragged = false;
+      startX = e.pageX; startLeft = el.scrollLeft;
+    });
+    const onMove = (e) => {
+      if (!down) return;
+      const dx = e.pageX - startX;
+      if (Math.abs(dx) > 6) dragged = true;
+      if (dragged) { e.preventDefault(); el.scrollLeft = startLeft - dx; }
+    };
+    const onUp = () => { down = false; };
+    window.addEventListener('mousemove', onMove);
+    window.addEventListener('mouseup', onUp);
+    el.addEventListener('click', (e) => {
+      if (dragged) { e.preventDefault(); e.stopPropagation(); dragged = false; }
+    }, true);
+
+    const onKey = (e) => {
+      if (!document.getElementById('strip')) return;
+      if (document.querySelector('.pswp--open')) return; // PhotoSwipe handles its own keys
+      if (e.key === 'ArrowRight') el.scrollBy({ left: 420, behavior: 'smooth' });
+      if (e.key === 'ArrowLeft') el.scrollBy({ left: -420, behavior: 'smooth' });
+    };
+    document.addEventListener('keydown', onKey);
+
+    // lightbox
+    const lightbox = new PhotoSwipeLightbox({
+      gallery: '#strip',
+      children: 'a[data-pswp-width]',
+      pswpModule: () => import('photoswipe'),
+      bgOpacity: 1,
+    });
+    // paint the page black + lock scroll while open, so iOS rubber-banding
+    // never reveals the white page behind the lightbox
+    const pswpBgOff = () => document.documentElement.classList.remove('pswp-on');
+    lightbox.on('uiRegister', () => {
+      lightbox.pswp.ui.registerElement({
+        name: 'pfs-caption',
+        appendTo: 'root',
+        onInit: (elCap, pswp) => {
+          pswp.on('change', () => {
+            elCap.textContent = pswp.currSlide?.data?.element?.dataset?.caption ?? '';
+          });
+        },
+      });
+    });
+    lightbox.on('beforeOpen', () => document.documentElement.classList.add('pswp-on'));
+    lightbox.on('close', pswpBgOff);
+    lightbox.on('destroy', pswpBgOff);
+    lightbox.init();
+
+    // scroll-linked layer: parallax drift (desktop, motion-safe) + the
+    // film-strip progress line and frame counter (always on desktop)
+    const imgs = Array.from(el.querySelectorAll('.strip-img img'));
+    const bar = document.querySelector('[data-strip-bar]');
+    const pos = document.querySelector('[data-strip-pos]');
+    // the strip scrolls horizontally on desktop and becomes a vertical
+    // page-scroll list at <=900px — track whichever axis is live
+    const isVertical = () => matchMedia('(max-width: 900px)').matches;
+    const wantParallax = !matchMedia('(prefers-reduced-motion: reduce)').matches && matchMedia('(min-width: 901px)').matches;
+    const setters = wantParallax ? imgs.map((img) => {
+      gsap.set(img, { willChange: 'transform' }); // resting scale lives in CSS (pre-paint)
+      return gsap.quickTo(img, 'x', { duration: 0.4, ease: 'power2.out' });
+    }) : null;
+    let raf = 0;
+    const update = () => {
+      raf = 0;
+      let best = 0, bestDist = Infinity;
+      if (isVertical()) {
+        const vh = window.innerHeight;
+        imgs.forEach((img, i) => {
+          const r = img.parentElement.getBoundingClientRect();
+          const center = r.top + r.height / 2 - vh / 2;
+          if (Math.abs(center) < bestDist) { bestDist = Math.abs(center); best = i; }
+        });
+        if (bar) {
+          const r = el.getBoundingClientRect();
+          const span = r.height - vh;
+          bar.style.transform = `scaleX(${span > 0 ? Math.min(1, Math.max(0, -r.top / span)) : 1})`;
+        }
+      } else {
+        const vw = el.clientWidth;
+        imgs.forEach((img, i) => {
+          const r = img.parentElement.getBoundingClientRect();
+          const center = r.left + r.width / 2 - vw / 2;
+          if (Math.abs(center) < bestDist) { bestDist = Math.abs(center); best = i; }
+          if (setters) setters[i]((center / vw) * -14);
+        });
+        if (bar) {
+          const max = el.scrollWidth - el.clientWidth;
+          bar.style.transform = `scaleX(${max > 0 ? el.scrollLeft / max : 0})`;
+        }
+      }
+      if (pos) pos.textContent = String(best + 1).padStart(2, '0');
+    };
+    const onScroll = () => { if (!raf) raf = requestAnimationFrame(update); };
+    el.addEventListener('scroll', onScroll, { passive: true });
+    window.addEventListener('scroll', onScroll, { passive: true });
+    window.addEventListener('resize', onScroll, { passive: true });
+    update();
+    const parallaxCleanup = () => {
+      el.removeEventListener('scroll', onScroll);
+      window.removeEventListener('scroll', onScroll);
+      window.removeEventListener('resize', onScroll);
+    };
+
+    window.__pfsStripCleanup = () => {
+      window.removeEventListener('mousemove', onMove);
+      window.removeEventListener('mouseup', onUp);
+      document.removeEventListener('keydown', onKey);
+      lightbox.destroy();
+      pswpBgOff();
+      parallaxCleanup();
+    };
+  });
+</script>

@@ -1,0 +1,65 @@
+title: piri
+subtitle: album artwork & press shoot
+kind: strip
+pageTitle: piri — Album Artwork & Press Shoot | Jessi Clover Belgrave
+description: piri — Album Artwork & Press Shoot. Photography by Jessi Clover Belgrave, London director and photographer.
+ogImage: stills/web/piri-album_cover-large.jpg
+credits:
+  - text: photography - plastic fruit studios
+media:
+  - type: image
+    src: stills/web/piri-album_cover-large.jpg
+    alt: piri — album artwork & press shoot
+    loading: eager
+  - type: image
+    src: stills/web/piri-album_01-large.jpg
+    alt: piri — album artwork & press shoot
+    loading: eager
+  - type: image
+    src: stills/web/piri-album_02-large.jpg
+    alt: piri — album artwork & press shoot
+    loading: eager
+  - type: image
+    src: stills/web/piri-album_03-large.jpg
+    alt: piri — album artwork & press shoot
+    loading: lazy
+  - type: image
+    src: stills/web/piri-album_04-large.jpg
+    alt: piri — album artwork & press shoot
+    loading: lazy
+  - type: image
+    src: stills/web/piri-album_05-large.jpg
+    alt: piri — album artwork & press shoot
+    loading: lazy
+  - type: image
+    src: stills/web/piri-album_06-large.jpg
+    alt: piri — album artwork & press shoot
+    loading: lazy
+  - type: image
+    src: stills/web/piri-album_07-large.jpg
+    alt: piri — album artwork & press shoot
+    loading: lazy
+  - type: image
+    src: stills/web/piri-album_08-large.jpg
+    alt: piri — album artwork & press shoot
+    loading: lazy
+  - type: image
+    src: stills/web/piri-album_09-large.jpg
+    alt: piri — album artwork & press shoot
+    loading: lazy
+  - type: image
+    src: stills/web/piri-album_10-large.jpg
+    alt: piri — album artwork & press shoot
+    loading: lazy
+  - type: image
+    src: stills/web/piri-album_11-large.jpg
+    alt: piri — album artwork & press shoot
+    loading: lazy
+  - type: image
+    src: stills/web/piri-album_12-large.jpg
+    alt: piri — album artwork & press shoot
+    loading: lazy
+  - type: image
+    src: stills/web/piri-album_13-large.jpg
+    alt: piri — album artwork & press shoot
+    loading: lazy

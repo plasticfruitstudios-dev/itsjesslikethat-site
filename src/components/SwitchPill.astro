@@ -1,0 +1,9 @@
+---
+interface Props { active: 'all' | 'stills' | 'motion' }
+const { active } = Astro.props;
+---
+<div class="switch-pill">
+  <a href="/" class={active === 'all' ? 'active' : undefined}>all</a>
+  <a href="/stills" class={active === 'stills' ? 'active' : undefined}>stills</a>
+  <a href="/motion" class={active === 'motion' ? 'active' : undefined}>motion</a>
+</div>

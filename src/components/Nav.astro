@@ -1,0 +1,13 @@
+---
+interface Props { active?: 'index' | 'stills' | 'motion' | 'info' | null }
+const { active = null } = Astro.props;
+const cls = (k: string) => (active === k ? 'active' : undefined);
+---
+<nav>
+  <a href="/" class="logo-wrap"><img src="/assets/logo.webp" alt="Jessi Clover Belgrave" width="300" height="239" /></a>
+  <ul class="nav-links">
+    <li><a href="/stills" class={cls('stills')}>stills</a></li>
+    <li><a href="/motion" class={cls('motion')}>motion</a></li>
+    <li><a href="/info" class={cls('info')}>info</a></li>
+  </ul>
+</nav>

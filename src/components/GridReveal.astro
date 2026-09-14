@@ -1,0 +1,22 @@
+---
+// staggered card reveal (legacy index/motion behaviour), view-transition aware
+---
+<script>
+  document.addEventListener('astro:page-load', () => {
+    const cards = document.querySelectorAll('.project-card:not(.reveal)');
+    if (!cards.length) return;
+    if (document.documentElement.classList.contains('soft-nav')) {
+      cards.forEach(el => el.classList.add('visible'));
+      return; // the stagger is a first-impression device; returning visitors get instant
+    }
+    const obs = new IntersectionObserver((entries) => {
+      entries.forEach((entry, i) => {
+        if (entry.isIntersecting) {
+          setTimeout(() => entry.target.classList.add('visible'), i * 60);
+          obs.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.1 });
+    cards.forEach(el => obs.observe(el));
+  });
+</script>

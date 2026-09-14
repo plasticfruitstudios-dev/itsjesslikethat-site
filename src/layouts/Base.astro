@@ -1,0 +1,108 @@
+---
+import { ClientRouter } from 'astro:transitions';
+import Nav from '../components/Nav.astro';
+import SiteScripts from '../components/SiteScripts.astro';
+import globalCss from '../styles/global.css?raw';
+import { BUILD_ID } from '../lib/build-id.js';
+import { NAME, abs, graph } from '../lib/site.js';
+import { publicImageSize } from '../lib/image-size.js';
+
+interface Props {
+  title: string;
+  description?: string;
+  /** page path without leading slash, '' for home — builds the extensionless canonical */
+  path?: string;
+  ogTitle?: string;
+  ogImage?: string;
+  ogType?: string;
+  /** page-specific JSON-LD nodes, appended to the shared WebSite + Person graph */
+  jsonld?: object[];
+  /** Vimeo embeds on the page: preconnect to the player origins */
+  vimeo?: boolean;
+  noindex?: boolean;
+  active?: 'index' | 'stills' | 'motion' | 'info' | null;
+  /** omit the loader overlay (legacy 404 has none) */
+  noLoader?: boolean;
+  /** body class scoping the page family's CSS, e.g. kind-film */
+  bodyClass?: string;
+}
+const {
+  title, description, path, ogTitle, ogImage, ogType = 'website',
+  noindex = false, active = null, noLoader = false, bodyClass, jsonld, vimeo = false,
+} = Astro.props;
+const canonical = path === undefined ? undefined : abs(path);
+const ogImageAbs = ogImage ? abs(ogImage) : undefined;
+// og:image dimensions read from the actual file, so they can never drift
+const ogDims = ogImage ? publicImageSize(ogImage) : undefined;
+const shareTitle = ogTitle ?? title;
+---
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="preload" href="/font/ApercuPro-Medium.woff2" as="font" type="font/woff2" crossorigin />
+  {/* shared core as one byte-identical element on every page: the router's
+      head-diffing keeps it across navigations, so @font-face and global rules
+      are never torn down mid-swap (the stills<->motion restyle flash) */}
+  <style is:inline set:html={globalCss}></style>
+  <link rel="icon" href="/assets/logo.png" type="image/png" />
+  <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+  <title>{title}</title>
+  {description && <meta name="description" content={description} />}
+  {canonical && <link rel="canonical" href={canonical} />}
+  <meta name="author" content={NAME} />
+  <meta name="theme-color" content="#eabcbc" />
+  <meta name="robots" content={noindex ? 'noindex' : 'index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1'} />
+  <meta property="og:site_name" content={NAME} />
+  <meta property="og:locale" content="en_GB" />
+  <meta property="og:title" content={shareTitle} />
+  {description && <meta property="og:description" content={description} />}
+  <meta property="og:type" content={ogType} />
+  {canonical && <meta property="og:url" content={canonical} />}
+  {ogImageAbs && <meta property="og:image" content={ogImageAbs} />}
+  {ogImageAbs && <meta property="og:image:alt" content={shareTitle} />}
+  {ogDims && <meta property="og:image:width" content={String(ogDims.width)} />}
+  {ogDims && <meta property="og:image:height" content={String(ogDims.height)} />}
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:site" content="@itsjesslikethat" />
+  <meta name="twitter:title" content={shareTitle} />
+  {description && <meta name="twitter:description" content={description} />}
+  {ogImageAbs && <meta name="twitter:image" content={ogImageAbs} />}
+  {ogImageAbs && <meta name="twitter:image:alt" content={shareTitle} />}
+  <link rel="me" href="https://www.instagram.com/itsjesslikethat" />
+  {vimeo && <link rel="preconnect" href="https://player.vimeo.com" />}
+  {vimeo && <link rel="preconnect" href="https://i.vimeocdn.com" crossorigin />}
+  {jsonld && <script type="application/ld+json" is:inline set:html={JSON.stringify(graph(jsonld))}></script>}
+  <meta name="pfs-build" content={BUILD_ID} />
+  {/* iOS Safari blinks white during the native view-transition CAPTURE phase
+      itself (before any animation, even skipped ones). Hiding the API from
+      the router on iOS means the capture never runs — the site's own overlay
+      dissolve (SiteScripts) is the only transition mechanism there. */}
+  <script is:inline set:html={"try{if(/iPad|iPhone|iPod/.test(navigator.userAgent)||(navigator.userAgent.includes('Macintosh')&&navigator.maxTouchPoints>1)){delete Document.prototype.startViewTransition;}}catch(e){}"}></script>
+  {/* fallback "swap": without the native API the router swaps instantly —
+      no simulated fade (which blinks white) */}
+  <ClientRouter fallback="swap" />
+  <slot name="head" />
+</head>
+<body class={bodyClass}>
+  <a class="skip-link" href="#main">skip to content</a>
+  {!noLoader && <div id="loader"><img src="/assets/logo.webp" alt="" /><span id="load-pct">0%</span></div>}
+  {!noLoader && <script is:inline set:html={"try{if(sessionStorage.getItem('jess-visited')){var l=document.getElementById('loader');if(l)l.style.display='none'}}catch(e){}"}></script>}
+  <Nav active={active} />
+  <main id="main">
+    <slot />
+  </main>
+  <footer>
+    <span>© jessi clover belgrave. {new Date().getFullYear()}. all rights reserved.</span>
+  </footer>
+  <a href="https://www.instagram.com/itsjesslikethat" target="_blank" rel="noopener"
+     id="ig-icon"
+     style="position:fixed;bottom:28px;right:36px;z-index:900;opacity:0.35;transition:opacity 0.2s;line-height:0;"
+     onmouseenter="this.style.opacity='1'" onmouseleave="this.style.opacity='0.35'"
+     aria-label="Instagram">
+    <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="#0a0a0a"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.791-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
+  </a>
+  <SiteScripts />
+  <slot name="after-scripts" />
+</body>
+</html>

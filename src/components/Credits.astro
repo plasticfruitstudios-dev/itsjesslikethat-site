@@ -1,0 +1,6 @@
+---
+interface Props { credits: { text: string; gap?: boolean }[] }
+const { credits } = Astro.props;
+---
+{credits.length > 0 && <div class="credits-label">credits</div>}
+{credits.map(c => <div class="credit" style={c.gap ? 'margin-top:20px;' : undefined}>{c.text}</div>)}

@@ -1,0 +1,21 @@
+title: charlieeeee
+subtitle: press shoot
+kind: strip
+pageTitle: charlieeeee — Press Shoot | Jessi Clover Belgrave
+description: charlieeeee — Press Shoot. Photography by Jessi Clover Belgrave, London director and photographer.
+ogImage: stills/web/charlieeeee_3-large.jpg
+credits:
+  - text: photography - plastic fruit studios
+media:
+  - type: image
+    src: stills/web/charlieeeee_3-large.jpg
+    alt: charlieeeee — press shoot
+    loading: eager
+  - type: image
+    src: stills/web/charlieeeee_1-large.jpg
+    alt: charlieeeee — press shoot
+    loading: eager
+  - type: image
+    src: stills/web/charlieeeee_2-large.jpg
+    alt: charlieeeee — press shoot
+    loading: eager

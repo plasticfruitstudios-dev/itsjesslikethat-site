@@ -1,0 +1,29 @@
+---
+// Lights down while a film plays: the Vimeo Player API reports play/pause and
+// the page dims to a screening-room black around the (ambilit) player.
+---
+<script>
+  import Player from '@vimeo/player';
+
+  const lightsUp = () => document.documentElement.classList.remove('lights-down');
+  document.addEventListener('astro:before-swap', lightsUp);
+
+  document.addEventListener('astro:page-load', () => {
+    if (window.__pfsFilmCleanup) { window.__pfsFilmCleanup(); window.__pfsFilmCleanup = null; }
+    const iframes = document.querySelectorAll('.player iframe[src*="player.vimeo.com"]');
+    if (!iframes.length) return;
+    const players = [];
+    iframes.forEach((f) => {
+      const p = new Player(f);
+      players.push(p);
+      // hold the poster until Vimeo has actually painted (no black takeover)
+      const show = () => f.classList.add('ready');
+      p.ready().then(show).catch(show);
+      setTimeout(show, 2000);
+      p.on('play', () => document.documentElement.classList.add('lights-down'));
+      p.on('pause', lightsUp);
+      p.on('ended', lightsUp);
+    });
+    window.__pfsFilmCleanup = () => players.forEach((p) => { try { p.destroy(); } catch {} });
+  });
+</script>

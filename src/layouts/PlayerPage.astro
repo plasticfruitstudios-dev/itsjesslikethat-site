@@ -1,0 +1,27 @@
+---
+import Base from './Base.astro';
+import Credits from '../components/Credits.astro';
+import Media from '../components/Media.astro';
+import { projectNodes } from '../lib/site.js';
+import '../styles/player.css';
+
+const { entry } = Astro.props;
+const d = entry.data;
+const hasInstagram = d.media.some((m) => m.type === 'instagram');
+---
+<Base title={d.pageTitle} description={d.description} path={entry.id}
+      ogTitle={d.ogTitle} ogImage={d.ogImage} ogType="video.other" vimeo
+      jsonld={projectNodes(entry.id, d)} active="motion" bodyClass="kind-player">
+  <div class="project-wrap">
+    <div class="project-meta">
+      <h1 class="artist">{d.title}</h1>
+      {d.subtitle && <div class="title">{d.subtitle}</div>}
+      <Credits credits={d.credits} />
+      <a class="backlink" href="/motion">&larr; back</a>
+    </div>
+    <div class="player-stack">
+      {d.media.map((m, i) => <Media item={m} tname={i === 0 ? 'cover-' + entry.id : undefined} />)}
+    </div>
+  </div>
+  {hasInstagram && <script async is:inline src="https://www.instagram.com/embed.js" slot="after-scripts"></script>}
+</Base>

@@ -1,0 +1,29 @@
+---
+import { getCollection } from 'astro:content';
+import Base from '../layouts/Base.astro';
+import GridCard from '../components/GridCard.astro';
+import SwitchPill from '../components/SwitchPill.astro';
+import GridReveal from '../components/GridReveal.astro';
+import grid from '../data/grid-motion.json';
+import { collectionNodes } from '../lib/site.js';
+import '../styles/grid.css';
+
+const projects = await getCollection('projects');
+const bySlug = Object.fromEntries(projects.map((p) => [p.id, p.data]));
+const title = 'Motion — Music Videos & Commercials by Jessi Clover Belgrave';
+const description = 'Music videos, commercials and live films directed by Jessi Clover Belgrave — Sam Smith, Audemars Piguet, Gorgon City, Sonny Fodera, Sienna Spiro, piri & tommy and more.';
+---
+<Base title={title} description={description} path="motion" ogImage="images/og/sam-smith.jpg"
+      jsonld={collectionNodes({ path: 'motion', title, description })}
+      active="motion">
+  <h1 class="sr-only">Motion — music videos, commercials &amp; films directed by Jessi Clover Belgrave</h1>
+  <div class="projects">
+    {grid.rows.map((row) => (
+      <div class={row.class ?? "row"}>
+        {row.cards.map((card) => <GridCard card={card} project={bySlug[card.slug]} />)}
+      </div>
+    ))}
+  </div>
+  <GridReveal slot="after-scripts" />
+  <SwitchPill active="motion" slot="after-scripts" />
+</Base>

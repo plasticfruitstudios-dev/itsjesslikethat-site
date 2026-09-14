@@ -1,0 +1,22 @@
+---
+// staggered reveal for the stills grid (legacy stills.html: .reveal cards, threshold 0.05)
+---
+<script>
+  document.addEventListener('astro:page-load', () => {
+    const els = document.querySelectorAll('.reveal');
+    if (!els.length) return;
+    if (document.documentElement.classList.contains('soft-nav')) {
+      els.forEach(el => el.classList.add('visible'));
+      return;
+    }
+    const obs = new IntersectionObserver((entries) => {
+      entries.forEach((entry, i) => {
+        if (entry.isIntersecting) {
+          setTimeout(() => entry.target.classList.add('visible'), i * 60);
+          obs.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.05 });
+    els.forEach(el => obs.observe(el));
+  });
+</script>

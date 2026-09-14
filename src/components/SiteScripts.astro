@@ -1,0 +1,213 @@
+---
+// Every behaviour the legacy site duplicated per page, now existing exactly once.
+// Runs via astro:page-load so it re-initialises after client-side view transitions.
+---
+<script>
+  // Loader - 0-100% counter tied to real image loading; first site visit per session only
+  function initLoader() {
+    const loader = document.getElementById('loader');
+    if (!loader) return;
+    if (sessionStorage.getItem('jess-visited')) {
+      loader.style.display = 'none';
+    } else {
+      sessionStorage.setItem('jess-visited', '1');
+      const pctEl = document.getElementById('load-pct');
+      const imgs = Array.from(document.images).filter(im => !loader.contains(im));
+      let loadedCount = 0;
+      imgs.forEach(im => {
+        if (im.complete) loadedCount++;
+        else {
+          im.addEventListener('load', () => loadedCount++);
+          im.addEventListener('error', () => loadedCount++);
+        }
+      });
+      const start = performance.now();
+      const MIN = 1000, MAX = 2800;
+      let shown = 0;
+      function tick(now) {
+        const t = now - start;
+        const real = imgs.length ? loadedCount / imgs.length : 1;
+        const floor = Math.min(t / MAX, 1);
+        const ceil = Math.min(t / MIN, 1);
+        const target = Math.min(Math.max(real, floor), ceil) * 100;
+        shown = Math.min(shown + 3, Math.max(shown, target));
+        pctEl.textContent = Math.floor(shown) + '%';
+        if (shown >= 100) {
+          loader.classList.add('hide');
+          setTimeout(() => loader.style.display = 'none', 700);
+        } else {
+          requestAnimationFrame(tick);
+        }
+      }
+      requestAnimationFrame(tick);
+    }
+  }
+
+  // lazy-load + keep-alive for local video loops (browsers suspend long muted loops)
+  function initVideos() {
+    if (window.__pfsVideoCleanup) { window.__pfsVideoCleanup(); window.__pfsVideoCleanup = null; }
+    const vids = Array.from(document.querySelectorAll('video[data-src]'));
+    if (!vids.length) return;
+    if (matchMedia('(prefers-reduced-motion: reduce)').matches) return; // posters only
+    const start = v => {
+      if (v.dataset.src && !v.src) { v.src = v.dataset.src; v.load(); }
+      v.play().catch(() => {});
+    };
+    const preIO = new IntersectionObserver(entries => {
+      entries.forEach(e => {
+        if (e.isIntersecting && e.target.dataset.src && !e.target.src) {
+          e.target.src = e.target.dataset.src; e.target.load(); preIO.unobserve(e.target);
+        }
+      });
+    }, { rootMargin: '600px 0px' });
+    const io = new IntersectionObserver(entries => {
+      entries.forEach(e => {
+        e.target.dataset.vis = e.isIntersecting ? '1' : '0';
+        if (e.isIntersecting) start(e.target);
+        else e.target.pause();
+      });
+    }, { threshold: 0.1 });
+    vids.forEach(v => { preIO.observe(v); io.observe(v); });
+    const iv = setInterval(() => {
+      if (document.hidden) return;
+      vids.forEach(v => { if (v.dataset.vis === '1' && v.paused) start(v); });
+    }, 3000);
+    // iOS Low Power Mode rejects non-gesture play(); any touch is a gesture,
+    // so use it to kick visible loops that the policy paused.
+    const kick = () => vids.forEach(v => { if (v.dataset.vis === '1' && v.paused) start(v); });
+    window.addEventListener('touchend', kick, { passive: true });
+    window.__pfsVideoCleanup = () => {
+      preIO.disconnect(); io.disconnect(); clearInterval(iv);
+      window.removeEventListener('touchend', kick);
+    };
+  }
+
+  // iOS Safari: WebKit's view-transition rendering has proven unreliable on
+  // this site (flicker through three transition grammars), so on iOS we skip
+  // it entirely and hand-animate the navigation with plain CSS opacity —
+  // primitives every engine renders perfectly. Desktop keeps native morphs.
+  const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent)
+    || (navigator.userAgent.includes('Macintosh') && navigator.maxTouchPoints > 1);
+  const noMotion = () => matchMedia('(prefers-reduced-motion: reduce)').matches;
+  let dissolveShot = null;
+  if (isIOS) {
+    document.addEventListener('astro:before-swap', (e) => {
+      e.viewTransition?.skipTransition();
+      if (noMotion()) return;
+      // keep a visual copy of the outgoing page: it will dissolve ON TOP of
+      // the complete incoming page, so total coverage never dips through
+      // white — a true cross-dissolve with no flash frame possible
+      const wrap = document.createElement('div');
+      wrap.style.cssText = 'position:fixed;inset:0;z-index:99999;pointer-events:none;overflow:hidden;background:#eabcbc';
+      // shadow root: the ghost keeps the OLD page's exact styles without
+      // leaking them onto the incoming page
+      const shadow = wrap.attachShadow({ mode: 'open' });
+      document.querySelectorAll('style').forEach((s) => shadow.appendChild(s.cloneNode(true)));
+      const inner = document.body.cloneNode(true);
+      inner.querySelectorAll('script').forEach((s) => s.remove());
+      inner.querySelectorAll('[id]').forEach((el) => el.removeAttribute('id'));
+      inner.style.cssText = 'position:absolute;left:0;top:' + (-window.scrollY) + 'px;width:100%;margin:0';
+      shadow.appendChild(inner);
+      dissolveShot = wrap;
+    });
+  }
+
+  // Hold navigation until the incoming page's visible imagery is decoded
+  // (clones inherit <picture> source selection, so the real AVIF/WebP
+  // candidates warm too). Reveal happens in one piece; a 900ms cap keeps
+  // slow networks from making navigation feel stuck.
+  document.addEventListener('astro:before-preparation', (e) => {
+    const load = e.loader;
+    e.loader = async () => {
+      await load();
+      const doc = e.newDocument;
+      if (!doc) return;
+      // a newer deploy is live: hand this navigation to the browser so the
+      // tab picks up fresh JavaScript instead of soft-swapping forever
+      const cur = document.querySelector('meta[name="pfs-build"]')?.content;
+      const next = doc.querySelector('meta[name="pfs-build"]')?.content;
+      if (cur && next && cur !== next) {
+        window.location.href = e.to.href;
+        return new Promise(() => {});
+      }
+      const holder = document.createElement('div');
+      holder.style.cssText = 'position:absolute;left:-9999px;top:0;width:1px;height:1px;overflow:hidden;pointer-events:none';
+      document.body.appendChild(holder);
+      const jobs = [];
+      doc.querySelectorAll('main picture, main img:not(picture img)').forEach((el, i) => {
+        if (i >= 14) return;
+        const clone = el.cloneNode(true);
+        holder.appendChild(clone);
+        const img = clone.tagName === 'PICTURE' ? clone.querySelector('img') : clone;
+        if (img) jobs.push(img.decode ? img.decode().catch(() => {}) : Promise.resolve());
+      });
+      const seen = new Set();
+      doc.querySelectorAll('main video[poster]').forEach((v, i) => {
+        if (i >= 14) return;
+        const p = v.getAttribute('poster');
+        if (!p || seen.has(p)) return;
+        seen.add(p);
+        const im = new Image();
+        im.src = p;
+        jobs.push(im.decode().catch(() => {}));
+      });
+      doc.querySelectorAll('.player[style*="url("]').forEach((el) => {
+        const m = /url\(['"]?([^'")]+)/.exec(el.getAttribute('style') || '');
+        if (m) { const im = new Image(); im.src = m[1]; jobs.push(im.decode().catch(() => {})); }
+      });
+      await Promise.race([Promise.all(jobs), new Promise((r) => setTimeout(r, 400))]);
+      holder.remove();
+    };
+  });
+
+  // astro:after-swap fires only on client-side navigations, synchronously
+  // BEFORE the browser paints the new page — so the entrance-animation
+  // suppression is in place from the first frame (no flash).
+  // reveal the new page in ONE piece: keep the dissolve overlay up until the
+  // visible videos have their first frames ready (cap 700ms), so imagery and
+  // playback appear together instead of videos popping in after arrival
+  const revealWhenReady = (shot) => {
+    const vids = Array.from(document.querySelectorAll('video[data-src]'))
+      .filter((v) => v.getBoundingClientRect().top < window.innerHeight * 1.2)
+      .slice(0, 6);
+    const jobs = vids.map((v) => new Promise((res) => {
+      if (!v.src) { v.src = v.dataset.src; v.load(); }
+      v.play().catch(() => {});
+      if (v.readyState >= 2) return res();
+      v.addEventListener('loadeddata', res, { once: true });
+      v.addEventListener('error', res, { once: true });
+    }));
+    Promise.race([Promise.all(jobs), new Promise((r) => setTimeout(r, 700))]).then(() => {
+      requestAnimationFrame(() => requestAnimationFrame(() => {
+        shot.style.transition = 'opacity 300ms ease';
+        shot.style.opacity = '0';
+        setTimeout(() => shot.remove(), 380);
+      }));
+    });
+  };
+
+  document.addEventListener('astro:after-swap', () => {
+    if (dissolveShot) {
+      const shot = dissolveShot;
+      dissolveShot = null;
+      document.body.appendChild(shot);
+      revealWhenReady(shot);
+    }
+    document.documentElement.classList.add('soft-nav');
+    initCoverFades(); // pre-paint: loading imagery must be invisible from frame 1
+  });
+  // imagery still fetching fades in over a quiet plate instead of popping
+  function initCoverFades() {
+    document.querySelectorAll('.cover img, .strip-img img').forEach((img) => {
+      if (img.complete) return;
+      img.setAttribute('data-loading', '');
+      const done = () => img.removeAttribute('data-loading');
+      img.addEventListener('load', done, { once: true });
+      img.addEventListener('error', done, { once: true });
+    });
+  }
+
+  document.addEventListener('astro:page-load', () => {
+    initLoader(); initVideos(); initCoverFades();
+  });
+</script>

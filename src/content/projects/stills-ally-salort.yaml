@@ -1,0 +1,53 @@
+title: ally salort
+subtitle: artwork & press shoot
+kind: strip
+pageTitle: Ally Salort — Artwork & Press Shoot | Jessi Clover Belgrave
+description: Ally Salort — Artwork & Press Shoot. Photography by Jessi Clover Belgrave, London director and photographer.
+ogImage: stills/web/ally-salort_cover-large.jpg
+credits:
+  - text: director & photographer - jessica clover belgrave
+  - text: director of photography - vladimir woodham-smith
+  - text: producer - rhory danniells
+  - text: 1st ad - henry heffer
+  - text: production assistant - holly whittaker
+  - text: 1st ac - justin mcgillivray
+  - text: 2nd ac - inigo woodham-smith
+  - text: gaffer - kenneth liew
+  - text: spark - ben alder
+  - text: art director - luba kuziw
+  - text: art assistants - molly brabner, luca pirie
+  - text: makeup - elaine lynskey
+  - text: stylist - hana
+  - text: hair - mayuko nakae
+  - text: behind the scenes - becky cooke
+  - text: production company - intergalactic studios
+  - text: management - toby andrews
+media:
+  - type: image
+    src: stills/web/ally-salort_cover-large.jpg
+    alt: ally salort — artwork & press shoot
+    loading: eager
+  - type: image
+    src: stills/web/ally-salort_01-large.jpg
+    alt: ally salort — artwork & press shoot
+    loading: eager
+  - type: image
+    src: stills/web/ally-salort_02-large.jpg
+    alt: ally salort — artwork & press shoot
+    loading: eager
+  - type: image
+    src: stills/web/ally-salort_04-large.jpg
+    alt: ally salort — artwork & press shoot
+    loading: lazy
+  - type: image
+    src: stills/web/ally-salort_06-large.jpg
+    alt: ally salort — artwork & press shoot
+    loading: lazy
+  - type: image
+    src: stills/web/ally-salort_09-large.jpg
+    alt: ally salort — artwork & press shoot
+    loading: lazy
+  - type: image
+    src: stills/web/ally-salort_08-large.jpg
+    alt: ally salort — artwork & press shoot
+    loading: lazy

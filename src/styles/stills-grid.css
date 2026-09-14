@@ -1,0 +1,111 @@
+/* stills-grid styles (factored from legacy; source of truth was byte-identical page family). */
+
+
+
+.reveal {
+  opacity: 0; transform: translateY(10px); transition: opacity 0.55s ease, transform 0.55s ease;
+}
+
+.reveal.visible {
+  opacity: 1; transform: translateY(0);
+}
+
+footer {
+  padding: 28px 100px; margin-top: 60px;
+      border-top: 0.5px solid rgba(0,0,0,0.1);
+      display: flex; justify-content: space-between; align-items: center;
+}
+
+.projects {
+  padding: 80px 100px 40px;
+}
+
+.row {
+  display: flex; justify-content: space-between; align-items: flex-start;
+      margin-bottom: 90px;
+}
+
+.row.center {
+  justify-content: center;
+}
+
+.row:last-child {
+  margin-bottom: 100px;
+}
+
+.project-card {
+  display: block; text-decoration: none; color: #0a0a0a;
+}
+
+.cover {
+  overflow: hidden;
+}
+
+.cover img {
+  width: 100%; height: auto; display: block;
+      transition: transform 0.7s cubic-bezier(0.25,0.46,0.45,0.94);
+}
+
+@media (hover: hover) and (pointer: fine) {
+.project-card:hover .cover img {
+  transform: scale(1.03);
+}
+}
+
+.card-text {
+  padding-top: 14px;
+}
+
+.card-title {
+  font-size: 15px; letter-spacing: 0.01em; text-transform: lowercase;
+      transition: color 0.2s;
+}
+
+.project-card:hover .card-title {
+  color: var(--accent);
+}
+
+.card-sub {
+  font-size: 13px; letter-spacing: 0.01em; text-transform: lowercase;
+      opacity: 0.55; margin-top: 3px;
+}
+
+@media (max-width: 900px) {
+  .projects { padding: 50px 40px 30px; }
+      .row { margin-bottom: 80px; }
+      .project-card { margin-top: 0 !important; }
+}
+
+@media (max-width: 640px) {
+  .projects { padding: 30px 24px 20px; }
+  .row { display: block; margin-bottom: 0; }
+  .row .project-card { width: 100% !important; margin: 0 0 56px !important; }
+  footer { padding: 24px 24px; flex-direction: column; gap: 8px; }
+}
+
+.switch-pill {
+  position: fixed; bottom: 26px; left: 50%; transform: translateX(-50%);
+      z-index: 950; display: flex; gap: 24px; align-items: center;
+      padding: 13px 26px; border-radius: 999px;
+      background: rgba(240,205,205,0.92);
+      -webkit-backdrop-filter: blur(12px); backdrop-filter: blur(12px);
+      border: 0.5px solid rgba(0,0,0,0.12);
+}
+
+.switch-pill a {
+  font-size: 12px; font-weight: 500; letter-spacing: 0.04em;
+      text-transform: lowercase; color: #0a0a0a; opacity: 0.55;
+      text-decoration: none; transition: color 0.2s, opacity 0.2s;
+}
+
+.switch-pill a:hover {
+  opacity: 1; color: var(--accent);
+}
+
+.switch-pill a.active {
+  opacity: 1;
+}
+
+@media (max-width: 640px) {
+  .switch-pill { bottom: 18px; padding: 11px 20px; gap: 18px; }
+}

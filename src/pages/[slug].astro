@@ -1,0 +1,14 @@
+---
+import { getCollection } from 'astro:content';
+import FilmPage from '../layouts/FilmPage.astro';
+import PlayerPage from '../layouts/PlayerPage.astro';
+import StripPage from '../layouts/StripPage.astro';
+
+export async function getStaticPaths() {
+  const projects = await getCollection('projects');
+  return projects.map((entry) => ({ params: { slug: entry.id }, props: { entry } }));
+}
+const { entry } = Astro.props;
+const Layout = { film: FilmPage, player: PlayerPage, strip: StripPage }[entry.data.kind];
+---
+<Layout entry={entry} />

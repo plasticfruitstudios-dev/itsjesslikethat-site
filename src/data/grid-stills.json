@@ -1,0 +1,122 @@
+{
+  "rows": [
+    {
+      "cards": [
+        {
+          "slug": "stills-ally-salort",
+          "style": "width:76%;",
+          "media": {
+            "type": "image",
+            "src": "stills/web/ally-salort_cover-large.jpg",
+            "alt": "ally salort — artwork & press shoot",
+            "loading": "lazy"
+          },
+          "titleOverride": "ally salort",
+          "subOverride": "artwork & press shoot"
+        }
+      ],
+      "class": "row center"
+    },
+    {
+      "cards": [
+        {
+          "slug": "stills-piri-album",
+          "style": "width:42%;",
+          "media": {
+            "type": "image",
+            "src": "stills/web/piri-album_cover-grid.jpg",
+            "alt": "piri — album artwork & press shoot",
+            "loading": "lazy"
+          },
+          "titleOverride": "piri",
+          "subOverride": "album artwork & press shoot"
+        },
+        {
+          "slug": "stills-cat-burns",
+          "style": "width:50%;margin-top:90px;",
+          "media": {
+            "type": "image",
+            "src": "stills/web/cat-burns-ep-cover-grid.jpg",
+            "alt": "cat burns — people pleaser : sleep at night ep cover",
+            "loading": "lazy"
+          },
+          "titleOverride": "cat burns",
+          "subOverride": "people pleaser : sleep at night ep cover"
+        }
+      ]
+    },
+    {
+      "cards": [
+        {
+          "slug": "stills-charlieeeee",
+          "style": "width:54%;",
+          "media": {
+            "type": "image",
+            "src": "stills/web/charlieeeee_3-grid.jpg",
+            "alt": "charlieeeee — press shoot",
+            "loading": "lazy"
+          },
+          "titleOverride": "charlieeeee",
+          "subOverride": "press shoot"
+        },
+        {
+          "slug": "stills-piri-and-tommy",
+          "style": "width:38%;margin-top:100px;",
+          "media": {
+            "type": "image",
+            "src": "stills/web/piri-tommy-yoyo_4-grid.jpg",
+            "alt": "piri & tommy — press shoot",
+            "loading": "lazy"
+          },
+          "titleOverride": "piri & tommy",
+          "subOverride": "press shoot"
+        }
+      ]
+    },
+    {
+      "cards": [
+        {
+          "slug": "stills-benjiflow",
+          "style": "width:50%;",
+          "media": {
+            "type": "image",
+            "src": "stills/web/benjiflow_3-grid.jpg",
+            "alt": "there are no borders to benjiflow — dmy editorial",
+            "loading": "lazy"
+          },
+          "titleOverride": "there are no borders to benjiflow",
+          "subOverride": "dmy editorial"
+        },
+        {
+          "slug": "stills-tapwaterlucy-x-piri",
+          "style": "width:36%;margin-top:80px;",
+          "media": {
+            "type": "image",
+            "src": "stills/web/tapwaterlucy-x-piri-v3_11-grid.jpg",
+            "alt": "tapwaterlucy x piri — press shoot",
+            "loading": "lazy"
+          },
+          "titleOverride": "tapwaterlucy x piri",
+          "subOverride": "press shoot"
+        }
+      ]
+    },
+    {
+      "cards": [
+        {
+          "slug": "stills-jade",
+          "style": "width:62%;",
+          "media": {
+            "type": "image",
+            "src": "stills/web/jade_press-shot-large.jpg",
+            "alt": "jade — press shoot",
+            "loading": "lazy"
+          },
+          "titleOverride": "jade",
+          "subOverride": "press shoot"
+        }
+      ],
+      "class": "row center"
+    }
+  ]
+}

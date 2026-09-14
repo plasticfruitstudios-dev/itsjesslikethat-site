@@ -1,0 +1,29 @@
+title: piri & tommy
+subtitle: press shoot
+kind: strip
+pageTitle: piri & tommy — Press Shoot | Jessi Clover Belgrave
+description: piri & tommy — Press Shoot. Photography by Jessi Clover Belgrave, London director and photographer.
+ogImage: stills/web/piri-tommy-yoyo_4-large.jpg
+credits:
+  - text: photography - plastic fruit studios
+media:
+  - type: image
+    src: stills/web/piri-tommy-yoyo_4-large.jpg
+    alt: piri & tommy — press shoot
+    loading: eager
+  - type: image
+    src: stills/web/piri-tommy-yoyo_2-large.jpg
+    alt: piri & tommy — press shoot
+    loading: eager
+  - type: image
+    src: stills/web/piri-tommy-yoyo_3-large.jpg
+    alt: piri & tommy — press shoot
+    loading: eager
+  - type: image
+    src: stills/web/piri-tommy-yoyo_6-large.jpg
+    alt: Piri & Tommy — photographed by Jessi Clover Belgrave
+    loading: lazy
+  - type: image
+    src: stills/web/piri-tommy-yoyo_1-large.jpg
+    alt: piri & tommy — press shoot
+    loading: lazy

@@ -1,0 +1,74 @@
+/* info page: bio + links on the left, portrait on the right (stacks below 900px). */
+
+.info-wrap {
+  min-height: calc(100vh - 175px - 72px);
+      display: flex; align-items: center;
+      padding: 60px 100px;
+}
+
+.info-inner {
+  display: flex; gap: 72px; align-items: flex-start;
+      opacity: 0; transform: translateY(16px);
+      animation: fadeUp 0.7s ease 0.2s forwards;
+}
+
+@keyframes fadeUp {
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.info-content {
+  max-width: 500px;
+}
+
+.info-content p {
+  font-size: 15px; font-weight: 500; line-height: 1.75;
+      letter-spacing: 0.01em;
+      color: #0a0a0a; opacity: 0.85; margin-bottom: 28px;
+}
+
+.info-links {
+  display: flex; flex-direction: column; align-items: flex-start; gap: 14px; margin-top: 36px;
+}
+
+.info-links a {
+  font-size: 15px; font-weight: 500; letter-spacing: 0.01em;
+      color: #0a0a0a; text-decoration: none;
+      opacity: 0.85; transition: opacity 0.2s, color 0.2s;
+      border-bottom: 0.5px solid rgba(0,0,0,0.3); padding-bottom: 2px;
+}
+
+.info-links a:hover {
+  opacity: 1; color: var(--accent); border-bottom-color: var(--accent);
+}
+
+.pfs-logo-link {
+  border-bottom: 0 !important; margin-top: 10px;
+}
+
+.pfs-logo-link img {
+  height: 72px; width: auto; display: block;
+}
+
+.info-photo {
+  flex: 0 0 280px;
+}
+
+.info-photo img {
+  width: 100%; height: auto; display: block;
+}
+
+footer {
+  padding: 28px 100px;
+      border-top: 0.5px solid rgba(0,0,0,0.1);
+      display: flex; justify-content: space-between; align-items: center;
+}
+
+@media (max-width: 900px) {
+  .info-inner { flex-direction: column-reverse; gap: 40px; }
+  .info-photo { flex: unset; width: 240px; }
+}
+
+@media (max-width: 640px) {
+  .info-wrap { padding: 40px 24px 60px; }
+  footer { padding: 24px 24px; flex-direction: column; gap: 8px; }
+}

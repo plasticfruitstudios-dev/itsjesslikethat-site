@@ -1,0 +1,37 @@
+title: jade
+subtitle: press shoot
+kind: strip
+pageTitle: JADE — Press Shoot | Jessi Clover Belgrave
+description: JADE — Press Shoot. Photography by Jessi Clover Belgrave, London director and photographer.
+ogImage: stills/web/jade_press-shot-large.jpg
+credits:
+  - text: photography - plastic fruit studios
+media:
+  - type: image
+    src: stills/web/jade_press-shot-large.jpg
+    alt: jade — press shoot
+    loading: eager
+  - type: image
+    src: stills/web/jade-still-02-large.jpg
+    alt: Jade — photographed by Jessi Clover Belgrave
+    loading: lazy
+  - type: image
+    src: stills/web/jade-still-04-large.jpg
+    alt: Jade — photographed by Jessi Clover Belgrave
+    loading: lazy
+  - type: image
+    src: stills/web/jade-still-06-large.jpg
+    alt: Jade — photographed by Jessi Clover Belgrave
+    loading: lazy
+  - type: image
+    src: stills/web/jade-still-08-large.jpg
+    alt: Jade — photographed by Jessi Clover Belgrave
+    loading: lazy
+  - type: image
+    src: stills/web/jade-still-14-large.jpg
+    alt: Jade — photographed by Jessi Clover Belgrave
+    loading: lazy
+  - type: image
+    src: stills/web/jade-still-15-large.jpg
+    alt: Jade — photographed by Jessi Clover Belgrave
+    loading: lazy

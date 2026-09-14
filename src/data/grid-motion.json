@@ -1,0 +1,162 @@
+{
+  "rows": [
+    {
+      "cards": [
+        {
+          "slug": "mi-sam-smith",
+          "style": "width:62%;",
+          "media": {
+            "type": "video",
+            "src": "videos/sam-smith.mp4",
+            "poster": "videos/posters/sam-smith.jpg",
+            "alt": "Sam Smith"
+          },
+          "titleOverride": "sam smith",
+          "subOverride": "to be free (live visuals)"
+        }
+      ],
+      "class": "row center"
+    },
+    {
+      "cards": [
+        {
+          "slug": "mi-audemars-piguet",
+          "style": "width:48%;",
+          "media": {
+            "type": "video",
+            "src": "videos/audemars.mp4",
+            "poster": "videos/posters/audemars.jpg",
+            "alt": "Audemars Piguet"
+          },
+          "titleOverride": "audemars piguet",
+          "subOverride": "the time is now"
+        },
+        {
+          "slug": "the-diamond-store",
+          "style": "width:46%;margin-top:30px;",
+          "media": {
+            "type": "video",
+            "src": "videos/diamond-store.mp4",
+            "poster": "videos/posters/diamond-store.jpg",
+            "alt": "The Diamond Store"
+          },
+          "titleOverride": "the diamond store",
+          "subOverride": "seasonal campaigns"
+        }
+      ]
+    },
+    {
+      "cards": [
+        {
+          "slug": "mi-piri-tommy-dog",
+          "style": "width:48%;",
+          "media": {
+            "type": "video",
+            "src": "videos/dog.mp4",
+            "poster": "videos/posters/dog.jpg",
+            "alt": "piri & tommy"
+          },
+          "titleOverride": "piri & tommy",
+          "subOverride": "dog"
+        },
+        {
+          "slug": "mi-gorgon-city",
+          "style": "width:44%;margin-top:30px;",
+          "media": {
+            "type": "video",
+            "src": "videos/gorgon.mp4",
+            "poster": "videos/posters/gorgon.jpg",
+            "alt": "Gorgon City, NORTH"
+          },
+          "titleOverride": "gorgon city, north",
+          "subOverride": "breathe you in"
+        }
+      ]
+    },
+    {
+      "cards": [
+        {
+          "slug": "mi-girl-group",
+          "style": "width:54%;",
+          "media": {
+            "type": "video",
+            "src": "videos/girl-group.mp4",
+            "poster": "videos/posters/girl-group.jpg",
+            "alt": "girl group"
+          },
+          "titleOverride": "girl group",
+          "subOverride": "ep live"
+        },
+        {
+          "slug": "jade",
+          "style": "width:27%;margin-right:8%;",
+          "media": {
+            "type": "video",
+            "src": "videos/jade.mp4",
+            "poster": "videos/posters/jade.jpg",
+            "alt": "JADE"
+          },
+          "titleOverride": "jade",
+          "subOverride": "short form series"
+        }
+      ],
+      "class": "row middle"
+    },
+    {
+      "cards": [
+        {
+          "slug": "mi-somedays",
+          "style": "width:40%;",
+          "media": {
+            "type": "video",
+            "src": "videos/somedays.mp4",
+            "poster": "videos/posters/somedays.jpg",
+            "alt": "Sonny Fodera, Jazzy, D.O.D"
+          },
+          "titleOverride": "sonny fodera, jazzy, d.o.d",
+          "subOverride": "somedays"
+        },
+        {
+          "slug": "mi-sienna-spiro-maybe",
+          "style": "width:46%;margin-top:28px;",
+          "media": {
+            "type": "video",
+            "src": "videos/sienna-mews.mp4",
+            "poster": "videos/posters/sienna-mews.jpg",
+            "alt": "Sienna Spiro"
+          },
+          "titleOverride": "sienna spiro",
+          "subOverride": "maybe. (live from the mews)"
+        }
+      ]
+    },
+    {
+      "cards": [
+        {
+          "slug": "mi-tell-me",
+          "style": "width:42%;",
+          "media": {
+            "type": "video",
+            "src": "videos/tell-me.mp4",
+            "poster": "videos/posters/tell-me.jpg",
+            "alt": "Sonny Fodera & Clementine Douglas"
+          },
+          "titleOverride": "sonny fodera & clementine douglas",
+          "subOverride": "tell me"
+        },
+        {
+          "slug": "bea",
+          "style": "width:44%;margin-top:26px;",
+          "media": {
+            "type": "video",
+            "src": "videos/bea.mp4",
+            "poster": "videos/posters/bea.jpg",
+            "alt": "Bea & Her Business"
+          },
+          "titleOverride": "bea & her business",
+          "subOverride": "ep visuals"
+        }
+      ]
+    }
+  ]
+}

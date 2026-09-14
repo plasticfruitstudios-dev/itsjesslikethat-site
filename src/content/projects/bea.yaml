@@ -1,0 +1,52 @@
+title: bea & her business
+subtitle: ep visuals
+kind: player
+pageTitle: Bea & Her Business — EP Visuals | Jessi Clover Belgrave
+description: Bea & Her Business — EP Visuals. Directed by Jessi Clover Belgrave, a London director making music videos, commercials and editorial.
+ogImage: images/og/bea.jpg
+credits:
+  - text: director - jessica clover belgrave
+  - text: director of photography - vladimir woodham-smith
+  - text: 1st ac - inigo woodham-smith
+  - text: visualiser set design - lewis vorn
+  - text: visualiser movement - angelica wska
+  - text: ep trailer director - paddy renehan
+  - text: label - warner music uk, warner records uk
+  - text: a&r - zak boumlaki, paddy renehan, georgia wedderburn, euan sime
+media:
+  - type: iframe
+    src: https://www.youtube.com/embed/PcDCR8s0IU4?rel=0&color=white
+    klass: media ratio169
+  - type: iframe
+    src: https://www.youtube.com/embed/6-B2hDMR7S0?rel=0&color=white
+    klass: media ratio169
+  - type: iframe
+    src: https://www.youtube.com/embed/dM7CmIHwJnU?rel=0&color=white
+    klass: media ratio169
+  - type: iframe
+    src: https://www.youtube.com/embed/R0UJgMJJaio?rel=0&color=white
+    klass: media ratio169
+  - type: image
+    src: images/bea/bea-1.jpg
+    alt: Bea & Her Business — photographed by Jessi Clover Belgrave
+    loading: lazy
+  - type: image
+    src: images/bea/bea-2.jpg
+    alt: Bea & Her Business — photographed by Jessi Clover Belgrave
+    loading: lazy
+  - type: image
+    src: images/bea/bea-3.jpg
+    alt: Bea & Her Business — photographed by Jessi Clover Belgrave
+    loading: lazy
+  - type: image
+    src: images/bea/bea-4.jpg
+    alt: Bea & Her Business — photographed by Jessi Clover Belgrave
+    loading: lazy
+  - type: image
+    src: images/bea/bea-5.jpg
+    alt: Bea & Her Business — photographed by Jessi Clover Belgrave
+    loading: lazy
+  - type: image
+    src: images/bea/bea-6.jpg
+    alt: Bea & Her Business — photographed by Jessi Clover Belgrave
+    loading: lazy

@@ -1,0 +1,206 @@
+/* Shared core factored from the identical rules across all legacy page families. */
+
+:root {
+  --bg: #eabcbc;
+  --accent: #2d6b5b;
+  /* quiet placeholder behind still-loading imagery: a shade darker than --bg */
+  --plate: #e2b1b1;
+}
+
+* {
+  margin: 0; padding: 0; box-sizing: border-box;
+}
+
+body {
+  background: var(--bg);
+      min-height: 100vh;
+      font-family: 'Apercu Pro', 'Apercu', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+      font-weight: 500;
+      color: #0a0a0a;
+      cursor: url('/assets/cursor.png') 24 8, auto;
+      overflow-x: hidden;
+}
+
+#loader {
+  position: fixed; inset: 0; background: var(--bg); z-index: 5000;
+      display: flex; align-items: center; justify-content: center; gap: 14px;
+      transition: opacity 0.7s ease;
+}
+
+#loader.hide {
+  opacity: 0; pointer-events: none;
+}
+
+#loader img {
+  width: 40px; height: 40px; object-fit: contain; display: block;
+}
+
+#load-pct {
+  font-size: 12px; font-weight: 500; letter-spacing: 0.08em;
+      color: #0a0a0a; font-variant-numeric: tabular-nums; min-width: 42px;
+}
+
+/* centred header: logo above centred nav links (no tagline, no hamburger —
+   the three links fit at every width) */
+nav {
+  position: sticky; top: 0; z-index: 100;
+      display: flex; flex-direction: column; align-items: center; justify-content: flex-start;
+      gap: 16px; padding: 26px 24px 20px; background: var(--bg);
+}
+
+.logo-wrap {
+  display: block; line-height: 0;
+}
+
+.logo-wrap img {
+  height: 88px; width: auto; display: block;
+}
+
+.nav-links {
+  display: flex; gap: 40px; list-style: none; margin: 0; padding: 0;
+      align-items: center; justify-content: center;
+}
+
+.nav-links a {
+  font-size: 14px; font-weight: 500; letter-spacing: 0.01em;
+      text-transform: lowercase; color: #0a0a0a; text-decoration: none;
+      opacity: 0.55; transition: opacity 0.2s, color 0.2s;
+}
+
+.nav-links a:hover, .nav-links a.active {
+  opacity: 1; color: var(--accent);
+}
+
+footer span {
+  font-size: 11px; font-weight: 500; letter-spacing: 0.01em; text-transform: lowercase; color: #0a0a0a; opacity: 0.55;
+}
+
+@font-face {
+  font-family: 'Apercu Pro';
+      src: url('/font/ApercuPro-Medium.woff2') format('woff2'),
+           url('/font/ApercuPro-Medium.woff')  format('woff');
+      font-weight: 500;
+      font-style: normal;
+      font-display: swap;
+}
+
+
+html { scrollbar-gutter: stable; }
+
+/* ---- accessibility layer (2026-08 audit) ---- */
+a:focus-visible, button:focus-visible {
+  outline: 2px solid #0a0a0a; outline-offset: 3px;
+}
+
+.sr-only {
+  position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px;
+  overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; border: 0;
+}
+
+.skip-link {
+  position: absolute; left: 16px; top: -100px; z-index: 6000;
+  background: var(--bg); color: #0a0a0a; padding: 10px 16px; font-size: 13px;
+  text-decoration: none; border: 1px solid #0a0a0a;
+}
+.skip-link:focus { top: 16px; }
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+  .project-card, .reveal { opacity: 1 !important; transform: none !important; }
+}
+
+/* Mobile header — canonical single copy. Lives at the END of global.css so the
+   cascade beats the base rules above regardless of how Vite orders the
+   per-family stylesheets (the ordering bug that hid the mobile nav on /info). */
+@media (max-width: 640px) {
+  nav { padding: 18px 20px 14px; gap: 12px; }
+  .logo-wrap img { height: 58px; }
+  .nav-links { gap: 26px; }
+}
+
+/* soft (view-transition) navigations: the morph is the entrance */
+html.soft-nav .project-wrap,
+html.soft-nav .strip-wrap,
+html.soft-nav .project-content,
+html.soft-nav .info-inner {
+  animation: none !important;
+  opacity: 1 !important;
+  transform: none !important;
+}
+
+/* the loader overlay is a first-visit device; scripts hide it only after the
+   first paint, so on soft navigations it must never paint at all */
+html.soft-nav #loader { display: none !important; }
+
+/* grid cards are revealed by JS after paint — on soft
+   navigations they must be visible from the first frame */
+html.soft-nav .project-card,
+html.soft-nav .reveal {
+  opacity: 1 !important;
+  transform: none !important;
+}
+
+/* while the PhotoSwipe lightbox is open: black behind everything, no
+   background scroll, no white rubber-band edges on iOS */
+html.pswp-on { background: #000; overscroll-behavior: none; }
+html.pswp-on body { overflow: hidden; }
+
+/* ---- lights down while a film plays ----
+   transitions live ONLY inside the lit-down state: dimming animates in, but
+   lights-up (incl. at navigation) is instant — a lingering 0.8s body
+   transition was painting mid-fade frames into view-transition snapshots */
+html.lights-down body { background: #0a0a0a; transition: background 0.8s ease; }
+html.lights-down nav, html.lights-down .project-meta, html.lights-down footer,
+html.lights-down .back-bottom, html.lights-down #ig-icon { transition: opacity 0.8s ease; }
+html.lights-down nav,
+html.lights-down .project-meta,
+html.lights-down footer,
+html.lights-down .back-bottom,
+html.lights-down #ig-icon { opacity: 0.1; }
+html.lights-down .project-meta:hover,
+html.lights-down nav:hover { opacity: 1; }
+
+
+
+/* ---- copied-email toast ---- */
+.pfs-toast {
+  position: fixed; bottom: 32px; left: 50%; translate: -50% 8px;
+  background: #0a0a0a; color: #fff;
+  font-size: 12px; letter-spacing: 0.03em; text-transform: lowercase;
+  padding: 10px 18px; border-radius: 999px;
+  opacity: 0; transition: opacity 0.3s ease, translate 0.3s ease;
+  z-index: 7000; pointer-events: none;
+}
+.pfs-toast.in { opacity: 1; translate: -50% 0; }
+
+/* ---- lightbox caption ---- */
+.pswp__pfs-caption {
+  position: absolute; left: 24px; bottom: 20px;
+  color: #fff; opacity: 0.75;
+  font-size: 12px; letter-spacing: 0.02em; text-transform: lowercase;
+  max-width: 60%;
+}
+
+/* ---- loading imagery: a quiet plate + fade-in instead of a white pop ---- */
+.cover, .strip-img { background: var(--plate); }
+.cover img, .cover video, .strip-img img { transition: opacity 0.45s ease; }
+.cover img[data-loading], .strip-img img[data-loading] { opacity: 0; }
+
+/* consistent view-transition timing (groups otherwise run at the UA default) */
+::view-transition-group(*) {
+  animation-duration: 200ms;
+  animation-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* the film player's Vimeo iframe stays invisible over the poster until the
+   player has actually painted (FilmScript adds .ready) */
+.player iframe { opacity: 0; transition: opacity 0.3s ease; }
+.player iframe.ready { opacity: 1; }
+
+
+}

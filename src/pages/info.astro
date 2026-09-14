@@ -1,0 +1,62 @@
+---
+import { Picture } from 'astro:assets';
+import Base from '../layouts/Base.astro';
+import { PFS, profileNodes } from '../lib/site.js';
+import portrait from '../assets/images/jessi.jpg';
+import '../styles/info.css';
+
+const title = 'Info & Contact — Jessi Clover Belgrave, Director';
+const description = 'Jessi Clover Belgrave is a North London director of Caribbean, English and Danish heritage, working across music videos, advertising, editorial and photography as one half of Plastic Fruit Studios.';
+---
+<Base title={title} description={description} path="info" ogImage="assets/jessi.jpg"
+      jsonld={profileNodes({ path: 'info', title, description })}
+      active="info">
+  <h1 class="sr-only">Info — Jessi Clover Belgrave, director</h1>
+
+  <div class="info-wrap">
+    <div class="info-inner">
+      <div class="info-content">
+        <p>Born and raised in North London, Jessi Clover Belgrave is a director of Caribbean, English and Danish heritage whose visual language is shaped by a music-led instinct.</p>
+        <p>She began in music as a singer, songwriter and producer, creating for her own artist projects as well as major brands and Hollywood films before moving into directing.</p>
+        <p>As one half of Plastic Fruit Studios, she works across music videos, advertising, editorial and photography.</p>
+        <div class="info-links">
+          <a href="#" id="contact-email" aria-label="email jessi">&#8203;</a>
+          <a href="https://www.instagram.com/itsjesslikethat" target="_blank" rel="noopener">@itsjesslikethat</a>
+          <a href={PFS.url} target="_blank" rel="noopener" class="pfs-logo-link">
+            <img src="/assets/pfs-logo.webp" alt="Plastic Fruit Studios" width="200" height="200" />
+          </a>
+        </div>
+      </div>
+      <div class="info-photo">
+        <Picture src={portrait} formats={['avif', 'webp']} widths={[280, 560, 840]} sizes="(max-width: 900px) 240px, 280px" loading="eager" alt="Jessi Clover Belgrave" />
+      </div>
+    </div>
+  </div>
+
+  <script is:inline data-astro-rerun slot="after-scripts">
+    (function () {
+      var u = 'jessi', d = 'plasticfruitstudios' + '.' + 'com';
+      var a = document.getElementById('contact-email');
+      if (!a || a.dataset.bound) return;
+      a.dataset.bound = '1';
+      var email = u + '@' + d;
+      a.textContent = email;
+      a.href = 'mailto:' + email;
+      a.addEventListener('click', function (e) {
+        if (!navigator.clipboard) return; // no clipboard API -> normal mailto
+        e.preventDefault();
+        navigator.clipboard.writeText(email).then(function () {
+          var toast = document.createElement('div');
+          toast.className = 'pfs-toast';
+          toast.textContent = 'email copied';
+          document.body.appendChild(toast);
+          requestAnimationFrame(function () { toast.classList.add('in'); });
+          setTimeout(function () {
+            toast.classList.remove('in');
+            setTimeout(function () { toast.remove(); }, 400);
+          }, 1600);
+        }).catch(function () { location.href = 'mailto:' + email; });
+      });
+    })();
+  </script>
+</Base>

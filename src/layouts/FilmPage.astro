@@ -1,0 +1,40 @@
+---
+import Base from './Base.astro';
+import Credits from '../components/Credits.astro';
+import Media from '../components/Media.astro';
+import FilmScript from '../components/FilmScript.astro';
+import { projectNodes } from '../lib/site.js';
+import '../styles/film.css';
+
+import gridMotion from '../data/grid-motion.json';
+import gridIndex from '../data/grid-index.json';
+
+const { entry } = Astro.props;
+const d = entry.data;
+// the poster this project's card shows on the grids — the morph lands on the
+// same frame instead of a black box while the Vimeo player loads
+const card = [...gridMotion.rows, ...gridIndex.rows].flatMap((r) => r.cards).find((c) => c.slug === entry.id);
+const posterBg = card?.media?.poster ? `background:#0a0a0a url('/${card.media.poster}') center/cover no-repeat;` : '';
+---
+<Base title={d.pageTitle} description={d.description} path={entry.id}
+      ogTitle={d.ogTitle} ogImage={d.ogImage} ogType="video.other" vimeo
+      jsonld={projectNodes(entry.id, d)} active="motion" bodyClass="kind-film">
+  <div class="project-wrap">
+    <div class="project-meta">
+      <h1 class="artist">{d.title}</h1>
+      {d.subtitle && <div class="title">{d.subtitle}</div>}
+      <Credits credits={d.credits} />
+      {d.ext && <a class="ext" href={d.ext.href} target="_blank" rel="noopener">{d.ext.label} &#8599;</a>}
+    </div>
+    {(d.media.length > 0 || d.stackPlayer) ? (
+      <div class="player-stack">
+        <div class="player" transition:name={'cover-' + entry.id} style={`aspect-ratio: ${d.vimeo.aspect};${posterBg}`}><iframe src={`https://player.vimeo.com/video/${d.vimeo.id}?${d.vimeo.query}`} frameborder="0" allow="autoplay; fullscreen; picture-in-picture; clipboard-write; encrypted-media; web-share" referrerpolicy="strict-origin-when-cross-origin" title={d.vimeo.title}></iframe></div>
+        {d.media.map((m) => <Media item={m} />)}
+      </div>
+    ) : (
+      <div class="player" transition:name={'cover-' + entry.id} style={`aspect-ratio: ${d.vimeo.aspect};${posterBg}`}><iframe src={`https://player.vimeo.com/video/${d.vimeo.id}?${d.vimeo.query}`} frameborder="0" allow="autoplay; fullscreen; picture-in-picture; clipboard-write; encrypted-media; web-share" referrerpolicy="strict-origin-when-cross-origin" title={d.vimeo.title}></iframe></div>
+    )}
+  </div>
+  <a class="back-bottom" href="/motion">&larr; back</a>
+  <FilmScript slot="after-scripts" />
+</Base>

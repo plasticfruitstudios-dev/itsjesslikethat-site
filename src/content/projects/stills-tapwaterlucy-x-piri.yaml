@@ -1,0 +1,29 @@
+title: tapwaterlucy x piri
+subtitle: press shoot
+kind: strip
+pageTitle: tapwaterlucy x piri — Press Shoot | Jessi Clover Belgrave
+description: tapwaterlucy x piri — Press Shoot. Photography by Jessi Clover Belgrave, London director and photographer.
+ogImage: stills/web/tapwaterlucy-x-piri-v3_11-large.jpg
+credits:
+  - text: photography - plastic fruit studios
+media:
+  - type: image
+    src: stills/web/tapwaterlucy-x-piri-v3_11-large.jpg
+    alt: tapwaterlucy x piri — press shoot
+    loading: eager
+  - type: image
+    src: stills/web/tapwaterlucy-x-piri-v2_3-large.jpg
+    alt: tapwaterlucy x piri — press shoot
+    loading: lazy
+  - type: image
+    src: stills/web/tapwaterlucy-x-piri-v3_1-large.jpg
+    alt: tapwaterlucy x piri — press shoot
+    loading: lazy
+  - type: image
+    src: stills/web/tapwaterlucy-x-piri-v3_7-large.jpg
+    alt: tapwaterlucy x piri — press shoot
+    loading: lazy
+  - type: image
+    src: stills/web/tapwaterlucy-x-piri_16-large.jpg
+    alt: tapwaterlucy x piri — press shoot
+    loading: lazy

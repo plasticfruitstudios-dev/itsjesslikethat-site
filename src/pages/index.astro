@@ -1,0 +1,30 @@
+---
+import { getCollection } from 'astro:content';
+import Base from '../layouts/Base.astro';
+import GridCard from '../components/GridCard.astro';
+import SwitchPill from '../components/SwitchPill.astro';
+import GridReveal from '../components/GridReveal.astro';
+import grid from '../data/grid-index.json';
+import { collectionNodes } from '../lib/site.js';
+import '../styles/grid.css';
+
+const projects = await getCollection('projects');
+const bySlug = Object.fromEntries(projects.map((p) => [p.id, p.data]));
+const title = 'Jessi Clover Belgrave — Director & Photographer, London';
+const description = 'Jessi Clover Belgrave is a London director and photographer making music videos, commercials and editorial. Work for Sam Smith, Audemars Piguet, JADE, Gorgon City, Sonny Fodera, Sienna Spiro and piri.';
+const ogImage = 'stills/web/ally-salort_cover-large.jpg';
+---
+<Base title={title} description={description} path="" ogImage={ogImage}
+      jsonld={collectionNodes({ path: '', title, description, primaryImage: ogImage, crumbs: false })}
+      active="index">
+  <h1 class="sr-only">Jessi Clover Belgrave — director &amp; photographer, London</h1>
+  <div class="projects">
+    {grid.rows.map((row) => (
+      <div class={row.class ?? "row"}>
+        {row.cards.map((card) => <GridCard card={card} project={bySlug[card.slug]} />)}
+      </div>
+    ))}
+  </div>
+  <GridReveal slot="after-scripts" />
+  <SwitchPill active="all" slot="after-scripts" />
+</Base>

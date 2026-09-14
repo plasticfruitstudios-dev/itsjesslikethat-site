@@ -1,0 +1,125 @@
+/* player family styles (union of legacy variants; variants verified additive). */
+/* All rules scoped under body.kind-player — the [slug] route bundles every family's CSS together. */
+
+body.kind-player /* player family styles (union of legacy variants; variants verified additive). */
+
+.info-wrap {
+  min-height: calc(100vh - 115px - 72px);
+      display: flex; align-items: center;
+      padding: 80px 100px;
+}
+
+body.kind-player .info-content {
+  max-width: 500px;
+      opacity: 0; transform: translateY(16px);
+      animation: fadeUp 0.7s ease 0.2s forwards;
+}
+
+@keyframes fadeUp {
+  to { opacity: 1; transform: translateY(0); }
+}
+
+body.kind-player .info-content p {
+  font-size: 15px; font-weight: 500; line-height: 1.75;
+      letter-spacing: 0.01em;
+      color: #0a0a0a; opacity: 0.85; margin-bottom: 36px;
+}
+
+body.kind-player .info-content a {
+  font-size: 15px; font-weight: 500; letter-spacing: 0.01em;
+      color: #0a0a0a; text-decoration: none;
+      opacity: 0.85; transition: opacity 0.2s;
+      border-bottom: 0.5px solid rgba(0,0,0,0.3); padding-bottom: 2px;
+}
+
+body.kind-player .info-content a:hover {
+  opacity: 1; color: var(--accent); border-bottom-color: var(--accent);
+}
+
+body.kind-player footer {
+  padding: 28px 100px;
+      border-top: 0.5px solid rgba(0,0,0,0.1);
+      display: flex; justify-content: space-between; align-items: center;
+}
+
+@media (max-width: 640px) {
+  body.kind-player .info-wrap { padding: 60px 24px; }
+  body.kind-player footer { padding: 24px 24px; flex-direction: column; gap: 8px; }
+}
+
+
+
+
+body.kind-player .project-wrap {
+  display: flex; gap: 64px; align-items: flex-start;
+      padding: 70px 100px 40px;
+      opacity: 0; transform: translateY(12px);
+      animation: fadeUp 0.6s ease 0.1s forwards;
+}
+
+body.kind-player .project-meta {
+  width: 300px; flex-shrink: 0; position: sticky; top: 140px;
+}
+
+body.kind-player .project-meta .artist {
+  font-size: 15px; font-weight: 500; letter-spacing: 0.02em; text-transform: lowercase; color: var(--accent);
+}
+
+body.kind-player .project-meta .title {
+  font-size: 15px; font-weight: 500; letter-spacing: 0.02em; text-transform: lowercase; color: #0a0a0a; margin-top: 2px;
+}
+
+body.kind-player .project-meta .credits-label {
+  font-size: 12px; font-weight: 500; letter-spacing: 0.04em; text-transform: lowercase; color: var(--accent); margin-top: 32px;
+}
+
+body.kind-player .project-meta .credit {
+  font-size: 13px; font-weight: 500; letter-spacing: 0.02em; text-transform: lowercase; color: #0a0a0a; margin-top: 6px; line-height: 1.5;
+}
+
+body.kind-player .project-meta .backlink {
+  display: inline-block; margin-top: 36px; font-size: 12px; font-weight: 500;
+      letter-spacing: 0.04em; text-transform: lowercase; color: #0a0a0a; opacity: 0.55;
+      text-decoration: none; transition: color 0.2s, opacity 0.2s;
+}
+
+body.kind-player .project-meta .backlink:hover {
+  color: var(--accent); opacity: 1;
+}
+
+body.kind-player .player-stack {
+  flex: 1; display: flex; flex-direction: column; gap: 44px; min-width: 0;
+}
+
+body.kind-player .media video, body.kind-player .media img {
+  width: 100%; height: auto; display: block;
+}
+
+body.kind-player .media.ratio169 {
+  aspect-ratio: 16 / 9; background: #0a0a0a;
+}
+
+body.kind-player .media.ratio169 iframe {
+  width: 100%; height: 100%; display: block; border: 0;
+}
+
+body.kind-player .media.ig {
+  display: flex; justify-content: center;
+}
+
+@media (max-width: 900px) {
+  body.kind-player .project-wrap { flex-direction: column; gap: 32px; padding: 40px 40px 20px; }
+  body.kind-player .project-meta { width: 100%; position: static; }
+}
+
+@media (max-width: 640px) {
+  body.kind-player .project-wrap { padding: 24px 24px 10px; }
+}
+
+body.kind-player .media.portrait {
+  max-width: 430px; margin: 0 auto; width: 100%;
+}
+
+body.kind-player .media video {
+  width: 100%; height: auto; display: block;
+}

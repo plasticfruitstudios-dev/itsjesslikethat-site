@@ -1,0 +1,280 @@
+{
+  "rows": [
+    {
+      "cards": [
+        {
+          "slug": "stills-ally-salort",
+          "style": "width:76%;",
+          "media": {
+            "type": "image",
+            "src": "stills/web/ally-salort_cover-large.jpg",
+            "alt": "ally salort",
+            "loading": "lazy"
+          },
+          "titleOverride": "ally salort",
+          "subOverride": "artwork & press shoot"
+        }
+      ],
+      "class": "row center"
+    },
+    {
+      "cards": [
+        {
+          "slug": "mi-sam-smith",
+          "style": "width:46%;",
+          "media": {
+            "type": "video",
+            "src": "videos/sam-smith.mp4",
+            "poster": "videos/posters/sam-smith.jpg",
+            "alt": "sam smith"
+          },
+          "titleOverride": "sam smith",
+          "subOverride": "to be free (live visuals)"
+        },
+        {
+          "slug": "stills-piri-album",
+          "style": "width:32%;margin-top:40px;",
+          "media": {
+            "type": "image",
+            "src": "stills/web/piri-album_cover-grid.jpg",
+            "alt": "piri",
+            "loading": "lazy"
+          },
+          "titleOverride": "piri",
+          "subOverride": "album artwork & press shoot"
+        }
+      ]
+    },
+    {
+      "cards": [
+        {
+          "slug": "stills-cat-burns",
+          "style": "width:42%;",
+          "media": {
+            "type": "image",
+            "src": "stills/web/cat-burns-ep-cover-grid.jpg",
+            "alt": "cat burns",
+            "loading": "lazy"
+          },
+          "titleOverride": "cat burns",
+          "subOverride": "people pleaser : sleep at night ep cover"
+        },
+        {
+          "slug": "mi-audemars-piguet",
+          "style": "width:48%;margin-top:44px;",
+          "media": {
+            "type": "video",
+            "src": "videos/audemars.mp4",
+            "poster": "videos/posters/audemars.jpg",
+            "alt": "audemars piguet"
+          },
+          "titleOverride": "audemars piguet",
+          "subOverride": "the time is now"
+        }
+      ]
+    },
+    {
+      "cards": [
+        {
+          "slug": "stills-charlieeeee",
+          "style": "width:54%;",
+          "media": {
+            "type": "image",
+            "src": "stills/web/charlieeeee_3-grid.jpg",
+            "alt": "charlieeeee",
+            "loading": "lazy"
+          },
+          "titleOverride": "charlieeeee",
+          "subOverride": "press shoot"
+        }
+      ],
+      "class": "row center"
+    },
+    {
+      "cards": [
+        {
+          "slug": "mi-piri-tommy-dog",
+          "style": "width:48%;",
+          "media": {
+            "type": "video",
+            "src": "videos/dog.mp4",
+            "poster": "videos/posters/dog.jpg",
+            "alt": "piri & tommy"
+          },
+          "titleOverride": "piri & tommy",
+          "subOverride": "dog"
+        },
+        {
+          "slug": "stills-tapwaterlucy-x-piri",
+          "style": "width:30%;margin-top:36px;margin-right:9%;",
+          "media": {
+            "type": "image",
+            "src": "stills/web/tapwaterlucy-x-piri-v3_11-grid.jpg",
+            "alt": "tapwaterlucy x piri",
+            "loading": "lazy"
+          },
+          "titleOverride": "tapwaterlucy x piri",
+          "subOverride": "press shoot"
+        }
+      ]
+    },
+    {
+      "cards": [
+        {
+          "slug": "mi-girl-group",
+          "style": "width:54%;",
+          "media": {
+            "type": "video",
+            "src": "videos/girl-group.mp4",
+            "poster": "videos/posters/girl-group.jpg",
+            "alt": "girl group"
+          },
+          "titleOverride": "girl group",
+          "subOverride": "ep live"
+        }
+      ],
+      "class": "row center"
+    },
+    {
+      "cards": [
+        {
+          "slug": "stills-benjiflow",
+          "style": "width:46%;",
+          "media": {
+            "type": "image",
+            "src": "stills/web/benjiflow_3-grid.jpg",
+            "alt": "there are no borders to benjiflow",
+            "loading": "lazy"
+          },
+          "titleOverride": "there are no borders to benjiflow",
+          "subOverride": "dmy editorial"
+        },
+        {
+          "slug": "mi-gorgon-city",
+          "style": "width:44%;margin-top:40px;",
+          "media": {
+            "type": "video",
+            "src": "videos/gorgon.mp4",
+            "poster": "videos/posters/gorgon.jpg",
+            "alt": "gorgon city, north"
+          },
+          "titleOverride": "gorgon city, north",
+          "subOverride": "breathe you in"
+        }
+      ]
+    },
+    {
+      "cards": [
+        {
+          "slug": "stills-piri-and-tommy",
+          "style": "width:30%;",
+          "media": {
+            "type": "image",
+            "src": "stills/web/piri-tommy-yoyo_4-grid.jpg",
+            "alt": "piri & tommy",
+            "loading": "lazy"
+          },
+          "titleOverride": "piri & tommy",
+          "subOverride": "press shoot"
+        },
+        {
+          "slug": "mi-sienna-spiro-maybe",
+          "style": "width:48%;margin-top:36px;",
+          "media": {
+            "type": "video",
+            "src": "videos/sienna-mews.mp4",
+            "poster": "videos/posters/sienna-mews.jpg",
+            "alt": "sienna spiro"
+          },
+          "titleOverride": "sienna spiro",
+          "subOverride": "maybe. (live from the mews)"
+        }
+      ]
+    },
+    {
+      "cards": [
+        {
+          "slug": "the-diamond-store",
+          "style": "width:48%;",
+          "media": {
+            "type": "video",
+            "src": "videos/diamond-store.mp4",
+            "poster": "videos/posters/diamond-store.jpg",
+            "alt": "the diamond store"
+          },
+          "titleOverride": "the diamond store",
+          "subOverride": "seasonal campaigns"
+        },
+        {
+          "slug": "jade",
+          "style": "width:26%;",
+          "media": {
+            "type": "video",
+            "src": "videos/jade.mp4",
+            "poster": "videos/posters/jade.jpg",
+            "alt": "jade"
+          },
+          "titleOverride": "jade",
+          "subOverride": "short form series"
+        }
+      ],
+      "class": "row middle"
+    },
+    {
+      "cards": [
+        {
+          "slug": "mi-somedays",
+          "style": "width:44%;",
+          "media": {
+            "type": "video",
+            "src": "videos/somedays.mp4",
+            "poster": "videos/posters/somedays.jpg",
+            "alt": "sonny fodera, jazzy, d.o.d"
+          },
+          "titleOverride": "sonny fodera, jazzy, d.o.d",
+          "subOverride": "somedays"
+        },
+        {
+          "slug": "stills-jade",
+          "style": "width:46%;margin-top:40px;",
+          "media": {
+            "type": "image",
+            "src": "stills/web/jade_press-shot-grid.jpg",
+            "alt": "jade",
+            "loading": "lazy"
+          },
+          "titleOverride": "jade",
+          "subOverride": "press shoot"
+        }
+      ]
+    },
+    {
+      "cards": [
+        {
+          "slug": "bea",
+          "style": "width:46%;",
+          "media": {
+            "type": "video",
+            "src": "videos/bea.mp4",
+            "poster": "videos/posters/bea.jpg",
+            "alt": "bea & her business"
+          },
+          "titleOverride": "bea & her business",
+          "subOverride": "ep visuals"
+        },
+        {
+          "slug": "mi-tell-me",
+          "style": "width:44%;margin-top:40px;",
+          "media": {
+            "type": "video",
+            "src": "videos/tell-me.mp4",
+            "poster": "videos/posters/tell-me.jpg",
+            "alt": "sonny fodera & clementine douglas"
+          },
+          "titleOverride": "sonny fodera & clementine douglas",
+          "subOverride": "tell me"
+        }
+      ]
+    }
+  ]
+}

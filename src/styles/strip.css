@@ -1,0 +1,203 @@
+/* strip family styles (union of legacy variants; variants verified additive). */
+/* All rules scoped under body.kind-strip — the [slug] route bundles every family's CSS together. */
+
+body.kind-strip /* strip family styles (union of legacy variants; variants verified additive). */
+
+.info-wrap {
+  min-height: calc(100vh - 115px - 72px);
+      display: flex; align-items: center;
+      padding: 80px 100px;
+}
+
+body.kind-strip .info-content {
+  max-width: 500px;
+      opacity: 0; transform: translateY(16px);
+      animation: fadeUp 0.7s ease 0.2s forwards;
+}
+
+@keyframes fadeUp {
+  to { opacity: 1; transform: translateY(0); }
+}
+
+body.kind-strip .info-content p {
+  font-size: 15px; font-weight: 500; line-height: 1.75;
+      letter-spacing: 0.01em;
+      color: #0a0a0a; opacity: 0.85; margin-bottom: 36px;
+}
+
+body.kind-strip .info-content a {
+  font-size: 15px; font-weight: 500; letter-spacing: 0.01em;
+      color: #0a0a0a; text-decoration: none;
+      opacity: 0.85; transition: opacity 0.2s;
+      border-bottom: 0.5px solid rgba(0,0,0,0.3); padding-bottom: 2px;
+}
+
+body.kind-strip .info-content a:hover {
+  opacity: 1; color: var(--accent); border-bottom-color: var(--accent);
+}
+
+body.kind-strip footer {
+  padding: 28px 100px;
+      border-top: 0.5px solid rgba(0,0,0,0.1);
+      display: flex; justify-content: space-between; align-items: center;
+}
+
+@media (max-width: 640px) {
+  body.kind-strip .info-wrap { padding: 60px 24px; }
+  body.kind-strip footer { padding: 24px 24px; flex-direction: column; gap: 8px; }
+}
+
+
+
+
+body.kind-strip {
+  overflow: hidden;
+}
+
+body.kind-strip .strip-wrap {
+  height: calc(100vh - 130px);
+      display: flex; align-items: center;
+      overflow-x: auto; overflow-y: hidden;
+      scrollbar-width: none; -ms-overflow-style: none;
+      padding: 0 100px;
+      opacity: 0; animation: fadeIn 0.6s ease 0.1s forwards;
+}
+
+@keyframes fadeIn {
+  to { opacity: 1; }
+}
+
+body.kind-strip .strip-wrap::-webkit-scrollbar {
+  display: none;
+}
+
+body.kind-strip .strip-meta {
+  flex: 0 0 auto; width: 280px; margin-right: 72px;
+}
+
+body.kind-strip .strip-meta .artist {
+  font-size: 15px; font-weight: 500; letter-spacing: 0.02em; text-transform: lowercase; color: var(--accent);
+}
+
+body.kind-strip .strip-meta .title {
+  font-size: 15px; font-weight: 500; letter-spacing: 0.02em; text-transform: lowercase; color: #0a0a0a; margin-top: 2px;
+}
+
+body.kind-strip .strip-meta .credits-label {
+  font-size: 12px; font-weight: 500; letter-spacing: 0.04em; text-transform: lowercase; color: var(--accent); margin-top: 28px;
+}
+
+body.kind-strip .strip-meta .credit {
+  font-size: 13px; font-weight: 500; letter-spacing: 0.02em; text-transform: lowercase; color: #0a0a0a; margin-top: 6px;
+}
+
+body.kind-strip .strip-meta .backlink {
+  display: inline-block; margin-top: 30px; font-size: 12px; font-weight: 500;
+      letter-spacing: 0.04em; text-transform: lowercase; color: #0a0a0a; opacity: 0.55;
+      text-decoration: none; transition: color 0.2s, opacity 0.2s;
+}
+
+body.kind-strip .strip-meta .backlink:hover {
+  color: var(--accent); opacity: 1;
+}
+
+body.kind-strip .strip-img {
+  flex: 0 0 auto; margin-right: 56px;
+}
+
+body.kind-strip .strip-img img {
+  height: 64vh; width: auto; display: block; user-select: none; -webkit-user-drag: none;
+}
+
+body.kind-strip .strip-end {
+  flex: 0 0 60px;
+}
+
+body.kind-strip .scroll-hint {
+  position: fixed; bottom: 26px; right: 100px; z-index: 900;
+      font-size: 11px; font-weight: 500; letter-spacing: 0.08em;
+      text-transform: lowercase; color: #0a0a0a; opacity: 0.55;
+}
+
+body.kind-strip footer {
+  display: none;
+}
+
+body.kind-strip #lightbox {
+  display: none; position: fixed; inset: 0;
+      background: rgba(0,0,0,0.93); z-index: 3000;
+      align-items: center; justify-content: center;
+}
+
+body.kind-strip #lightbox.open {
+  display: flex;
+}
+
+body.kind-strip #lightbox img {
+  max-width: 88vw; max-height: 88vh; object-fit: contain; display: block;
+}
+
+body.kind-strip #lb-close, body.kind-strip #lb-prev, body.kind-strip #lb-next {
+  position: fixed; font-size: 12px; font-weight: 500; letter-spacing: 0.08em;
+      text-transform: lowercase; color: #ffffff; opacity: 0.5;
+      transition: opacity 0.2s; user-select: none;
+}
+
+body.kind-strip #lb-close {
+  top: 28px; right: 36px;
+}
+
+body.kind-strip #lb-prev {
+  left: 36px; top: 50%; transform: translateY(-50%);
+}
+
+body.kind-strip #lb-next {
+  right: 36px; top: 50%; transform: translateY(-50%);
+}
+
+body.kind-strip #lb-close:hover, body.kind-strip #lb-prev:hover, body.kind-strip #lb-next:hover {
+  opacity: 1;
+}
+
+@media (max-width: 900px) {
+  body.kind-strip { overflow: auto; }
+  body.kind-strip .strip-wrap { height: auto; display: block; overflow: visible; padding: 30px 40px; }
+  body.kind-strip .strip-meta { width: 100%; margin: 0 0 32px; }
+  body.kind-strip .strip-img { margin: 0 0 36px; }
+  body.kind-strip .strip-img img { height: auto; width: 100%; }
+  body.kind-strip .scroll-hint { display: none; }
+}
+
+@media (max-width: 640px) {
+  body.kind-strip .strip-wrap { padding: 20px 24px; }
+}
+
+body.kind-strip .strip-img { overflow: hidden; }
+body.kind-strip .strip-img a { display: block; line-height: 0; cursor: zoom-in; }
+
+body.kind-strip .strip-progress {
+  position: fixed; left: 100px; right: 100px; bottom: 16px;
+  height: 2px; background: rgba(0, 0, 0, 0.08); z-index: 900;
+}
+body.kind-strip .strip-progress span {
+  display: block; height: 100%; background: var(--accent);
+  transform-origin: left; transform: scaleX(0);
+  transition: transform 0.15s linear;
+}
+body.kind-strip .strip-counter {
+  position: fixed; left: 100px; bottom: 26px; z-index: 900;
+  font-size: 11px; font-weight: 500; letter-spacing: 0.08em;
+  font-variant-numeric: tabular-nums; color: #0a0a0a; opacity: 0.55;
+}
+@media (max-width: 900px) {
+  body.kind-strip .strip-progress { left: 40px; right: 40px; bottom: 12px; }
+  body.kind-strip .strip-counter { left: 40px; bottom: 22px; }
+}
+@media (max-width: 640px) {
+  body.kind-strip .strip-progress { left: 24px; right: 24px; }
+  body.kind-strip .strip-counter { left: 24px; }
+}
+
+@media (min-width: 901px) and (prefers-reduced-motion: no-preference) {
+  body.kind-strip .strip-img img { scale: 1.05; }
+}

@@ -1,0 +1,13 @@
+.DS_Store
+Thumbs.db
+push.sh
+photo label/
+new stills projects to add/
+.claude/
+video sources/
+/rebrand-plastic-fruit.md
+
+_archive/
+node_modules/
+dist/
+.astro/

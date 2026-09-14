@@ -1,0 +1,31 @@
+title: piri & tommy
+subtitle: dog
+kind: film
+video:
+  uploadDate: "2026-07-12"
+  duration: PT3M50S
+pageTitle: piri & tommy — Dog | Jessi Clover Belgrave
+description: piri & tommy — Dog. Directed by Jessi Clover Belgrave, a London director making music videos, commercials and editorial.
+ogImage: images/og/dog.jpg
+credits:
+  - text: starring - kipper von spot, maisy dewey, maisi, lucy tun, sacha peers, inigo woodham-smith
+  - text: director - jessica clover belgrave, piri & tommy
+    gap: true
+  - text: director of photography - vladimir woodham-smith
+  - text: producer - chloe howl
+  - text: production designer - jade rache
+  - text: art assistant - morris p. industry
+  - text: 1st ac - inigo woodham-smith
+  - text: 2nd ac - sacha peers
+  - text: makeup - wendy turner
+  - text: styling - phoebe butterworth
+  - text: colour - vladimir woodham-smith
+  - text: production company - plastic fruit studios
+  - text: management - listen generously
+vimeo:
+  id: "1209331307"
+  aspect: 4 / 3
+  title: piri & tommy - dog
+ext:
+  href: https://www.youtube.com/watch?v=5LNlBIg4g3I
+  label: watch on youtube

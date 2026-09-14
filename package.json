@@ -1,0 +1,20 @@
+{
+  "name": "plastic-fruit-site",
+  "type": "module",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "dev": "astro dev",
+    "build": "astro build",
+    "preview": "astro preview"
+  },
+  "dependencies": {
+    "@vimeo/player": "^2.30.4",
+    "astro": "^7.2.7",
+    "gsap": "^3.15.0",
+    "photoswipe": "^5.4.4"
+  },
+  "devDependencies": {
+    "playwright": "^1.62.1"
+  }
+}
