@@ -56,7 +56,7 @@
 }
 
 /* hover-capable pointers only: a tap would leave the title stuck red */
-@media (hover: hover) {
+@media (hover: hover) and (pointer: fine) {
   .project-card:hover .card-title {
     color: var(--accent);
   }
