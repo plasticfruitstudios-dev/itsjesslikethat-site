@@ -61,8 +61,11 @@ footer {
       transition: color 0.2s;
 }
 
-.project-card:hover .card-title {
-  color: var(--accent);
+/* hover-capable pointers only: a tap would leave the title stuck red */
+@media (hover: hover) {
+  .project-card:hover .card-title {
+    color: var(--accent);
+  }
 }
 
 .card-sub {

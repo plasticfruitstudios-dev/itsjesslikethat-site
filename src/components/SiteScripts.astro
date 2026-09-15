@@ -104,13 +104,59 @@
       const shadow = wrap.attachShadow({ mode: 'open' });
       document.querySelectorAll('style').forEach((s) => shadow.appendChild(s.cloneNode(true)));
       // freeze entrance animations: a cloned node restarts them from opacity 0,
-      // which blinked the outgoing page out before the dissolve began
+      // which blinked the outgoing page out before the dissolve began. Grid
+      // cards are left alone: their revealed state is the cloned .visible class,
+      // so cards the live page hasn't revealed yet stay hidden in the ghost too
       const freeze = document.createElement('style');
-      freeze.textContent = '*,*::before,*::after{animation:none!important;transition:none!important}.project-wrap,.strip-wrap,.project-content,.info-content,.info-inner,.project-card,.reveal{opacity:1!important;transform:none!important}';
+      freeze.textContent = '*,*::before,*::after{animation:none!important;transition:none!important}.project-wrap,.strip-wrap,.project-content,.info-content,.info-inner{opacity:1!important;transform:none!important}';
       shadow.appendChild(freeze);
       const inner = document.body.cloneNode(true);
       inner.querySelectorAll('script').forEach((s) => s.remove());
       inner.querySelectorAll('[id]').forEach((el) => el.removeAttribute('id'));
+      // media must hold still inside the ghost: a cloned <video> restarts at a
+      // different frame and a cloned iframe reloads its whole player, both
+      // visible while the ghost is up. Videos become a snapshot of their current
+      // frame (or their poster); iframes become a box of the same size that
+      // keeps the embed's own card styling (Instagram's white card) or, for the
+      // main film player, the player's plate — never a different picture.
+      const liveMedia = Array.from(document.body.querySelectorAll('video, iframe'));
+      Array.from(inner.querySelectorAll('video, iframe')).forEach((node, i) => {
+        const live = liveMedia[i];
+        if (!live) return;
+        const r = live.getBoundingClientRect();
+        const cs = getComputedStyle(live);
+        const box = 'display:block;position:' + cs.position + ';top:' + cs.top + ';left:' + cs.left
+          + ';width:' + r.width + 'px;height:' + r.height + 'px;';
+        let still;
+        const unplayed = live.tagName === 'VIDEO' && live.paused && live.currentTime === 0;
+        if (live.tagName === 'VIDEO' && !unplayed && live.readyState >= 2 && live.videoWidth) {
+          still = document.createElement('canvas');
+          still.width = live.videoWidth; still.height = live.videoHeight;
+          try { still.getContext('2d').drawImage(live, 0, 0); } catch (err) { /* keep blank */ }
+        } else if (live.tagName === 'VIDEO' && live.getAttribute('poster')) {
+          still = document.createElement('img');
+          still.src = live.getAttribute('poster');
+          still.style.objectFit = 'cover';
+        } else {
+          still = document.createElement('div');
+        }
+        still.className = node.className;
+        still.style.cssText += box;
+        if (live.tagName === 'IFRAME') {
+          const transparent = (c) => c === 'transparent' || c === 'rgba(0, 0, 0, 0)';
+          const plate = live.closest('.player') ? getComputedStyle(live.closest('.player')).backgroundColor : '';
+          still.style.backgroundColor = transparent(cs.backgroundColor) ? (plate || 'transparent') : cs.backgroundColor;
+          still.style.border = cs.border;
+          still.style.borderRadius = cs.borderRadius;
+          still.style.boxShadow = cs.boxShadow;
+          still.style.margin = cs.margin;
+        }
+        node.replaceWith(still);
+      });
+      // the sticky nav has no scroll container inside the ghost: pin it to the
+      // top of the viewport the way the live page shows it
+      const ghostNav = inner.querySelector('nav');
+      if (ghostNav) ghostNav.style.cssText += ';position:relative;top:' + window.scrollY + 'px';
       inner.style.cssText = 'position:absolute;left:0;top:' + (-window.scrollY) + 'px;width:100%;margin:0';
       shadow.appendChild(inner);
       dissolveShot = wrap;
