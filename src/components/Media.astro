@@ -17,6 +17,9 @@ interface Props {
 const { item } = Astro.props;
 const klass = item.klass ?? (item.type === 'instagram' ? 'media ig' : 'media');
 const isYouTube = item.type === 'iframe' && item.src.includes('youtube');
+// YouTube's own thumbnail sits behind the embed, so the page lands on a picture
+// rather than a black box while the player initialises
+const ytId = isYouTube ? /\/embed\/([\w-]{11})/.exec(item.src)?.[1] : undefined;
 const meta = item.type === 'image' ? imageFor(item.src) : null;
 const pMeta = item.type === 'video' && item.poster ? imageFor(item.poster) : null;
 const { tname } = Astro.props;
@@ -27,9 +30,9 @@ const widths = meta ? [...new Set([480, 800, 1200, meta.width].filter((w) => w <
   {item.type === 'image' && (meta
     ? <Picture src={meta} formats={['avif', 'webp']} quality={80} widths={widths} sizes="(max-width: 900px) 92vw, 60vw" loading={item.loading ?? 'lazy'} alt={item.alt} />
     : <img src={'/' + item.src} loading={item.loading ?? 'lazy'} alt={item.alt} />)}
-  {item.type === 'video' && <video data-src={'/' + item.src} poster={item.poster ? '/' + item.poster : undefined} style={pMeta ? `aspect-ratio: ${pMeta.width} / ${pMeta.height}` : undefined} loop muted playsinline preload="none"></video>}
+  {item.type === 'video' && <video data-src={'/' + item.src} data-astro-transition-persist={'loop:' + item.src} poster={item.poster ? '/' + item.poster : undefined} style={pMeta ? `aspect-ratio: ${pMeta.width} / ${pMeta.height}` : undefined} loop muted playsinline preload="none"></video>}
   {item.type === 'instagram' && <blockquote class="instagram-media" data-instgrm-permalink={item.src} data-instgrm-version="14" style="margin:0 auto; max-width:540px; width:100%;"></blockquote>}
   {item.type === 'iframe' && (isYouTube
-    ? <iframe src={item.src} title={item.title} frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+    ? <>{ytId && <img class="yt-poster" src={`https://i.ytimg.com/vi/${ytId}/maxresdefault.jpg`} alt="" loading={tname ? 'eager' : 'lazy'} decoding="async" />}<iframe src={item.src} title={item.title} onload="this.classList.add('ready')" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe></>
     : <iframe src={item.src} title={item.title} frameborder="0" allow="autoplay; fullscreen; picture-in-picture; clipboard-write; encrypted-media; web-share" referrerpolicy="strict-origin-when-cross-origin"></iframe>)}
 </div>

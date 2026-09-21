@@ -9,6 +9,7 @@
 
 * {
   margin: 0; padding: 0; box-sizing: border-box;
+  -webkit-tap-highlight-color: transparent;
 }
 
 body {
@@ -202,5 +203,32 @@ html.lights-down nav:hover { opacity: 1; }
 .player iframe { opacity: 0; transition: opacity 0.3s ease; }
 .player iframe.ready { opacity: 1; }
 
+/* keep the site chrome above the morphing covers during view transitions:
+   named covers are lifted into the ::view-transition layer and would
+   otherwise paint over the sticky nav and the fixed pill/icon */
+html[data-astro-transition] nav { view-transition-name: site-nav; }
+html[data-astro-transition] .switch-pill { view-transition-name: switch-pill; }
+html[data-astro-transition] #ig-icon { view-transition-name: ig-icon; }
+::view-transition-group(site-nav),
+::view-transition-group(switch-pill),
+::view-transition-group(ig-icon) { z-index: 1; }
+/* the UA copies the pill's backdrop-filter onto its group, which doesn't fade:
+   when only one page has the pill a blurred box would linger over the morph */
+::view-transition-group(switch-pill) { -webkit-backdrop-filter: none; backdrop-filter: none; }
+/* navigating from the open mobile menu: the menu is the curtain, so the old
+   state must be the flat menu over the page — no named nav or covers lifted
+   above it (the incoming page arrives menu-closed and keeps its names) */
+html:has(nav.open) :is(nav, [data-astro-transition-scope], [style*="view-transition-name"]) {
+  view-transition-name: none !important;
+}
 
+/* a film lands on the card's own picture and stays there until the viewer
+   plays (FilmScript); the Vimeo iframe above it is invisible but takes the
+   click/tap, and this mark says "press play" */
+.player { position: relative; }
+.player[style*="url("]:has(> iframe:is([src*="player.vimeo.com"], [data-ghost-src*="player.vimeo.com"]):not(.ready))::after {
+  content: ''; position: absolute; inset: 0; margin: auto;
+  width: 64px; height: 64px; border-radius: 50%;
+  background: rgba(10,10,10,0.45) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M8 5v14l11-7z' fill='%23fff'/%3E%3C/svg%3E") 55% 50% / 26px no-repeat;
+  pointer-events: none;
 }

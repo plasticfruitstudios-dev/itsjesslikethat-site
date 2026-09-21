@@ -13,17 +13,34 @@
     const iframes = document.querySelectorAll('.player iframe[src*="player.vimeo.com"]');
     if (!iframes.length) return;
     const players = [];
+    const offs = [];
     iframes.forEach((f) => {
       const p = new Player(f);
       players.push(p);
-      // hold the poster until Vimeo has actually painted (no black takeover)
       const show = () => f.classList.add('ready');
-      p.ready().then(show).catch(show);
-      setTimeout(show, 2000);
+      if (/url\(/.test(f.parentElement.getAttribute('style') || '')) {
+        // the main player keeps the picture the page landed on (the card's own
+        // frame or poster) until the viewer plays — Vimeo's pre-play thumbnail
+        // is a different picture and fading it in after arrival was a pulse.
+        // The invisible iframe still takes the click/tap; focus moving into it
+        // reveals Vimeo's own controls at once, 'play' is the backstop.
+        const onBlur = () => { if (document.activeElement === f) show(); };
+        window.addEventListener('blur', onBlur);
+        offs.push(() => window.removeEventListener('blur', onBlur));
+        p.on('play', show);
+        p.ready().catch(show);
+      } else {
+        // secondary players: hold their black box until Vimeo has painted
+        p.ready().then(show).catch(show);
+        setTimeout(show, 2000);
+      }
       p.on('play', () => document.documentElement.classList.add('lights-down'));
       p.on('pause', lightsUp);
       p.on('ended', lightsUp);
     });
-    window.__pfsFilmCleanup = () => players.forEach((p) => { try { p.destroy(); } catch {} });
+    window.__pfsFilmCleanup = () => {
+      offs.forEach((off) => off());
+      players.forEach((p) => { try { p.destroy(); } catch {} });
+    };
   });
 </script>

@@ -125,6 +125,19 @@
         if (!live) return;
         const r = live.getBoundingClientRect();
         const cs = getComputedStyle(live);
+        // an iframe the live page keeps invisible (a film player held on its
+        // landed picture, a YouTube embed still loading) stays an inert,
+        // invisible iframe in the ghost, so what shows behind it (picture,
+        // play mark) is unchanged: no src (nothing loads), its URL kept in
+        // data-ghost-src for the play-mark rule, no onload that could mark it
+        // ready, and opacity pinned at 0
+        if (live.tagName === 'IFRAME' && +cs.opacity === 0) {
+          node.setAttribute('data-ghost-src', node.getAttribute('src') || '');
+          node.removeAttribute('src');
+          node.removeAttribute('onload');
+          node.style.setProperty('opacity', '0', 'important');
+          return;
+        }
         const box = 'display:block;position:' + cs.position + ';top:' + cs.top + ';left:' + cs.left
           + ';width:' + r.width + 'px;height:' + r.height + 'px;';
         let still;
@@ -144,8 +157,13 @@
         still.style.cssText += box;
         if (live.tagName === 'IFRAME') {
           const transparent = (c) => c === 'transparent' || c === 'rgba(0, 0, 0, 0)';
-          const plate = live.closest('.player') ? getComputedStyle(live.closest('.player')).backgroundColor : '';
-          still.style.backgroundColor = transparent(cs.backgroundColor) ? (plate || 'transparent') : cs.backgroundColor;
+          const player = live.closest('.player');
+          const plate = player ? getComputedStyle(player).backgroundColor : '';
+          // a revealed non-Vimeo (YouTube) main player sits over the picture the
+          // page landed on: let that picture show through rather than a flat plate
+          const pictured = player && !/player\.vimeo\.com/.test(live.src) && /url\(/.test(player.getAttribute('style') || '');
+          still.style.backgroundColor = pictured ? 'transparent'
+            : transparent(cs.backgroundColor) ? (plate || 'transparent') : cs.backgroundColor;
           still.style.border = cs.border;
           still.style.borderRadius = cs.borderRadius;
           still.style.boxShadow = cs.boxShadow;
@@ -165,14 +183,143 @@
 
   // Hold navigation until the incoming page's visible imagery is decoded
   // (clones inherit <picture> source selection, so the real AVIF/WebP
-  // candidates warm too). Reveal happens in one piece; a 900ms cap keeps
-  // slow networks from making navigation feel stuck.
+  // candidates warm too), so the page arrives in one piece. The work starts
+  // the moment a link is hovered, focused or touched (warmFor), so by the time
+  // of the click it is usually done; the click itself never waits more than
+  // HOLD_MS for it.
+  const HOLD_MS = 150;
+  const IMAGERY_LIMIT = 6;
+  // the hero (first image) decodes on its own first; the rest queue behind it
+  // so they can't take its bandwidth on a slow link
+  const imageryJobs = (doc, holder, limit) => {
+    const jobs = [];
+    const decodeEl = (el) => {
+      const clone = el.cloneNode(true);
+      clone.querySelectorAll('img').forEach((im) => im.setAttribute('loading', 'eager'));
+      if (clone.tagName === 'IMG') clone.setAttribute('loading', 'eager');
+      holder.appendChild(clone);
+      const img = clone.tagName === 'PICTURE' ? clone.querySelector('img') : clone;
+      return img && img.decode ? img.decode().catch(() => {}) : Promise.resolve();
+    };
+    const els = Array.from(doc.querySelectorAll('main picture, main img:not(picture img)')).slice(0, limit);
+    if (els.length) {
+      const hero = decodeEl(els[0]);
+      jobs.push(hero);
+      if (els.length > 1) jobs.push(hero.then(() => Promise.all(els.slice(1).map(decodeEl))));
+    }
+    const seen = new Set();
+    doc.querySelectorAll('main video[poster]').forEach((v, i) => {
+      if (i >= limit) return;
+      const src = v.getAttribute('poster');
+      if (!src || seen.has(src)) return;
+      seen.add(src);
+      const im = new Image();
+      holder.appendChild(im);
+      im.src = src;
+      jobs.push(im.decode().catch(() => {}));
+    });
+    doc.querySelectorAll('.player[style*="url("]').forEach((el) => {
+      const m = /url\(['"]?([^'")]+)/.exec(el.getAttribute('style') || '');
+      if (m && !m[1].startsWith('blob:')) { const im = new Image(); holder.appendChild(im); im.src = m[1]; jobs.push(im.decode().catch(() => {})); }
+    });
+    return jobs;
+  };
+  // offscreen decode holders live outside <body>: the swap doesn't discard
+  // them mid-decode and the iOS ghost doesn't clone them
+  const newHolder = () => {
+    const holder = document.createElement('div');
+    holder.setAttribute('aria-hidden', 'true');
+    holder.style.cssText = 'position:absolute;left:-9999px;top:0;width:1px;height:1px;overflow:hidden;pointer-events:none';
+    document.documentElement.appendChild(holder);
+    return holder;
+  };
+  const parsePage = (html) => {
+    const doc = new DOMParser().parseFromString(html, 'text/html');
+    doc.querySelectorAll('noscript').forEach((el) => el.remove());
+    return doc;
+  };
+  // pathname -> { html: Promise<string> (the page, reused by the click),
+  //               ready: Promise (its first imagery decoded) }
+  const warmed = new Map();
+  const warmFor = (a, imagery = true) => {
+    if (!a || a.target || a.hasAttribute('download') || a.dataset.astroPrefetch === 'false') return;
+    let url;
+    try { url = new URL(a.href, location.href); } catch (err) { return; }
+    if (url.origin !== location.origin || url.pathname === location.pathname) return;
+    let w = warmed.get(url.pathname);
+    if (!w) {
+      const html = fetch(url.pathname)
+        .then((r) => (r.ok && !r.redirected && /text\/html/.test(r.headers.get('content-type') || '') ? r.text() : ''))
+        .catch(() => '');
+      w = { html, ready: null };
+      warmed.set(url.pathname, w);
+      setTimeout(() => warmed.delete(url.pathname), 60000);
+    }
+    if (imagery && !w.ready) {
+      w.ready = w.html.then((html) => {
+        if (!html) return;
+        const holder = newHolder();
+        return Promise.all(imageryJobs(parsePage(html), holder, IMAGERY_LIMIT))
+          .finally(() => setTimeout(() => holder.remove(), 8000));
+      }).catch(() => {});
+    }
+  };
+  let hoverTimer = 0;
+  document.addEventListener('pointerover', (e) => {
+    if (e.pointerType === 'touch') return; // touch is handled below
+    const a = e.target.closest?.('a[href]');
+    clearTimeout(hoverTimer);
+    // mouse/pen: a short dwell so sweeping across the grid doesn't decode everything
+    if (a) hoverTimer = setTimeout(() => warmFor(a), 80);
+  }, { passive: true });
+  // touch: fetch the page only (a touch may be the start of a scroll, so no
+  // image downloads here); the click decodes imagery within HOLD_MS
+  document.addEventListener('touchstart', (e) => warmFor(e.target.closest?.('a[href]'), false), { passive: true });
+  let focusTimer = 0;
+  document.addEventListener('focusin', (e) => {
+    clearTimeout(focusTimer);
+    const a = e.target.closest?.('a[href]');
+    if (a) focusTimer = setTimeout(() => warmFor(a), 150);
+  });
+
+  // Astro pairs persisted elements by id with querySelector (first match); a
+  // page showing the same loop twice would break the swap — keep the first
+  const dedupePersist = (root) => {
+    const ids = new Set();
+    root.querySelectorAll('[data-astro-transition-persist]').forEach((el) => {
+      const id = el.getAttribute('data-astro-transition-persist');
+      if (ids.has(id)) el.removeAttribute('data-astro-transition-persist');
+      else ids.add(id);
+    });
+  };
+  dedupePersist(document);
+
+  // the frame a playing card shows at the click, as an image the next page's
+  // film player can sit on — so the card morphs into exactly what it showed
+  let frameUrl = '';
+  const snapshotFrame = (video) => new Promise((res) => {
+    try {
+      const w = Math.min(video.videoWidth, 1280);
+      const c = document.createElement('canvas');
+      c.width = w; c.height = Math.round(video.videoHeight * (w / video.videoWidth));
+      c.getContext('2d').drawImage(video, 0, 0, c.width, c.height);
+      c.toBlob((b) => res(b ? URL.createObjectURL(b) : ''), 'image/jpeg', 0.9);
+    } catch (err) { res(''); }
+  });
+
   document.addEventListener('astro:before-preparation', (e) => {
     const load = e.loader;
     e.loader = async () => {
-      await load();
+      // reuse the page the hover/touch warm-up already fetched (same checks as
+      // Astro's own loader); otherwise let the router fetch it
+      const w = !e.formData && warmed.get(e.to.pathname);
+      const html = w ? await w.html : '';
+      const warmDoc = html ? parsePage(html) : null;
+      if (warmDoc && warmDoc.querySelector('[name="astro-view-transitions-enabled"]')) e.newDocument = warmDoc;
+      else await load();
       const doc = e.newDocument;
-      if (!doc) return;
+      if (!doc || doc === document) return;
+      dedupePersist(doc);
       // a newer deploy is live: hand this navigation to the browser so the
       // tab picks up fresh JavaScript instead of soft-swapping forever
       const cur = document.querySelector('meta[name="pfs-build"]')?.content;
@@ -181,42 +328,31 @@
         window.location.href = e.to.href;
         return new Promise(() => {});
       }
-      const holder = document.createElement('div');
-      holder.style.cssText = 'position:absolute;left:-9999px;top:0;width:1px;height:1px;overflow:hidden;pointer-events:none';
-      document.body.appendChild(holder);
-      const jobs = [];
-      doc.querySelectorAll('main picture, main img:not(picture img)').forEach((el, i) => {
-        if (i >= 14) return;
-        const clone = el.cloneNode(true);
-        holder.appendChild(clone);
-        const img = clone.tagName === 'PICTURE' ? clone.querySelector('img') : clone;
-        if (img) jobs.push(img.decode ? img.decode().catch(() => {}) : Promise.resolve());
-      });
-      const seen = new Set();
-      doc.querySelectorAll('main video[poster]').forEach((v, i) => {
-        if (i >= 14) return;
-        const p = v.getAttribute('poster');
-        if (!p || seen.has(p)) return;
-        seen.add(p);
-        const im = new Image();
-        im.src = p;
-        jobs.push(im.decode().catch(() => {}));
-      });
-      doc.querySelectorAll('.player[style*="url("]').forEach((el) => {
-        const m = /url\(['"]?([^'")]+)/.exec(el.getAttribute('style') || '');
-        if (m) { const im = new Image(); im.src = m[1]; jobs.push(im.decode().catch(() => {})); }
-      });
-      await Promise.race([Promise.all(jobs), new Promise((r) => setTimeout(r, 400))]);
-      holder.remove();
+      const holder = newHolder();
+      const jobs = imageryJobs(doc, holder, IMAGERY_LIMIT);
+      const player = doc.querySelector('main .player[style*="url("]');
+      const card = document.querySelector(`a.project-card[href="${e.to.pathname}"] video`);
+      if (player && card && card.readyState >= 2 && card.videoWidth && !card.paused) {
+        if (frameUrl) URL.revokeObjectURL(frameUrl);
+        frameUrl = await snapshotFrame(card);
+        if (frameUrl) {
+          player.setAttribute('style', player.getAttribute('style').replace(/url\([^)]*\)/, `url('${frameUrl}')`));
+          const im = new Image(); im.src = frameUrl; jobs.push(im.decode().catch(() => {}));
+        }
+      }
+      const pending = warmed.get(e.to.pathname)?.ready;
+      if (pending) jobs.push(pending);
+      await Promise.race([Promise.all(jobs), new Promise((r) => setTimeout(r, HOLD_MS))]);
+      setTimeout(() => holder.remove(), 4000);
     };
   });
 
   // astro:after-swap fires only on client-side navigations, synchronously
   // BEFORE the browser paints the new page — so the entrance-animation
   // suppression is in place from the first frame (no flash).
-  // reveal the new page in ONE piece: keep the dissolve overlay up until the
-  // visible videos have their first frames ready (cap 700ms), so imagery and
-  // playback appear together instead of videos popping in after arrival
+  // reveal the new page in ONE piece: keep the dissolve overlay up briefly
+  // (cap 200ms) for visible videos' first frames — loops persisted from the
+  // previous page are already playing, the rest show their posters
   const revealWhenReady = (shot) => {
     const vids = Array.from(document.querySelectorAll('video[data-src]'))
       .filter((v) => v.getBoundingClientRect().top < window.innerHeight * 1.2)
@@ -228,7 +364,7 @@
       v.addEventListener('loadeddata', res, { once: true });
       v.addEventListener('error', res, { once: true });
     }));
-    Promise.race([Promise.all(jobs), new Promise((r) => setTimeout(r, 700))]).then(() => {
+    Promise.race([Promise.all(jobs), new Promise((r) => setTimeout(r, 200))]).then(() => {
       requestAnimationFrame(() => requestAnimationFrame(() => {
         shot.style.transition = 'opacity 300ms ease';
         shot.style.opacity = '0';
@@ -236,6 +372,14 @@
       }));
     });
   };
+
+  // Astro's swap strips html.soft-nav from the root, and a back/forward scroll
+  // restore flushes style before after-swap re-adds it — the grid cards then
+  // computed their hidden entrance state and replayed the 0.55s fade. Put the
+  // class on the incoming root so it is there from the swap itself.
+  document.addEventListener('astro:before-swap', (e) => {
+    e.newDocument.documentElement.classList.add('soft-nav');
+  });
 
   document.addEventListener('astro:after-swap', () => {
     if (dissolveShot) {

@@ -33,7 +33,7 @@ const sizes = `(max-width: 640px) calc(100vw - 48px), (max-width: 900px) calc((1
       ? (meta
           ? <Picture src={meta} formats={['avif', 'webp']} quality={80} widths={widths} sizes={sizes} loading={m.loading ?? 'lazy'} alt={m.alt ?? title} />
           : <img src={'/' + m.src} loading={m.loading ?? 'lazy'} alt={m.alt ?? title} />)
-      : <video data-src={'/' + m.src} poster={m.poster ? '/' + m.poster : undefined} style={pMeta ? `aspect-ratio: ${pMeta.width} / ${pMeta.height}` : undefined} aria-label={m.alt} loop muted playsinline preload="none"></video>}
+      : <video data-src={'/' + m.src} data-astro-transition-persist={'loop:' + m.src} poster={m.poster ? '/' + m.poster : undefined} style={pMeta ? `aspect-ratio: ${pMeta.width} / ${pMeta.height}` : undefined} aria-label={m.alt} loop muted playsinline preload="none"></video>}
   </div>
   <div class="card-text"><div class="card-title">{title}</div>{sub && <div class="card-sub">{sub}</div>}</div>
 </a>
