@@ -552,6 +552,7 @@
     }
     document.documentElement.classList.add('soft-nav');
     initCoverFades(); // pre-paint: loading imagery must be invisible from frame 1
+    fitProjectMeta(); // pre-paint too: a history step may restore a deep scroll
   });
   // imagery still fetching fades in over a quiet plate instead of popping
   function initCoverFades() {
@@ -564,7 +565,19 @@
     });
   }
 
+  // a project's credits column is sticky only while it fits the viewport
+  // (player.css .too-tall): a long credits list on a short screen would
+  // otherwise hold the back link below the fold
+  function fitProjectMeta() {
+    const meta = document.querySelector('.kind-player .project-meta');
+    if (!meta) return;
+    const room = document.documentElement.clientHeight - parseFloat(getComputedStyle(meta).top);
+    meta.classList.toggle('too-tall', meta.offsetHeight > room);
+  }
+  addEventListener('resize', fitProjectMeta);
+
   document.addEventListener('astro:page-load', () => {
     initLoader(); initVideos(); initCoverFades();
+    fitProjectMeta(); document.fonts.ready.then(fitProjectMeta); // web font changes line heights
   });
 </script>

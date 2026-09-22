@@ -61,6 +61,11 @@ body.kind-player .project-meta {
   width: 300px; flex-shrink: 0; position: sticky; top: 140px;
 }
 
+/* sticky only while the whole column fits below its offset: a longer one would
+   pin its bottom (the back link) below the fold until the media had scrolled
+   by, so it scrolls with the page instead. Flagged by SiteScripts' fitProjectMeta */
+body.kind-player .project-meta.too-tall { position: static; }
+
 body.kind-player .project-meta .artist {
   font-size: 15px; font-weight: 500; letter-spacing: 0.02em; text-transform: lowercase; color: var(--accent);
 }
