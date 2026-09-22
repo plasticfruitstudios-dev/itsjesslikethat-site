@@ -294,6 +294,140 @@
   };
   dedupePersist(document);
 
+  // Only covers visible on BOTH pages morph. Every other named cover would get
+  // its own view-transition group: it leaves a hole in the page snapshot and
+  // fades in or out on its own over the background (the white wash going back
+  // home), or flies off-screen toward a card below the fold. Unpaired covers
+  // are un-named for the transition so they cross-fade with the page instead.
+  const suppressed = [];
+  const suppressName = (el) => {
+    suppressed.push([el, el.style.getPropertyValue('view-transition-name'), el.style.getPropertyPriority('view-transition-name')]);
+    el.style.setProperty('view-transition-name', 'none', 'important');
+  };
+  const restoreNames = () => {
+    suppressed.splice(0).forEach(([el, value, priority]) => {
+      if (value) el.style.setProperty('view-transition-name', value, priority);
+      else el.style.removeProperty('view-transition-name');
+    });
+  };
+  const inView = (el) => {
+    const r = el.getBoundingClientRect();
+    if (!r.width || !r.height) return false;
+    const w = Math.min(r.right, innerWidth) - Math.max(r.left, 0);
+    const h = Math.min(r.bottom, innerHeight) - Math.max(r.top, 0);
+    return w > 0 && h > 0 && (w * h) / (r.width * r.height) >= 0.2;
+  };
+  const namedCovers = (root) => Array.from(root.querySelectorAll('[data-astro-transition-scope], [style*="view-transition-name"]'))
+    .map((el) => [el, getComputedStyle(el).viewTransitionName])
+    .filter(([, name]) => name && name.startsWith('cover-'));
+  // cover names the incoming page will carry (read from its markup, not yet rendered)
+  const coverNamesIn = (doc) => {
+    const byScope = new Map();
+    doc.querySelectorAll('style').forEach((st) => {
+      for (const m of st.textContent.matchAll(/\[data-astro-transition-scope="([^"]+)"\]\s*\{\s*view-transition-name:\s*([\w-]+)/g)) byScope.set(m[1], m[2]);
+    });
+    const names = new Set();
+    doc.body.querySelectorAll('[data-astro-transition-scope]').forEach((el) => {
+      const n = byScope.get(el.getAttribute('data-astro-transition-scope'));
+      if (n) names.add(n);
+    });
+    doc.body.querySelectorAll('[style*="view-transition-name"]').forEach((el) => {
+      const m = /view-transition-name:\s*([\w-]+)/.exec(el.getAttribute('style') || '');
+      if (m) names.add(m[1]);
+    });
+    return names;
+  };
+  let keptNames = null;
+  // Where each page's covers sit (document coordinates, per viewport width),
+  // saved as the page is left, so the OLD page — captured before the new one
+  // renders — can tell whether a card will actually be on screen at the
+  // destination. A picture kept named but unmatched on arrival fades alone
+  // over a hole in the snapshot.
+  const LAYOUT_KEY = 'cover-layout';
+  const readLayouts = () => { try { return JSON.parse(sessionStorage.getItem(LAYOUT_KEY) || '{}'); } catch (err) { return {}; } };
+  const saveLayout = (path, covers) => {
+    const rects = {};
+    covers.forEach(([el, name]) => {
+      const r = el.getBoundingClientRect();
+      if (r.width && r.height) rects[name] = [r.left, r.top + scrollY, r.width, r.height];
+    });
+    // nothing measured (e.g. left through the open mobile menu, which un-names
+    // every cover): keep what was saved before
+    if (!Object.keys(rects).length) return;
+    const all = readLayouts();
+    all[path] = { w: innerWidth, rects };
+    try { sessionStorage.setItem(LAYOUT_KEY, JSON.stringify(all)); } catch (err) { /* private mode */ }
+  };
+  // will `name` be on screen when `doc` arrives at `path`?
+  const willBeInView = (doc, path, name, traverse) => {
+    const layout = readLayouts()[path];
+    // not seen at this width: a project page's hero sits in the first screen;
+    // a grid is unknown, so cross-fade rather than risk a lone fading picture
+    if (!layout || layout.w !== innerWidth) return !doc.querySelector('a.project-card');
+    const r = layout.rects[name];
+    if (!r) return false;
+    const top = traverse ? (history.state?.scrollY ?? 0) : 0;
+    const w = Math.min(r[0] + r[2], innerWidth) - Math.max(r[0], 0);
+    const h = Math.min(r[1] + r[3], top + innerHeight) - Math.max(r[1], top);
+    return w > 0 && h > 0 && (w * h) / (r[2] * r[3]) >= 0.2;
+  };
+  let navGen = 0;
+
+  // a section back link that points at the page we just came from goes back in
+  // history instead: the grid returns at the scroll position it was left at,
+  // so the project's picture morphs straight back into its own card
+  const STACK_KEY = 'nav-stack';
+  // entries are tagged with this document, so a stack left over from an
+  // earlier visit (after a full reload or leaving the site) is never trusted
+  const DOC_ID = Math.random().toString(36).slice(2);
+  const readStack = () => { try { return JSON.parse(sessionStorage.getItem(STACK_KEY) || '{}'); } catch (err) { return {}; } };
+  const previousPath = () => {
+    const nav = window.navigation;
+    if (nav?.entries && nav.currentEntry) {
+      const prev = nav.entries()[nav.currentEntry.index - 1];
+      return prev?.sameDocument ? new URL(prev.url).pathname : null;
+    }
+    const idx = history.state?.index;
+    const prev = idx > 0 ? readStack()[idx - 1] : null;
+    return prev && prev.d === DOC_ID ? prev.p : null;
+  };
+  let backPending = false;
+  // the second click of a double-click / double-tap on a back link comes up to
+  // ~500ms after the first — by then the grid is usually back (on iOS nothing
+  // covers it) and the click would open whatever card now sits under it: any
+  // click that soon after a back link is dropped
+  const BACK_GUARD_MS = 500;
+  let backQuietUntil = 0;
+  document.addEventListener('astro:page-load', () => {
+    // a history step that landed late still gets the whole window from arrival
+    if (backPending) backQuietUntil = Math.max(backQuietUntil, performance.now() + BACK_GUARD_MS);
+    backPending = false;
+    const idx = history.state?.index;
+    if (idx == null) return;
+    const stack = readStack();
+    stack[idx] = { p: location.pathname, d: DOC_ID };
+    try { sessionStorage.setItem(STACK_KEY, JSON.stringify(stack)); } catch (err) { /* private mode */ }
+  });
+  addEventListener('pageshow', () => { backPending = false; });
+  document.addEventListener('click', (e) => {
+    if (performance.now() < backQuietUntil) { e.preventDefault(); e.stopPropagation(); return; }
+    const a = e.target.closest?.('a.back-bottom, a.backlink');
+    if (!a || e.button || e.metaKey || e.ctrlKey || e.shiftKey || e.altKey) return;
+    // a second click before the first one's history step lands would go back twice
+    if (backPending) { e.preventDefault(); return; }
+    // (also covers a back link that is a plain navigation)
+    backQuietUntil = performance.now() + BACK_GUARD_MS;
+    let target;
+    try { target = new URL(a.href, location.href); } catch (err) { return; }
+    if (target.origin === location.origin && previousPath() === target.pathname) {
+      e.preventDefault();
+      history.back();
+    }
+    // a history step or a plain navigation: either way the page it lands on
+    // gets the whole window from its arrival, however slow the network
+    backPending = true;
+  }, true);
+
   // the frame a playing card shows at the click, as an image the next page's
   // film player can sit on — so the card morphs into exactly what it showed
   let frameUrl = '';
@@ -317,9 +451,26 @@
       const warmDoc = html ? parsePage(html) : null;
       if (warmDoc && warmDoc.querySelector('[name="astro-view-transitions-enabled"]')) e.newDocument = warmDoc;
       else await load();
+      // superseded while loading: the page on screen is someone else's now
+      if (e.signal?.aborted) return;
       const doc = e.newDocument;
       if (!doc || doc === document) return;
       dedupePersist(doc);
+      restoreNames();
+      navGen++;
+      const incoming = coverNamesIn(doc);
+      const covers = namedCovers(document);
+      // e.from, not location: on a history traverse the URL has already changed
+      saveLayout(e.from.pathname, covers);
+      const traverse = e.navigationType === 'traverse';
+      // grid to grid never morphs: a card that moves far leaves pale holes in
+      // both snapshots, and one that stays put looks the same in a cross-fade
+      const gridToGrid = !!document.querySelector('a.project-card') && !!doc.querySelector('a.project-card');
+      keptNames = new Set();
+      covers.forEach(([el, name]) => {
+        if (!gridToGrid && incoming.has(name) && inView(el) && willBeInView(doc, e.to.pathname, name, traverse)) keptNames.add(name);
+        else suppressName(el);
+      });
       // a newer deploy is live: hand this navigation to the browser so the
       // tab picks up fresh JavaScript instead of soft-swapping forever
       const cur = document.querySelector('meta[name="pfs-build"]')?.content;
@@ -379,6 +530,17 @@
   // class on the incoming root so it is there from the swap itself.
   document.addEventListener('astro:before-swap', (e) => {
     e.newDocument.documentElement.classList.add('soft-nav');
+    const gen = navGen;
+    e.viewTransition?.finished.finally(() => requestAnimationFrame(() => requestAnimationFrame(() => {
+      if (gen === navGen) restoreNames();
+    })));
+  });
+  document.addEventListener('astro:after-swap', () => {
+    if (!keptNames) return;
+    namedCovers(document).forEach(([el, name]) => {
+      if (!(keptNames.has(name) && inView(el))) suppressName(el);
+    });
+    keptNames = null;
   });
 
   document.addEventListener('astro:after-swap', () => {
