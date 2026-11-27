@@ -1,12 +1,11 @@
 ---
 import { getCollection } from 'astro:content';
 import Base from '../layouts/Base.astro';
-import GridCard from '../components/GridCard.astro';
+import WorkList from '../components/WorkList.astro';
 import SwitchPill from '../components/SwitchPill.astro';
-import StillsGridReveal from '../components/StillsGridReveal.astro';
 import grid from '../data/grid-stills.json';
 import { collectionNodes } from '../lib/site.js';
-import '../styles/stills-grid.css';
+import '../styles/grid.css';
 
 const projects = await getCollection('projects');
 const bySlug = Object.fromEntries(projects.map((p) => [p.id, p.data]));
@@ -17,13 +16,7 @@ const description = 'Photography by Jessi Clover Belgrave — album artwork, pre
       jsonld={collectionNodes({ path: 'stills', title, description })}
       active="stills">
   <h1 class="sr-only">Stills — photography by Jessi Clover Belgrave</h1>
-  <div class="projects">
-    {grid.rows.map((row) => (
-      <div class={row.class ?? "row"}>
-        {row.cards.map((card) => <GridCard card={card} project={bySlug[card.slug]} reveal />)}
-      </div>
-    ))}
-  </div>
-  <StillsGridReveal slot="after-scripts" />
+  <div class="mega" aria-hidden="true">Stills</div>
+  <WorkList grid={grid} projects={bySlug} />
   <SwitchPill active="stills" slot="after-scripts" />
 </Base>

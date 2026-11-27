@@ -1,9 +1,8 @@
 ---
 import { getCollection } from 'astro:content';
 import Base from '../layouts/Base.astro';
-import GridCard from '../components/GridCard.astro';
+import WorkList from '../components/WorkList.astro';
 import SwitchPill from '../components/SwitchPill.astro';
-import GridReveal from '../components/GridReveal.astro';
 import grid from '../data/grid-index.json';
 import { collectionNodes } from '../lib/site.js';
 import '../styles/grid.css';
@@ -19,13 +18,6 @@ const ogImage = 'stills/web/ally-salort_cover-large.jpg';
       active="index">
   <h1 class="sr-only">Jessi Clover Belgrave — director &amp; photographer, London</h1>
   <div class="mega name" aria-hidden="true">Jessi Clover Belgrave</div>
-  <div class="projects">
-    {grid.rows.map((row) => (
-      <div class={row.class ?? "row"}>
-        {row.cards.map((card) => <GridCard card={card} project={bySlug[card.slug]} />)}
-      </div>
-    ))}
-  </div>
-  <GridReveal slot="after-scripts" />
+  <WorkList grid={grid} projects={bySlug} />
   <SwitchPill active="all" slot="after-scripts" />
 </Base>

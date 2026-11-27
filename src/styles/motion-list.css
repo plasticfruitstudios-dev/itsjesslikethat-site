@@ -1,4 +1,4 @@
-/* motion page as a running order (after the wedding Timeline board) */
+/* the work as a running order (after the wedding Timeline board): home, stills, motion */
 
 .tl {
   list-style: none; text-align: center; padding: 56px 24px 120px;
@@ -34,7 +34,10 @@
   box-shadow: 0 12px 32px rgba(0,0,0,0.22); background: var(--plate);
 }
 .tl-peek.on { opacity: 1; }
-.tl-peek video { display: block; width: 100%; height: auto; }
+/* films show their loop, stills their cover (portraits capped so they stay a peek) */
+.tl-peek img, .tl-peek video { display: block; width: 100%; height: auto; max-height: 380px; object-fit: cover; }
+.tl-peek video, .tl-peek.film img { display: none; }
+.tl-peek.film video { display: block; }
 
 /* touch: no hover, so each entry carries its poster */
 @media not ((hover: hover) and (pointer: fine)) {

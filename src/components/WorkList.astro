@@ -1,0 +1,106 @@
+---
+// The work as a running order, like the wedding Timeline board: a small mono
+// line above each big Extrabold name. Used by home (all), stills and motion;
+// order and media come from that page's grid-*.json.
+// Desktop: hovering a name shows that job beside it (the loop for films, the
+// cover for stills). Touch: each entry shows its picture under the name.
+import { getImage } from 'astro:assets';
+import { imageFor } from '../lib/images';
+import '../styles/motion-list.css';
+
+interface Card {
+  slug: string;
+  media: { type: 'image' | 'video'; src: string; poster?: string };
+  titleOverride?: string; subOverride?: string;
+}
+interface Props {
+  grid: { rows: { cards: Card[] }[] };
+  projects: Record<string, { title: string; subtitle?: string } | undefined>;
+}
+const { grid, projects } = Astro.props;
+
+const items = await Promise.all(grid.rows.flatMap((r) => r.cards).map(async (c) => {
+  const still = c.media.poster ?? c.media.src;
+  const meta = imageFor(still);
+  const img = meta
+    ? (await getImage({ src: meta, width: Math.min(900, meta.width), format: 'webp', quality: 76 })).src
+    : '/' + still;
+  return {
+    slug: c.slug,
+    title: c.titleOverride ?? projects[c.slug]?.title ?? c.slug,
+    sub: c.subOverride ?? projects[c.slug]?.subtitle,
+    video: c.media.type === 'video' ? '/' + c.media.src : undefined,
+    img,
+  };
+}));
+---
+<ol class="tl">
+  {items.map((i) => (
+    <li>
+      <a class="tl-i" href={'/' + i.slug} data-video={i.video} data-img={i.img}>
+        {i.sub && <span class="tl-s">{i.sub}</span>}
+        <span class="tl-t">{i.title}</span>
+        <img class="tl-thumb" src={i.img} alt="" loading="lazy" decoding="async" />
+      </a>
+    </li>
+  ))}
+</ol>
+<div class="tl-peek" aria-hidden="true"><img alt="" /><video muted loop playsinline preload="none"></video></div>
+
+<script>
+  document.addEventListener('astro:page-load', () => {
+    const peek = document.querySelector<HTMLElement>('.tl-peek');
+    const list = document.querySelector('.tl');
+    if (!peek || !list || !matchMedia('(hover: hover) and (pointer: fine)').matches) return;
+    const vid = peek.querySelector('video')!;
+    const pic = peek.querySelector('img')!;
+    const GAP = 32;
+    let cur: HTMLAnchorElement | null = null;
+    let lastX = 0, lastY = 0, tx = 0, ty = 0, px = 0, py = 0, raf = 0;
+    const place = () => { peek.style.transform = `translate(${px}px, ${py}px) rotate(3deg)`; };
+    // sit beside the hovered name, never over it: right of the name if there is
+    // room, else left of it, else above it
+    const target = () => {
+      if (!cur) return;
+      const r = cur.querySelector('.tl-t')!.getBoundingClientRect();
+      const vw = document.documentElement.clientWidth;
+      const W = peek.offsetWidth, H = peek.offsetHeight || 225;
+      ty = lastY - H / 2;
+      if (r.right + GAP + W < vw - 16) tx = Math.max(lastX, r.right) + GAP;
+      else if (r.left - GAP - W > 16) tx = r.left - GAP - W;
+      else { tx = Math.min(Math.max(lastX - W / 2, 16), vw - W - 16); ty = r.top - H - 40; }
+      tx = Math.min(tx, vw - W - 16);
+    };
+    const tick = () => {
+      px += (tx - px) * 0.18; py += (ty - py) * 0.18; place();
+      raf = Math.abs(tx - px) + Math.abs(ty - py) > 0.5 ? requestAnimationFrame(tick) : 0;
+    };
+    const follow = () => { target(); if (!raf) raf = requestAnimationFrame(tick); };
+    list.addEventListener('pointermove', (e) => {
+      lastX = (e as PointerEvent).clientX; lastY = (e as PointerEvent).clientY;
+      if (cur) follow();
+    });
+    pic.addEventListener('load', () => { if (cur) follow(); });
+    list.querySelectorAll<HTMLAnchorElement>('.tl-i').forEach((a) => {
+      a.addEventListener('pointerenter', (e) => {
+        cur = a;
+        lastX = (e as PointerEvent).clientX; lastY = (e as PointerEvent).clientY;
+        const film = a.dataset.video;
+        peek.classList.toggle('film', !!film);
+        if (film) {
+          vid.poster = a.dataset.img ?? '';
+          if (vid.getAttribute('src') !== film) vid.src = film;
+          vid.play().catch(() => {});
+        } else {
+          vid.pause();
+          if (pic.getAttribute('src') !== a.dataset.img) pic.src = a.dataset.img ?? '';
+        }
+        target();
+        if (!peek.classList.contains('on')) { px = tx; py = ty; place(); }
+        else if (!raf) raf = requestAnimationFrame(tick);
+        peek.classList.add('on');
+      });
+      a.addEventListener('pointerleave', () => { cur = null; peek.classList.remove('on'); vid.pause(); });
+    });
+  });
+</script>
