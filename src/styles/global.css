@@ -1,10 +1,17 @@
 /* Shared core factored from the identical rules across all legacy page families. */
 
 :root {
-  --bg: #eabcbc;
-  --accent: #2d6b5b;
+  /* signage palette (Vlad & Jessi wedding boards, Nov 2026): the boards' paper
+     pink taken 80% towards white (about as tinted as the warm papers top
+     production companies use), J×V bottle green, near-black ink */
+  --bg: #ecdcdd;
+  --accent: #186f49;
+  --ink: #171017;
   /* quiet placeholder behind still-loading imagery: a shade darker than --bg */
-  --plate: #e2b1b1;
+  --plate: #e0cfd0;
+  --paper: url('/assets/paper.jpg');
+  --sans: 'ABC Walter Neue', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  --mono: 'ABC Simon Mono', ui-monospace, Menlo, monospace;
 }
 
 * {
@@ -15,15 +22,22 @@
 body {
   background: var(--bg);
       min-height: 100vh;
-      font-family: 'Apercu Pro', 'Apercu', 'Helvetica Neue', Helvetica, Arial, sans-serif;
-      font-weight: 500;
-      color: #0a0a0a;
+      font-family: var(--sans);
+      font-weight: 400;
+      color: var(--ink);
       cursor: url('/assets/cursor.png') 24 8, auto;
       overflow-x: hidden;
 }
 
+/* the signage paper: one fixed sheet behind every page (a fixed layer rather
+   than background-attachment, which iOS ignores) */
+body::before {
+  content: ''; position: fixed; inset: 0; z-index: -1; pointer-events: none;
+  background: var(--bg) var(--paper) center / cover no-repeat;
+}
+
 #loader {
-  position: fixed; inset: 0; background: var(--bg); z-index: 5000;
+  position: fixed; inset: 0; background: var(--bg) var(--paper) center / cover no-repeat; z-index: 5000;
       display: flex; align-items: center; justify-content: center; gap: 14px;
       transition: opacity 0.7s ease;
 }
@@ -37,8 +51,8 @@ body {
 }
 
 #load-pct {
-  font-size: 12px; font-weight: 500; letter-spacing: 0.08em;
-      color: #0a0a0a; font-variant-numeric: tabular-nums; min-width: 42px;
+  font-family: var(--mono); font-size: 12px; font-weight: 500; letter-spacing: 0.08em;
+      color: var(--ink); font-variant-numeric: tabular-nums; min-width: 42px;
 }
 
 /* centred header: logo above centred nav links (no tagline, no hamburger —
@@ -46,7 +60,10 @@ body {
 nav {
   position: sticky; top: 0; z-index: 100;
       display: flex; flex-direction: column; align-items: center; justify-content: flex-start;
-      gap: 16px; padding: 26px 24px 20px; background: var(--bg);
+      gap: 16px; padding: 26px 24px 20px;
+      /* same sheet as body::before, pinned to the viewport so the sticky header
+         sits seamlessly on the paper */
+      background: var(--bg) var(--paper) center / cover no-repeat fixed;
 }
 
 .logo-wrap {
@@ -63,9 +80,9 @@ nav {
 }
 
 .nav-links a {
-  font-size: 14px; font-weight: 500; letter-spacing: 0.01em;
-      text-transform: lowercase; color: #0a0a0a; text-decoration: none;
-      opacity: 0.55; transition: opacity 0.2s, color 0.2s;
+  font-family: var(--mono); font-size: 13px; font-weight: 500; letter-spacing: 0.08em;
+      text-transform: uppercase; color: var(--ink); text-decoration: none;
+      opacity: 0.7; transition: opacity 0.2s, color 0.2s;
 }
 
 .nav-links a:hover, .nav-links a.active {
@@ -73,20 +90,39 @@ nav {
 }
 
 footer span {
-  font-size: 11px; font-weight: 500; letter-spacing: 0.01em; text-transform: lowercase; color: #0a0a0a; opacity: 0.55;
+  font-family: var(--mono); font-size: 11px; font-weight: 500; letter-spacing: 0.06em; text-transform: uppercase; color: var(--ink); opacity: 0.8;
 }
 
+/* signage type: ABC Walter Neue (text + Extrabold headings), ABC Simon Mono (labels) */
 @font-face {
-  font-family: 'Apercu Pro';
-      src: url('/font/ApercuPro-Medium.woff2') format('woff2'),
-           url('/font/ApercuPro-Medium.woff')  format('woff');
-      font-weight: 500;
-      font-style: normal;
-      font-display: swap;
+  font-family: 'ABC Walter Neue';
+      src: url('/font/ABCWalterNeue-Regular.woff2') format('woff2');
+      font-weight: 400; font-style: normal; font-display: swap;
+}
+@font-face {
+  font-family: 'ABC Walter Neue';
+      src: url('/font/ABCWalterNeue-Extrabold.woff2') format('woff2');
+      font-weight: 800; font-style: normal; font-display: swap;
+}
+@font-face {
+  font-family: 'ABC Simon Mono';
+      src: url('/font/ABCSimonMono-Medium.woff2') format('woff2');
+      font-weight: 500; font-style: normal; font-display: swap;
 }
 
 
 html { scrollbar-gutter: stable; }
+
+/* ---- poster headline, as on the wedding boards ("WELCOME", "TIMELINE") ---- */
+.mega {
+  font-weight: 800; text-transform: uppercase; letter-spacing: -0.025em;
+  line-height: 0.86; text-align: center; color: var(--ink);
+  font-size: clamp(72px, 11vw, 160px); padding: 24px 24px 0;
+}
+/* the home name runs edge to edge inside the 100px page margins */
+.mega.name { font-size: 6.75vw; white-space: nowrap; padding: 24px 100px 0; }
+@media (max-width: 900px) { .mega.name { padding: 20px 40px 0; } }
+@media (max-width: 640px) { .mega.name { font-size: 15.5vw; white-space: normal; padding: 16px 20px 0; line-height: 0.88; } }
 
 /* ---- accessibility layer (2026-08 audit) ---- */
 a:focus-visible, button:focus-visible {
@@ -156,6 +192,9 @@ html.pswp-on body { overflow: hidden; }
    lights-up (incl. at navigation) is instant — a lingering 0.8s body
    transition was painting mid-fade frames into view-transition snapshots */
 html.lights-down body { background: #0a0a0a; transition: background 0.8s ease; }
+body::before { transition: none; }
+html.lights-down body::before { opacity: 0; transition: opacity 0.8s ease; }
+html.lights-down nav { background: transparent; }
 html.lights-down nav, html.lights-down .project-meta, html.lights-down footer,
 html.lights-down .back-bottom, html.lights-down #ig-icon { transition: opacity 0.8s ease; }
 html.lights-down nav,
@@ -172,7 +211,7 @@ html.lights-down nav:hover { opacity: 1; }
 .pfs-toast {
   position: fixed; bottom: 32px; left: 50%; translate: -50% 8px;
   background: #0a0a0a; color: #fff;
-  font-size: 12px; letter-spacing: 0.03em; text-transform: lowercase;
+  font-family: var(--mono); font-size: 11px; letter-spacing: 0.08em; text-transform: uppercase;
   padding: 10px 18px; border-radius: 999px;
   opacity: 0; transition: opacity 0.3s ease, translate 0.3s ease;
   z-index: 7000; pointer-events: none;

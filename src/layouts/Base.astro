@@ -40,7 +40,8 @@ const shareTitle = ogTitle ?? title;
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <link rel="preload" href="/font/ApercuPro-Medium.woff2" as="font" type="font/woff2" crossorigin />
+  <link rel="preload" href="/font/ABCWalterNeue-Extrabold.woff2" as="font" type="font/woff2" crossorigin />
+  <link rel="preload" href="/font/ABCSimonMono-Medium.woff2" as="font" type="font/woff2" crossorigin />
   {/* shared core as one byte-identical element on every page: the router's
       head-diffing keeps it across navigations, so @font-face and global rules
       are never torn down mid-swap (the stills<->motion restyle flash) */}
@@ -51,7 +52,7 @@ const shareTitle = ogTitle ?? title;
   {description && <meta name="description" content={description} />}
   {canonical && <link rel="canonical" href={canonical} />}
   <meta name="author" content={NAME} />
-  <meta name="theme-color" content="#eabcbc" />
+  <meta name="theme-color" content="#ecdcdd" />
   <meta name="robots" content={noindex ? 'noindex' : 'index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1'} />
   <meta property="og:site_name" content={NAME} />
   <meta property="og:locale" content="en_GB" />

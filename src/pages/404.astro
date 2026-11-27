@@ -7,12 +7,12 @@
   <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
   <title>404 — Jessi Clover Belgrave</title>
   <style is:inline>
-    :root { --accent: #2d6b5b; --bg: #eabcbc; }
+    :root { --accent: #186f49; --bg: #ecdcdd; --ink: #171017; }
     * { margin: 0; padding: 0; box-sizing: border-box; }
     body {
-      background: var(--bg); min-height: 100vh;
-      font-family: 'Apercu Pro', 'Apercu', 'Helvetica Neue', Helvetica, Arial, sans-serif;
-      font-weight: 500; color: #0a0a0a; cursor: url('/assets/cursor.png') 24 8, auto; overflow-x: hidden;
+      background: var(--bg) url('/assets/paper.jpg') center / cover no-repeat fixed; min-height: 100vh;
+      font-family: 'ABC Simon Mono', ui-monospace, Menlo, monospace;
+      font-weight: 500; color: var(--ink); cursor: url('/assets/cursor.png') 24 8, auto; overflow-x: hidden;
       display: flex; align-items: center; justify-content: center;
     }
     .wrap {
@@ -24,13 +24,13 @@
     .wrap img { height: 90px; width: auto; display: block; margin: 0 auto 32px; }
     .wrap p {
       font-size: 11px; font-weight: 500; letter-spacing: 0.1em;
-      text-transform: lowercase; color: #0a0a0a; opacity: 0.55;
+      text-transform: uppercase; color: var(--ink); opacity: 0.8;
       margin-bottom: 28px;
     }
     .wrap a {
       font-size: 11px; font-weight: 500; letter-spacing: 0.1em;
-      text-transform: lowercase; color: #0a0a0a; text-decoration: none;
-      opacity: 0.55; border-bottom: 0.5px solid rgba(0,0,0,0.2);
+      text-transform: uppercase; color: var(--ink); text-decoration: none;
+      opacity: 0.8; border-bottom: 1px solid rgba(23,16,23,0.35);
       padding-bottom: 2px; transition: opacity 0.2s, color 0.2s, border-color 0.2s;
     }
     .wrap a:hover { opacity: 1; color: var(--accent); border-bottom-color: var(--accent); }
@@ -39,9 +39,8 @@
 
   <style is:inline>
     @font-face {
-      font-family: 'Apercu Pro';
-      src: url('/font/ApercuPro-Medium.woff2') format('woff2'),
-           url('/font/ApercuPro-Medium.woff')  format('woff');
+      font-family: 'ABC Simon Mono';
+      src: url('/font/ABCSimonMono-Medium.woff2') format('woff2');
       font-weight: 500;
       font-style: normal;
       font-display: swap;

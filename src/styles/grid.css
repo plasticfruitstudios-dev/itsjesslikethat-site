@@ -112,3 +112,10 @@ footer {
 @media (max-width: 640px) {
   .switch-pill { bottom: 18px; padding: 11px 20px; gap: 18px; }
 }
+
+/* ---- signage type ---- */
+.card-title { font-family: var(--sans); font-weight: 800; text-transform: uppercase; letter-spacing: -0.01em; font-size: 19px; line-height: 1.05; }
+.card-sub { font-family: var(--mono); font-weight: 500; text-transform: uppercase; letter-spacing: 0.07em; font-size: 11px; opacity: 0.75; margin-top: 6px; }
+footer { border-top: 1px solid rgba(23,16,23,0.35); }
+.switch-pill { background: rgba(236,220,221,0.9); border-color: rgba(23,16,23,0.3); }
+.switch-pill a { font-family: var(--mono); font-weight: 500; text-transform: uppercase; letter-spacing: 0.07em; font-size: 11px; color: var(--ink); opacity: 0.7; }

@@ -1,15 +1,25 @@
 ---
 import { getCollection } from 'astro:content';
 import Base from '../layouts/Base.astro';
-import GridCard from '../components/GridCard.astro';
 import SwitchPill from '../components/SwitchPill.astro';
-import GridReveal from '../components/GridReveal.astro';
 import grid from '../data/grid-motion.json';
 import { collectionNodes } from '../lib/site.js';
 import '../styles/grid.css';
+import '../styles/motion-list.css';
 
+// Motion as a running order, like the wedding Timeline board: a small mono line
+// above each big Extrabold name. Order and media come from grid-motion.json.
+// Desktop: hovering a name plays that job's loop in a tilted frame by the cursor.
+// Touch: each entry shows its poster under the name.
 const projects = await getCollection('projects');
 const bySlug = Object.fromEntries(projects.map((p) => [p.id, p.data]));
+const items = grid.rows.flatMap((r) => r.cards).map((c) => ({
+  slug: c.slug,
+  title: c.titleOverride ?? bySlug[c.slug]?.title ?? c.slug,
+  sub: c.subOverride ?? bySlug[c.slug]?.subtitle,
+  video: c.media.type === 'video' ? '/' + c.media.src : undefined,
+  poster: '/' + (c.media.poster ?? c.media.src),
+}));
 const title = 'Motion — Music Videos & Commercials by Jessi Clover Belgrave';
 const description = 'Music videos, commercials and live films directed by Jessi Clover Belgrave for Sam Smith, Audemars Piguet, Gorgon City, Sonny Fodera, Sienna Spiro and more.';
 ---
@@ -17,13 +27,64 @@ const description = 'Music videos, commercials and live films directed by Jessi 
       jsonld={collectionNodes({ path: 'motion', title, description })}
       active="motion">
   <h1 class="sr-only">Motion — music videos, commercials &amp; films directed by Jessi Clover Belgrave</h1>
-  <div class="projects">
-    {grid.rows.map((row) => (
-      <div class={row.class ?? "row"}>
-        {row.cards.map((card) => <GridCard card={card} project={bySlug[card.slug]} />)}
-      </div>
+  <div class="mega" aria-hidden="true">Motion</div>
+  <ol class="tl">
+    {items.map((i) => (
+      <li>
+        <a class="tl-i" href={'/' + i.slug} data-video={i.video} data-poster={i.poster}>
+          {i.sub && <span class="tl-s">{i.sub}</span>}
+          <span class="tl-t">{i.title}</span>
+          <img class="tl-thumb" src={i.poster} alt="" loading="lazy" />
+        </a>
+      </li>
     ))}
-  </div>
-  <GridReveal slot="after-scripts" />
+  </ol>
+  <div class="tl-peek" aria-hidden="true"><video muted loop playsinline preload="none"></video></div>
   <SwitchPill active="motion" slot="after-scripts" />
 </Base>
+
+<script>
+  document.addEventListener('astro:page-load', () => {
+    const peek = document.querySelector<HTMLElement>('.tl-peek');
+    const list = document.querySelector('.tl');
+    if (!peek || !list || !matchMedia('(hover: hover) and (pointer: fine)').matches) return;
+    const vid = peek.querySelector('video')!;
+    const W = 300, H = 225, GAP = 32;
+    let cur: HTMLAnchorElement | null = null;
+    let tx = 0, ty = 0, px = 0, py = 0, raf = 0;
+    const place = () => { peek.style.transform = `translate(${px}px, ${py}px) rotate(3deg)`; };
+    // sit beside the hovered name, never over it: right of the name if there is
+    // room, else left of it, else above it
+    const target = (cx: number, cy: number) => {
+      const r = cur!.querySelector('.tl-t')!.getBoundingClientRect();
+      const vw = document.documentElement.clientWidth;
+      ty = cy - H / 2;
+      if (r.right + GAP + W < vw - 16) tx = Math.max(cx, r.right) + GAP;
+      else if (r.left - GAP - W > 16) tx = r.left - GAP - W;
+      else { tx = Math.min(Math.max(cx - W / 2, 16), vw - W - 16); ty = r.top - H - 40; }
+      tx = Math.min(tx, vw - W - 16);
+    };
+    const tick = () => {
+      px += (tx - px) * 0.18; py += (ty - py) * 0.18; place();
+      raf = Math.abs(tx - px) + Math.abs(ty - py) > 0.5 ? requestAnimationFrame(tick) : 0;
+    };
+    list.addEventListener('pointermove', (e) => {
+      if (!cur) return;
+      target((e as PointerEvent).clientX, (e as PointerEvent).clientY);
+      if (!raf) raf = requestAnimationFrame(tick);
+    });
+    list.querySelectorAll<HTMLAnchorElement>('.tl-i').forEach((a) => {
+      a.addEventListener('pointerenter', (e) => {
+        cur = a;
+        target((e as PointerEvent).clientX, (e as PointerEvent).clientY);
+        if (!peek.classList.contains('on')) { px = tx; py = ty; place(); }
+        else if (!raf) raf = requestAnimationFrame(tick);
+        vid.poster = a.dataset.poster ?? '';
+        if (a.dataset.video && vid.getAttribute('src') !== a.dataset.video) vid.src = a.dataset.video;
+        vid.play().catch(() => {});
+        peek.classList.add('on');
+      });
+      a.addEventListener('pointerleave', () => { cur = null; peek.classList.remove('on'); vid.pause(); });
+    });
+  });
+</script>
