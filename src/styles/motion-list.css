@@ -1,0 +1,49 @@
+/* motion page as a running order (after the wedding Timeline board) */
+
+.tl {
+  list-style: none; text-align: center; padding: 56px 24px 120px;
+}
+
+.tl li + li { margin-top: 26px; }
+
+.tl-i {
+  display: inline-block; color: var(--ink); text-decoration: none;
+}
+
+.tl-s {
+  display: block; font-family: var(--mono); font-weight: 500; font-size: 14px;
+  letter-spacing: 0.08em; text-transform: uppercase;
+}
+
+.tl-t {
+  display: block; font-weight: 800; text-transform: uppercase;
+  font-size: clamp(34px, 4.2vw, 60px); line-height: 1; letter-spacing: -0.015em; margin-top: 4px;
+}
+
+.tl-thumb { display: none; }
+
+@media (hover: hover) and (pointer: fine) {
+  .tl-i { transition: color 0.2s; }
+  .tl-i:hover { color: var(--accent); }
+}
+
+/* the floating loop beside the cursor */
+.tl-peek {
+  position: fixed; left: 0; top: 0; z-index: 50; width: 300px; pointer-events: none;
+  opacity: 0; transition: opacity 0.25s ease;
+  box-shadow: 0 12px 32px rgba(0,0,0,0.22); background: var(--plate);
+}
+.tl-peek.on { opacity: 1; }
+.tl-peek video { display: block; width: 100%; height: auto; }
+
+/* touch: no hover, so each entry carries its poster */
+@media not ((hover: hover) and (pointer: fine)) {
+  .tl-peek { display: none; }
+  .tl li + li { margin-top: 44px; }
+  .tl-thumb { display: block; width: 100%; height: auto; margin-top: 14px; background: var(--plate); }
+}
+
+@media (max-width: 640px) {
+  .tl { padding: 36px 24px 100px; }
+  .tl-s { font-size: 12px; }
+}
